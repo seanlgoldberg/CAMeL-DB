@@ -10,13 +10,14 @@ $highestEntropyToken = '';
 $highestEntropyText = '';
 $highestEntropyStart = 0;
 $highestEntropyLabel = 0;
-$highestEntropyContextToken1 = 0;
-$highestEntropyContextToken2 = 0;
+$highestEntropyContextLabel1 = 0;
+$highestEntropyContextLabel2 = 0;
+$highestEntropyContextLabel3 = 0;
+$highestEntropyContextLabel4 = 0;
 
-$previousPreviousToken = 0;
 $previousPreviousLabel = 0;
-$previousToken = 0;
 $previousLabel = 0;
+$currentLabel = 0;
 
 $tokenClassifierMapping = array();
 
@@ -41,27 +42,44 @@ while ($row = mysql_fetch_assoc($result)) {
 			$skip = 0;
 			if (isset($tokenClassifierMapping[$highestEntropyTokenId])) {
 				if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel])) {
-					if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1])) {
-						if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2])) {
-							$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2]++;	
-							$skip = 1;
+					if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1])) {
+						if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2])) {
+							if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3])) {
+								if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4])) {
+									$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4]++;	
+									$skip = 1;
+								} else {
+									$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4] = 1;
+								}
+							} else {
+								$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3] = array();
+								$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4] = 1;
+							}
 						} else {
-							$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
+							$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2] = array();
+							$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3] = array();
+							$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4] = 1;		
 						}
 					} else {
-						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1] = array();
-						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
+						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1] = array();
+						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2] = array();
+						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3] = array();
+						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4] = 1;		
 					}
 				} else {
 					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel] = array();
-					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1] = array();  
-					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
+					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1] = array();
+					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2] = array();
+					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3] = array();
+					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4] = 1;		
 				}
 			} else {
 				$tokenClassifierMapping[$highestEntropyTokenId] = array();
 				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel] = array();
-				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1] = array();
-				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
+				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1] = array();
+				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2] = array();
+				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3] = array();
+				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextLabel1][$highestEntropyContextLabel2][$highestEntropyContextLabel3][$highestEntropyContextLabel4] = 1;		
 			}
 			
 			if (!$skip) {
@@ -73,7 +91,8 @@ while ($row = mysql_fetch_assoc($result)) {
 				$skipped++;
 			}
 		}
-		$previousPreviousToken = $previousPreviousLabel = $previousToken = $previousLabel = 0;
+		$previousPreviousLabel = $previousLabel = 0;
+		$currentLabel = $label;
 		$highestEntropy = 0;
 		$distanceFromHighestEntropy = -1000;
 	} 
@@ -84,23 +103,26 @@ while ($row = mysql_fetch_assoc($result)) {
 		$highestEntropyText = $citationText;
 		$highestEntropyStart = $tokenStart;
 		$highestEntropyLabel = $label;
-		$highestEntropyContextToken1 = $previousToken;
-		$highestEntropyContextToken2 = $previousPreviousToken;
+		$highestEntropyContextLabel1 = $previousLabel;
+		$highestEntropyContextLabel2 = $previousPreviousLabel;
+		$highestEntropyContextLabel3 = 0;
+		$highestEntropyContextLabel4 = 0;
 		$distanceFromHighestEntropy = 0;
 	} else {
 		$distanceFromHighestEntropy++;
 		if ($distanceFromHighestEntropy == 1) {
-			$highestEntropyContextToken2 = $tokenId;
-		} elseif ($distanceFromHighestEntropy == 2 && $highestEntropyContextToken1 == 0) {
-			$highestEntropyContextToken1 = $tokenId;
+			$highestEntropyContextLabel3 = $label;
+		} elseif ($distanceFromHighestEntropy == 2) {
+			$highestEntropyContextToken4 = $label;
 		}
 	}
 	$lastCitation = $citationId;
 	
-	$previousPreviousToken = $previousToken;
-	$previousPreviousLabel = $previousLabel;
-	$previousToken = $tokenId;
-	$previousLabel = $label;
+	if ($label != $currentLabel) {
+		$previousPreviousLabel = $previousLabel;
+		$previousLabel = $currentLabel;
+		$currentLabel = $label;
+	}
 }
 
 print "Retained: $retained Skipped: $skipped";
