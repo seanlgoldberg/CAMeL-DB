@@ -1,3 +1,4 @@
+package postQuestions;
 public class Tuple<X, Y> { 
     public final X x; 
     public Y y; 
