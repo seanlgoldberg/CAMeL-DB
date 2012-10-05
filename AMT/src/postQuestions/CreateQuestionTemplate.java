@@ -3,6 +3,8 @@ package postQuestions;
 import java.util.Vector;
 import java.io.*;
 
+import au.com.bytecode.opencsv.*;
+
 public class CreateQuestionTemplate {
 	
 	
@@ -11,14 +13,19 @@ public class CreateQuestionTemplate {
 		
 	}
 	
-	public static void generateQuestion(Vector<String[]> allTokens, Vector<String[]> printTokens, Vector<String[]> entWords, 
-        Vector<Integer> entNode, int index) {
+	public static void generateQuestion(Vector<String> citationID, Vector<String> citationText, Vector<String> positionToken,int index,String outputfile,String questionFileDir) {
 	//public void generateQuestion() {	
 		
+		String XMLfileName="Q" + index + ".xml";
 			try{
-				//FileWriter f1 = new FileWriter("test.txt");
-				FileWriter fstream = new FileWriter("Q" + index + ".xml");
+				//FileWriter f1 = new FileWriter("test.txt");	
+				
+				
+				FileWriter fstream = new FileWriter(questionFileDir+"/" + XMLfileName);
 				BufferedWriter out = new BufferedWriter(fstream);
+				
+				FileWriter outputWriter = new FileWriter(outputfile,true);
+				BufferedWriter outuptBuffer = new BufferedWriter(outputWriter);
 				
 				out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 				out.write("  <QuestionForm xmlns=\"http://mechanicalturk.amazonaws.com/AWSMechanicalTurkDataSchemas/2005-10-01/QuestionForm.xsd\n\">\n");
@@ -70,38 +77,18 @@ public class CreateQuestionTemplate {
 				out.write("      </FormattedContent>\n");
 				out.write("    </Overview>\n");
 				
-				for (int i=0; i<allTokens.size(); i++) {
-				
-					String[] tokens = allTokens.elementAt(i);
-					String[] pTokens = printTokens.elementAt(i);
-					int node = entNode.elementAt(i);
-					String[] words = entWords.elementAt(i);
-					
+				for (int i=0; i<citationID.size(); i++) {
+					outuptBuffer.write(citationID.get(i)+","+positionToken.get(i)+","+XMLfileName+","+(i+1)+"\n");	
 					out.write("    <Question>\n");
-					out.write("    <QuestionIdentifier>1</QuestionIdentifier>\n");
+					out.write("    <QuestionIdentifier>"+(i+1)+"</QuestionIdentifier>\n");
 					out.write("    <QuestionContent>\n");
 					out.write("        <FormattedContent>\n");
 					out.write("          <![CDATA[\n");
 					out.write("          <br></br>\n");
 					out.write("          <p><font size=\"2\">");
-						int count = 0;
-						for (int j=0; j<pTokens.length; j++) {
-							for (int k=0; k<words.length; k++) {
-								//f1.write(pTokens[j] + " - " + words[k] + "\n");	
-								if (pTokens[j].toLowerCase().equals(words[k].toLowerCase())) {
-									count++;
-									break;
-								}
-							}
-							//f1.write(pTokens[j] + " - " + count + " - " + node + "\n");
-							if (count==node) {
-								out.write("<b>" + pTokens[j] + "</b> ");
-							}
-							else {
-								out.write(pTokens[j]);				
-							}
 					
-						}
+					out.write(citationText.get(i));
+					
 					out.write("</font></p>\n");
 					out.write("          <br></br>]]>\n");
 					out.write("        </FormattedContent>\n");
@@ -146,8 +133,7 @@ public class CreateQuestionTemplate {
 					out.write("        </SelectionAnswer>\n");
 					out.write("      </AnswerSpecification>\n");
 					out.write("    </Question>\n");
-										
-						
+							
 				}
 				
 				out.write("  </QuestionForm>\n");
@@ -155,12 +141,70 @@ public class CreateQuestionTemplate {
 				
 				out.close();
 				//f1.close();
-				
+				outuptBuffer.close();
 				
 				
 			}catch (Exception e) {
+				System.out.println(" Error generated in Question file -:"+ XMLfileName);
 				System.err.println("Error: " + e.getMessage());
 			}
 		//}
 	}
+	
+	private void processInput(String inputCSVFile, String outputCSVFile, String questionFileDir, int noOfQuesPerHit) throws IOException{
+		String tokenize[];
+		Vector<String> citationText=new Vector<String>();
+		Vector<String> citationID=new Vector<String>();
+		Vector<String> positionToken=new Vector<String>();
+		int index=1;
+		
+		System.out.println("Reading from current CSV file "+inputCSVFile);
+		
+		CSVReader reader = new CSVReader(new FileReader(inputCSVFile));
+	
+		int counter=0;
+		
+		while((tokenize=reader.readNext())!=null){
+			positionToken.addElement(tokenize[1]);
+			citationID.addElement(tokenize[3]);
+			citationText.addElement(tokenize[4]);
+			counter++;
+			
+			if(counter==noOfQuesPerHit){
+				generateQuestion(citationID, citationText, positionToken, index++,outputCSVFile,questionFileDir);
+				counter=0;
+				citationText=new Vector<String>();
+				citationID=new Vector<String>();
+				positionToken=new Vector<String>();
+			}
+			
+		}
+		
+		if(counter<noOfQuesPerHit)
+			generateQuestion(citationID, citationText, positionToken, index++,outputCSVFile,questionFileDir);
+		
+		System.out.println("Output CSV fime "+outputCSVFile+ "is written successfully");
+		reader.close();
+		
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		CreateQuestionTemplate cqt=new CreateQuestionTemplate();
+		String inputCSVFile="highest_entropies.csv";
+		String outputCSVFile="outputCSV.csv";
+		String questionFileDir="QuestionXML";
+		File dir=new File(questionFileDir);
+		questionFileDir=dir.getAbsolutePath();
+		if (dir.exists() || dir.mkdirs())
+			System.out.println("Question XML's are found at "+ questionFileDir);
+		else
+			throw new Exception("Directory could not be created, thus file not generated");
+		
+		int noOfQuesPerHit=10;
+		cqt.processInput(inputCSVFile, outputCSVFile,questionFileDir,noOfQuesPerHit);
+		
+		
+	}
+	
 }
