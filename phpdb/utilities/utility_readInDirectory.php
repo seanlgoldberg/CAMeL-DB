@@ -5,11 +5,10 @@ $handle = fopen($argv[2], "w");
 $rawHandle = fopen("{$argv[2]}.raw", "w");
 $count = 0;
 foreach ($iterator as $path) {
-	print $path."\n";
 		$json = json_decode(file_get_contents($path));
-		$citation = $json->citation;
+		$citation = $json->{'citation'};
 		foreach ($json->recordList as $record) {
-			$title = $record->title;
+			$title = $record->{'title'};
 			$author = '';
 			$conference = '';
 			$isbn = '';
@@ -41,7 +40,6 @@ foreach ($iterator as $path) {
 			fwrite($rawHandle, "$citation\n");
 			$count++;
 		}
-	
 	if ($count > 10) {
 		break;
 	}
