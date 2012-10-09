@@ -59,8 +59,18 @@ while ($continue) {
         			case 'listHighestEntropy':
         				include('control/list_listHighestEntropy.php');
         				break;
+        			case 'listTopClusters':
+        				include('control/list_listTopClusters.php');
+        				break;
         			case 'groupHighestEntropy':
         				include('control/list_groupHighestEntropy.php');
+        				break;
+        		}
+        		break;
+        	case 'statistics':
+        		switch ($command) {
+        			case 'getAccuracy':
+        				include('control/statistics_getAccuracy.php');
         				break;
         		}
         		break;

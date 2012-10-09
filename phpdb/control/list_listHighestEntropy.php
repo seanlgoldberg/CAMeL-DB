@@ -121,6 +121,14 @@ while ($row = mysql_fetch_assoc($result)) {
 				$targetArray['count']++;
 				$targetArray['averageEntropy'] = ($targetArray['averageEntropy'] * ($targetArray['count'] - 1) + $highestEntropy) / $targetArray['count'];
 				$targetArray['citations'][] = $citationText;
+				if ($highestEntropy > $targetArray['highestEntropy']) {
+					$targetArray['highestEntropy'] = $highestEntropy;
+					$targetArray['highestEntropyIndex'] = $tokenId;
+					doQuery("UPDATE citations SET citation_highest_entropy_token=$tokenId WHERE citation_id=$citationId");
+				}
+				
+				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $citationId)");
+				doQuery("UPDATE clusters SET cluster_entropy={$targetArray['averageEntropy']} WHERE cluster_id={$targetArray['clusterId']}");
 				if ($targetArray['goldStandard'] != $highestEntropyGoldStandard) {
 					print "<P>Error - this citation has gold standard of <B>{$labelMapping[$highestEntropyGoldStandard]}</B>, whereas the first in the sequence had <B>{$labelMapping[$targetArray['goldStandard']]}</B><BR>This citation: $citationText<BR>Original in series: {$targetArray['citations'][0]}</P>";
 					
@@ -132,6 +140,14 @@ while ($row = mysql_fetch_assoc($result)) {
 				$targetArray['averageEntropy'] = $highestEntropy;
 				$targetArray['citations'] = array($citationText);
 				$targetArray['goldStandard'] = $highestEntropyGoldStandard;
+				$targetArray['highestEntropy'] = $highestEntropy;
+				$targetArray['highestEntropyIndex'] = $tokenId;
+				
+				doQuery("INSERT INTO clusters (cluster_entropy, cluster_algorithm) VALUES ({$targetArray['averageEntropy']}, 1)");
+				$targetArray['clusterId'] = mysql_insert_id();
+				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $citationId)");	
+				
+				doQuery("UPDATE citations SET citation_highest_entropy_token=$tokenId WHERE citation_id=$citationId");
 			}
 			
 			if (!$skip) {
@@ -185,12 +201,12 @@ function cmp($a, $b)
 	}
 	return ($a['averageEntropy'] > $b['averageEntropy']) ? -1 : 1;
 }
-usort($tokenClassifierMapping, "cmp");
+/*usort($tokenClassifierMapping, "cmp");
 
 print "<HTML><BODY>";
 print "Retained: $retained Skipped: $skipped Errors: $errors<P>";
 print "<PRE>";
 print_r($tokenClassifierMapping);
 print "</PRE></BODY></HTML>";
-
+*/
 ?>
