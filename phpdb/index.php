@@ -13,4 +13,6 @@ Upload evidence:
 
 <P><form action='controller.php' method='post'><input type='hidden' name='type' value='list' /><input type='hidden' name='command' value='listHighestEntropy' /><input type='submit' value='List Highest Entropy Tokens' /></form>
 
-<P><form action='controller.php' method='post'><input type='hidden' name='type' value='list' /><input type='hidden' name='command' value='groupHighestEntropy' /><input type='submit' value='List Grouped Highest Entropy Tokens' /></form>
+<P><form action='controller.php' method='post'><input type='hidden' name='type' value='list' /><input type='hidden' name='command' value='listTopClusters' /><input type='submit' value='List Top Clusters' /></form>
+
+<P><form action='controller.php' method='post'><input type='hidden' name='type' value='statistics' /><input type='hidden' name='command' value='getAccuracy' /><input type='submit' value='Get Accuracy Measurements' /></form>

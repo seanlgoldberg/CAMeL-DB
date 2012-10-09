@@ -1,30 +1,46 @@
 <?php
-header("Content-disposition: attachment; filename=highest_entropies.csv");
+//header("Content-disposition: attachment; filename=highest_entropies.csv");
 
-$result = doQuery("SELECT token_string_id, token_start, ts_string, tl_entropy, tl_label, citation_id, citation_text FROM tokens JOIN token_labelings ON token_current_labeling=tl_id JOIN token_strings ON ts_id=token_string_id JOIN citations ON token_citation_id=citation_id "/*ORDER BY token_citation_id, token_start"*/);
+//$pattern = "t 0,l 0,t-1,t+1";
+//$pattern = "t 0,l 0,l-1,l+1";
+$pattern = "E 0,L 0,L-1,L+1";
+//$pattern = "t 0,l 0,t-1,l-1,t+1,l+1";
+//$pattern = "t 0,l 0";
+$result = doQuery("SELECT token_string_id, token_start, ts_string, tl_entropy, tl_label, citation_id, citation_text, token_gold_standard FROM tokens JOIN token_labelings ON token_current_labeling=tl_id JOIN token_strings ON ts_id=token_string_id JOIN citations ON token_citation_id=citation_id"/*ORDER BY token_citation_id, token_start"*/);
 
 $lastCitation = 0;
+$lastCitationText = 0;
 $highestEntropy = 0;
-$highestEntropyTokenId = 0;
-$highestEntropyToken = '';
-$highestEntropyText = '';
+$highestEntropyTokenIndex = -1;
+$highestEntropyEntityIndex = -1;
 $highestEntropyStart = 0;
-$highestEntropyLabel = 0;
-$highestEntropyContextToken1 = 0;
-$highestEntropyContextToken2 = 0;
-
-$previousPreviousToken = 0;
-$previousPreviousLabel = 0;
-$previousToken = 0;
-$previousLabel = 0;
+$highestEntropyCriteria = array();
+$highestEntropyGoldStandard = -1;
 
 $tokenClassifierMapping = array();
 
 $skipped = 0;
 $retained = 0;
 
-$distanceFromHighestEntropy = 0;
+$tokens = array();
+$tokenLabels = array();
+$entities = array();
+$entityLabels = array();
 
+$currentEntity = '';
+$currentEntityLabel = -1;
+
+$tokenIndex = 0;
+$entityIndex = 0;
+
+$errors = 0;
+
+$labelMapping = array(0=>'Title', 1=>'Author', 2=>'Conference', 3=>'ISBN', 4=>'Publisher', 5=>'Series', 6=>'Proceedings', 7=>'Year');
+$colorMapping = array(0=>'red', 1=>'blue', 2=>'green', 3=>'grey', 4=>'orange', 5=>'violet', 6=>'pink', 7=>'maroon');
+print "<B>Color Map</B><BR>";
+foreach ($colorMapping as $key=>$color) {
+	print "{$labelMapping[$key]} --&gt; <font color='$color'>$color</font><BR>";
+}
 while ($row = mysql_fetch_assoc($result)) {
 	$tokenId = $row['token_string_id'];
 	$tokenString = $row['ts_string'];
@@ -33,75 +49,164 @@ while ($row = mysql_fetch_assoc($result)) {
 	$tokenStart = $row['token_start'];
 	$entropy = $row['tl_entropy'];
 	$label = $row['tl_label'];
+	$goldStandard = $row['token_gold_standard'];
 	
 	if ($lastCitation != $citationId) {
 		if ($lastCitation != 0) {
-			$citationText = substr($highestEntropyText, 0, $highestEntropyStart)."<B>".substr($highestEntropyText, $highestEntropyStart, strlen($highestEntropyToken))."</B>".substr($highestEntropyText, $highestEntropyStart + strlen($highestEntropyToken));
+			$entities[] = trim($currentEntity);
+			$entityLabels[] = $currentEntityLabel;
+			$entityIndex++;
+			$currentEntityLabel = $label;
+			$currentEntity = '';
 			
-			$skip = 0;
-			if (isset($tokenClassifierMapping[$highestEntropyTokenId])) {
-				if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel])) {
-					if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1])) {
-						if (isset($tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2])) {
-							$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2]++;	
-							$skip = 1;
-						} else {
-							$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
-						}
-					} else {
-						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1] = array();
-						$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
-					}
+			$citationText = '';
+			for ($i = 0; $i < count($entities); $i++) {
+				$citationText .= "<font color='{$colorMapping[$entityLabels[$i]]}'>";
+				if ($i == $highestEntropyEntityIndex) {
+					$citationText .= "<B>{$entities[$i]}</B>";
 				} else {
-					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel] = array();
-					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1] = array();  
-					$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
+					$citationText .= $entities[$i];
 				}
+				$citationText .= "</font> ";
+			}
+			$skip = 0;
+			
+			$criteria = explode(',', $pattern);
+			$highestEntropyCriteria = array();
+			foreach ($criteria as $criterion) {
+				$target = substr($criterion, 0, 1);
+				$sign = substr($criterion, 1, 1);
+				$offset = substr($criterion, 2, 1);
+				
+				if ($sign == '-') {
+					$offset *= -1;
+				}
+				
+				if ($target == 'l' || $target == 't') {
+					$index = $highestEntropyTokenIndex + $offset;
+					if ($index >= $tokenIndex || $index < 0) {
+						$highestEntropyCriteria[] = 0;
+					} elseif ($target == 'l') {
+						$highestEntropyCriteria[] = $tokenLabels[$index];
+					} elseif ($target == 't') {
+						$highestEntropyCriteria[] = $tokens[$index];
+					}
+				} elseif ($target == 'L' || $target == 'E') {
+					$index = $highestEntropyEntityIndex + $offset;
+					if ($index >= $entityIndex || $index < 0) {
+						$highestEntropyCriteria[] = 0;
+					} elseif ($target == 'L') {
+						$highestEntropyCriteria[] = $entityLabels[$index];
+					} elseif ($target == 'E') {
+						$highestEntropyCriteria[] = $entities[$index];
+					}
+				}
+			}
+			
+			$targetArray = &$tokenClassifierMapping;
+			foreach ($highestEntropyCriteria as $criterion) {
+				if (!isset($targetArray[$criterion])) {
+					$targetArray[$criterion] = array();
+					$targetArray[$criterion]['averageEntropy'] = $highestEntropy;
+					$targetArray[$criterion]['count'] = 1;
+					$targetArray[$criterion]['match'] = $criterion;
+					$targetArray[$criterion]['members'] = array();
+				} else {
+					$targetArray[$criterion]['count']++;
+					$targetArray[$criterion]['averageEntropy'] = ($targetArray[$criterion]['averageEntropy'] * ($targetArray[$criterion]['count'] - 1) + $highestEntropy) / $targetArray[$criterion]['count'];
+				}
+				$targetArray = &$targetArray[$criterion]['members']; 
+			}
+			if (isset($targetArray['count'])) {
+				$targetArray['count']++;
+				$targetArray['averageEntropy'] = ($targetArray['averageEntropy'] * ($targetArray['count'] - 1) + $highestEntropy) / $targetArray['count'];
+				$targetArray['citations'][] = $citationText;
+				if ($highestEntropy > $targetArray['highestEntropy']) {
+					$targetArray['highestEntropy'] = $highestEntropy;
+					$targetArray['highestEntropyIndex'] = $tokenId;
+					doQuery("UPDATE citations SET citation_highest_entropy_token=$tokenId WHERE citation_id=$citationId");
+				}
+				
+				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $citationId)");
+				doQuery("UPDATE clusters SET cluster_entropy={$targetArray['averageEntropy']} WHERE cluster_id={$targetArray['clusterId']}");
+				if ($targetArray['goldStandard'] != $highestEntropyGoldStandard) {
+					print "<P>Error - this citation has gold standard of <B>{$labelMapping[$highestEntropyGoldStandard]}</B>, whereas the first in the sequence had <B>{$labelMapping[$targetArray['goldStandard']]}</B><BR>This citation: $citationText<BR>Original in series: {$targetArray['citations'][0]}</P>";
+					
+					$errors++;
+				}
+				$skip = 1;
 			} else {
-				$tokenClassifierMapping[$highestEntropyTokenId] = array();
-				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel] = array();
-				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1] = array();
-				$tokenClassifierMapping[$highestEntropyTokenId][$highestEntropyLabel][$highestEntropyContextToken1][$highestEntropyContextToken2] = 1;
+				$targetArray['count'] = 1;
+				$targetArray['averageEntropy'] = $highestEntropy;
+				$targetArray['citations'] = array($citationText);
+				$targetArray['goldStandard'] = $highestEntropyGoldStandard;
+				$targetArray['highestEntropy'] = $highestEntropy;
+				$targetArray['highestEntropyIndex'] = $tokenId;
+				
+				doQuery("INSERT INTO clusters (cluster_entropy, cluster_algorithm) VALUES ({$targetArray['averageEntropy']}, 1)");
+				$targetArray['clusterId'] = mysql_insert_id();
+				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $citationId)");	
+				
+				doQuery("UPDATE citations SET citation_highest_entropy_token=$tokenId WHERE citation_id=$citationId");
 			}
 			
 			if (!$skip) {
 				$citationText = addSlashes($citationText);
-				$tokenString = addSlashes($highestEntropyToken);
-				print "\"$tokenString\",$highestEntropy,$lastCitation,\"$citationText\"\n";
+				$tokenString = addSlashes($tokens[$highestEntropyTokenIndex]);
+				//print "\"$tokenString\",$highestEntropyStart,$highestEntropy,$lastCitation,\"$citationText\"\n";
 				$retained++;
 			} else {
 				$skipped++;
 			}
 		}
-		$previousPreviousToken = $previousPreviousLabel = $previousToken = $previousLabel = 0;
 		$highestEntropy = 0;
-		$distanceFromHighestEntropy = -1000;
+		$tokenIndex = 0;
+		$entityIndex = 0;
+		$currentEntityLabel = -1;
+		$tokens = array();
+		$tokenLabels = array();
+		$entities = array();
+		$entityLabels = array();
 	} 
-	if ($entropy > $highestEntropy) {
-		$highestEntropy = $entropy;
-		$highestEntropyTokenId = $tokenId;
-		$highestEntropyToken = $tokenString;
-		$highestEntropyText = $citationText;
-		$highestEntropyStart = $tokenStart;
-		$highestEntropyLabel = $label;
-		$highestEntropyContextToken1 = $previousToken;
-		$highestEntropyContextToken2 = $previousPreviousToken;
-		$distanceFromHighestEntropy = 0;
-	} else {
-		$distanceFromHighestEntropy++;
-		if ($distanceFromHighestEntropy == 1) {
-			$highestEntropyContextToken2 = $tokenId;
-		} elseif ($distanceFromHighestEntropy == 2 && $highestEntropyContextToken1 == 0) {
-			$highestEntropyContextToken1 = $tokenId;
-		}
-	}
-	$lastCitation = $citationId;
 	
-	$previousPreviousToken = $previousToken;
-	$previousPreviousLabel = $previousLabel;
-	$previousToken = $tokenId;
-	$previousLabel = $label;
+	$tokens[] = $tokenString;
+	$tokenLabels[] = $label;
+	if ($label != $currentEntityLabel) {
+		if ($currentEntityLabel != -1) {
+			$entities[] = trim($currentEntity);
+			$entityLabels[] = $currentEntityLabel;
+			$entityIndex++;
+		}
+		$currentEntityLabel = $label;
+		$currentEntity = '';
+	}
+	$currentEntity .= ' '.$tokenString;
+	
+	if ($entropy > $highestEntropy && $tokenString != ',') {
+		$highestEntropy = $entropy;
+		$highestEntropyTokenIndex = $tokenIndex;
+		$highestEntropyEntityIndex = $entityIndex;
+		$highestEntropyStart = $tokenStart;
+		$highestEntropyGoldStandard = $goldStandard;
+	} 
+	$lastCitation = $citationId;
+	$lastCitationText = $citationText;
+	$tokenIndex++;
 }
 
-print "Retained: $retained Skipped: $skipped";
+function cmp($a, $b)
+{
+	if ($a['averageEntropy'] == $b['averageEntropy']) {
+		return 0;
+	}
+	return ($a['averageEntropy'] > $b['averageEntropy']) ? -1 : 1;
+}
+/*usort($tokenClassifierMapping, "cmp");
+
+print "<HTML><BODY>";
+print "Retained: $retained Skipped: $skipped Errors: $errors<P>";
+print "<PRE>";
+print_r($tokenClassifierMapping);
+print "</PRE></BODY></HTML>";
+*/
 ?>

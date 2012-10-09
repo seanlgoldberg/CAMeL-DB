@@ -1,3 +1,4 @@
+package postQuestions;
 /*
  * Copyright 2007-2008 Amazon Technologies, Inc.
  * 
@@ -14,7 +15,6 @@
  */ 
 
 
-package postQuestions;
 
 import com.amazonaws.mturk.service.axis.RequesterService;
 
@@ -99,13 +99,14 @@ public class AMTpost {
  * @throws Exception 
    * 
    */
-  public void postQuestions() throws Exception {
+  public String postQuestion(String fileName) throws Exception {
+	  String hitID="";
     try {
 
-        for(int i=1; i<=NUM_QUESTIONS; i++) {
+  
         	
         	// Each HIT has format "Q#.xml"
-        	String question = AMTpost.getXML("Q" + i + ".xml");
+        	String question = AMTpost.getXML(fileName);
         	
         	//String PreQualQuestion = AMTpost.getXML("PreQual.xml");
         	//String answerKey = AMTpost.getXML("PreQualAnswer.xml");
@@ -118,7 +119,7 @@ public class AMTpost {
         	//															answerKey,
         	//															(long) 60*60, false, null);
     	
-        	QualificationRequirement qualRec = new QualificationRequirement();
+        	/*QualificationRequirement qualRec = new QualificationRequirement();
         	//String ID = qual.getQualificationTypeId();
         	
         	// Users can only answer questions with the following qualification type ID
@@ -133,7 +134,19 @@ public class AMTpost {
         	// AMT requires qualifications to be in array format
         	QualificationRequirement[] qualRecArray = new QualificationRequirement[1];
         	qualRecArray[0] = qualRec;
-    	
+    	    */
+        	
+        	// TODO: Update this part to the set a proper qualification requirement
+        	 QualificationRequirement qualReq = new QualificationRequirement();
+             qualReq.setQualificationTypeId(RequesterService.LOCALE_QUALIFICATION_TYPE_ID);
+             qualReq.setComparator(Comparator.EqualTo);
+             Locale country = new Locale();
+             country.setCountry("US");
+             qualReq.setLocaleValue(country);
+        	
+            QualificationRequirement[] qualReqs = null;
+            qualReqs = new QualificationRequirement[] { qualReq };
+        	
         	// Create the HIT
         	HIT hit = service.createHIT(
     			null, //
@@ -147,20 +160,21 @@ public class AMTpost {
                 (long) 60*60*24*5, // Lifetime in seconds (HIT lasts for 5 days)
                 numAssignments, // How many Turkers will answer question
                 null,
-                qualRecArray, // Qualification test users must pass
+                qualReqs, // Qualification test users must pass
                 null);
-    	
-        	System.out.println("Created HIT: " + hit.getHITId());
+        	hitID=hit.getHITId();
+        	System.out.println("Created HIT: " + hitID);
 
         	System.out.println("You may see your HIT with HITTypeId '" 
         			+ hit.getHITTypeId() + "' here: ");
         	System.out.println(service.getWebsiteURL() 
         			+ "/mturk/preview?groupId=" + hit.getHITTypeId());
-        
-        }
+        	
+        return hitID;
 
     } catch (ServiceException e) {
       System.err.println(e.getLocalizedMessage());
+      return hitID;
     }
   }
 
@@ -170,16 +184,16 @@ public class AMTpost {
    * @param args
  * @throws Exception 
    */
-  public static void main(String[] args) throws Exception {
+ /* public static void main(String[] args) throws Exception {
 
     AMTpost app = new AMTpost();
     
     
     if (app.hasEnoughFund()) {
-      app.postQuestions();
+      app.postQuestion();
       System.out.println("Success.");
     } else {
       System.out.println("You do not have enough funds to create the HIT.");
     }
-  }
+  }*/
 }
