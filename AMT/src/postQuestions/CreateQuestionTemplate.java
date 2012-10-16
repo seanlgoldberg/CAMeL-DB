@@ -156,6 +156,7 @@ public class CreateQuestionTemplate {
 		Vector<String> citationText=new Vector<String>();
 		Vector<String> citationID=new Vector<String>();
 		Vector<String> positionToken=new Vector<String>();
+                Vector<String> clusterID = new Vector<String>();
 		int index=1;
 		
 		System.out.println("Reading from current CSV file "+inputCSVFile);
@@ -165,10 +166,18 @@ public class CreateQuestionTemplate {
 		int counter=0;
 		
 		while((tokenize=reader.readNext())!=null){
-			positionToken.addElement(tokenize[1]);
-			citationID.addElement(tokenize[3]);
-			citationText.addElement(tokenize[4]);
-			counter++;
+			//positionToken.addElement(tokenize[1]);
+			//citationID.addElement(tokenize[3]);
+			//citationText.addElement(tokenize[4]);
+			
+                        //Using schema of (CitationID,Position(in characters), ClusterID, TruthLabel, TokenString, CitationString)
+                        if (!clusterID.contains(tokenize[2])) {
+                            citationID.addElement(tokenize[0]);
+                            positionToken.addElement(tokenize[1]);
+                            citationText.addElement(tokenize[5]);
+                            clusterID.addElement(tokenize[2]);
+                            counter++;
+                        }
 			
 			if(counter==noOfQuesPerHit){
 				generateQuestion(citationID, citationText, positionToken, index++,outputCSVFile,questionFileDir);
@@ -191,8 +200,9 @@ public class CreateQuestionTemplate {
 	public static void main(String[] args) throws Exception {
 		
 		CreateQuestionTemplate cqt=new CreateQuestionTemplate();
-		String inputCSVFile="highest_entropies.csv";
-		String outputCSVFile="outputCSV.csv";
+		//String inputCSVFile="highest_entropies.csv";
+		String inputCSVFile = "top_clusters.csv";
+                String outputCSVFile="outputCSV.csv";
 		String questionFileDir="QuestionXML";
 		File dir=new File(questionFileDir);
 		questionFileDir=dir.getAbsolutePath();

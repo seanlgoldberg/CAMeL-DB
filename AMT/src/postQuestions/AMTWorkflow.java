@@ -19,6 +19,7 @@ public class AMTWorkflow {
 	public static final String MTURK_CONFIG_FILE="src/mturk.properties";
 	public static final String CURRENT_RESOURCE_DIRECTORY="src/postQuestions/";
 	public static final String postedCitationFileName=CURRENT_RESOURCE_DIRECTORY+"posted.txt";
+        public static final String XML_DIRECTORY = "QuestionXML/";
 	
 	private static int NUM_QUESTIONS = 50;
 	private static String delimiter = "***********************************";
@@ -141,7 +142,7 @@ public class AMTWorkflow {
 				
 				
 				// Setting the filename to the relative resource directory
-				String currFileName= CURRENT_RESOURCE_DIRECTORY + fileName;
+				String currFileName= CURRENT_RESOURCE_DIRECTORY + XML_DIRECTORY + fileName;
 				
 			System.out.println("Posting file " +currFileName +" as a HIT");
 			if (AMTposter.hasEnoughFund()) {

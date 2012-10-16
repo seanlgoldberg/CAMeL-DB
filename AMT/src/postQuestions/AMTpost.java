@@ -57,6 +57,7 @@ public class AMTpost {
    * 
    */
   public AMTpost() {
+    System.out.println(AMTWorkflow.MTURK_CONFIG_FILE);
     service = new RequesterService(new PropertiesClientConfig(AMTWorkflow.MTURK_CONFIG_FILE));
   }
 

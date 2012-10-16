@@ -52,6 +52,9 @@ public class Segment {
 	FileWriter f;
         FileWriter f2;
         FileWriter f3;
+        
+        int totalToks;
+        int rightToks;
 
 	public FeatureGenerator featureGenerator() {
 		return featureGen;
@@ -59,12 +62,12 @@ public class Segment {
 
 	public static void main(String argv[]) throws Exception {
 		if (argv.length < 3) {
-			System.out
-					.println("Usage: java Tagger train|test|calc -f <conf-file>");
+			//System.out
+					//.println("Usage: java Tagger train|test|calc -f <conf-file>");
 			//return;
                         argv[0] = "test";
                         argv[1] = "-f";
-                        argv[2] = "/home/sean/EclipseWorkspace2/AMT/samples/us50.conf";                         
+                        argv[2] = "/home/sean/CAMeL-DB/AMT/samples/us50.conf";                         
 		}
 		Segment segment = new Segment();
                 segment.parseConf(argv);
@@ -466,7 +469,10 @@ public class Segment {
 	///////////////////////////////////////////
 	
 	public void doTestWithClamping() throws Exception {
-		TreeMap<Integer, Integer> NodeCountMap = new TreeMap<Integer, Integer>();
+		totalToks = 0;
+                rightToks = 0;
+            
+                TreeMap<Integer, Integer> NodeCountMap = new TreeMap<Integer, Integer>();
 		
 		//Set up Reader stream for reading in raw test data
 		BufferedReader reader = new BufferedReader(new FileReader(baseDir
@@ -625,7 +631,11 @@ public class Segment {
                                 int tokenAuto[] = allLabels(trAuto);
                                 CRFout.setTrueLabels(tokenMan);
                                 CRFout.setAutoLabels(tokenAuto);
-                                
+                                for (int idx2=0; idx2<tokenMan.length; idx2++) {
+                                    totalToks++;
+                                    if (tokenMan[idx2]==tokenAuto[idx2])
+                                        rightToks++;
+                                }
                             //}
                         }
                         
@@ -700,10 +710,11 @@ public class Segment {
 
 			instance++;
                         
-                          f2.write(citTable.citationID + ", " + citTable.rawText + "\n");
+                          f2.write(citTable.citationID + ", \"" + citTable.rawText + "\"\n");
                         for (int line=0; line<CRFout.seqs.length; line++) {
                             f.write(CRFout.citationID + ", " 
-                                + citTable.rawText.indexOf(CRFout.seqs[line]) + ", \""
+                                //+ citTable.rawText.indexOf(CRFout.seqs[line]) + ", \""
+                                + line + ", \""
                                 + CRFout.seqs[line] + "\", " 
                                 + Integer.toString(CRFout.trueLabels[line]) + ", "
                                 + Integer.toString(CRFout.autoLabels[line]) + ", "
@@ -788,6 +799,10 @@ public class Segment {
 		f.close();
                 f2.close();
                 f3.close();
+                double acc = (double)rightToks/(double)totalToks;
+                System.out.println("Correct tokens: " + rightToks);
+                System.out.println("Total tokens: " + totalToks);
+                System.out.println("Accuracy: " + acc);
 	}
 
 	
