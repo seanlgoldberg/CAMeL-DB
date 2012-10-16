@@ -24,7 +24,7 @@ import com.amazonaws.mturk.util.PropertiesClientConfig;
 import com.amazonaws.mturk.requester.*;
 import com.amazonaws.mturk.service.axis.*;
 import com.amazonaws.mturk.addon.*;
-
+import postQuestions.AMTWorkflow;
 import java.io.*;
 import java.util.Scanner;
 import java.lang.*;
@@ -57,7 +57,7 @@ public class AMTpost {
    * 
    */
   public AMTpost() {
-    service = new RequesterService(new PropertiesClientConfig("../mturk.properties"));
+    service = new RequesterService(new PropertiesClientConfig(AMTWorkflow.MTURK_CONFIG_FILE));
   }
 
   /**
@@ -74,12 +74,13 @@ public class AMTpost {
   
   // Convert XML document into a string
   public static String getXML(String file) {
+	  String Q = "";
 	  try{
 		  FileInputStream fstream = new FileInputStream(file);
 		  DataInputStream in = new DataInputStream(fstream);
 		  BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		  
-		  String Q = "";
+		  Q = "";
 		  String Qline;
 		  while ((Qline = br.readLine()) != null) {
 			  Q += Qline;
@@ -119,7 +120,7 @@ public class AMTpost {
         	//															answerKey,
         	//															(long) 60*60, false, null);
     	
-        	/*QualificationRequirement qualRec = new QualificationRequirement();
+        	QualificationRequirement qualRec = new QualificationRequirement();
         	//String ID = qual.getQualificationTypeId();
         	
         	// Users can only answer questions with the following qualification type ID
@@ -134,10 +135,10 @@ public class AMTpost {
         	// AMT requires qualifications to be in array format
         	QualificationRequirement[] qualRecArray = new QualificationRequirement[1];
         	qualRecArray[0] = qualRec;
-    	    */
+    	    
         	
         	// TODO: Update this part to the set a proper qualification requirement
-        	 QualificationRequirement qualReq = new QualificationRequirement();
+        	 /*QualificationRequirement qualReq = new QualificationRequirement();
              qualReq.setQualificationTypeId(RequesterService.LOCALE_QUALIFICATION_TYPE_ID);
              qualReq.setComparator(Comparator.EqualTo);
              Locale country = new Locale();
@@ -146,7 +147,7 @@ public class AMTpost {
         	
             QualificationRequirement[] qualReqs = null;
             qualReqs = new QualificationRequirement[] { qualReq };
-        	
+        	*/
         	// Create the HIT
         	HIT hit = service.createHIT(
     			null, //
@@ -160,7 +161,7 @@ public class AMTpost {
                 (long) 60*60*24*5, // Lifetime in seconds (HIT lasts for 5 days)
                 numAssignments, // How many Turkers will answer question
                 null,
-                qualReqs, // Qualification test users must pass
+                qualRecArray, // Qualification test users must pass
                 null);
         	hitID=hit.getHITId();
         	System.out.println("Created HIT: " + hitID);

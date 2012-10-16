@@ -1,4 +1,5 @@
 package postQuestions;
+import postQuestions.AMTWorkflow;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
@@ -8,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.amazonaws.mturk.requester.Assignment;
 import com.amazonaws.mturk.requester.HIT;
@@ -22,7 +25,7 @@ public class HITProcessor {
 	private static BufferedWriter bufferedWriter;
 	
 	HITProcessor(){
-		requestPoller = new RequesterService(new PropertiesClientConfig("mturk.properties"));
+		requestPoller = new RequesterService(new PropertiesClientConfig(AMTWorkflow.MTURK_CONFIG_FILE));
 		hitTracker = new ArrayList<Tuple<String,Boolean>>();
 	}
 	
@@ -36,30 +39,38 @@ public class HITProcessor {
 		HITProcessor hitProcessor = new HITProcessor();
 		int numAvailable=1;
 		// time delay is 6 seconds
-		final int timedelay=6;
+		final int timedelay=3000;
 		
 		if (args.length != 1){
-			throw new Exception("Incorrect Usage. Usage is: java GetResultsForHITS fileNameWithHITIDS.txt");
+			throw new Exception("Incorrect Usage. Usage is: java GetResultsForHITS fileNameWithHITIDS");
 		}
 		
+		String inputFile=AMTWorkflow.CURRENT_RESOURCE_DIRECTORY+args[0];
 		// Setting up file input reading 
 		//hitProcessor.getReviewableHITs();
 		FileInputStream fstream=null;
 		try{
-		fstream = new FileInputStream(args[0]);
+		fstream = new FileInputStream(inputFile);
 		System.out.println("Reading HIT ID's input from file");
 		// Get the object of DataInputStream
 		  DataInputStream in = new DataInputStream(fstream);
 		  BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		  String hitIDValue="";
+		  String citationText="";
 		  
 		  
 		  
 		  // Opening file and reading input
-		  
-		  while ((hitIDValue = br.readLine()) != null)   {
-			  System.out.println ("Added: "+hitIDValue);
-			  hitTracker.add(new Tuple<String, Boolean>(hitIDValue, false));
+		  Set<String> hitList= new TreeSet<String>();
+		  while ((citationText = br.readLine()) != null)   {
+			  citationText.replaceAll("\\s","");
+			  String [] citation=citationText.split(",");
+			  if (citation!=null && citation.length==3){
+				  String hitID= citation[2];
+				  if (!hitList.contains(hitID)){
+					  hitList.add(hitID);
+					  hitTracker.add(new Tuple<String, Boolean>(hitID, false));
+				  }
+			  }
 			  }
 		 
 		  br.close();
@@ -67,7 +78,7 @@ public class HITProcessor {
 		  fstream.close();
 		}
 		catch (Exception e){
-			System.err.println("Error in reading file: "+ args[0]);
+			System.err.println("Error in reading file: "+ inputFile);
 			e.printStackTrace();
 			fstream.close();
 		}
@@ -86,9 +97,7 @@ public class HITProcessor {
 				System.out.println("Num available "+ numAvailable + "  hitTracker size :" + hitTracker.size());
 				if (numAvailable==0){
 						hitStatus.y=true;
-						
-						hitProcessor.writeHITOutput (hitStatus.x);
-						
+						hitProcessor.writeHITOutput (hitStatus.x);	
 				}
 			}
 		
@@ -121,7 +130,7 @@ public class HITProcessor {
 		
 		
 		try {
-			fwriter = new FileWriter(hitID+".xml");
+			fwriter = new FileWriter(AMTWorkflow.CURRENT_RESOURCE_DIRECTORY+hitID+".xml");
 			bufferedWriter = new BufferedWriter(fwriter);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
