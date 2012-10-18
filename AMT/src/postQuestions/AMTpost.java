@@ -126,8 +126,9 @@ public class AMTpost {
         	
         	// Users can only answer questions with the following qualification type ID
         	// Replace with QualificationTypeID obtained from "qualTestPost.java"
-        	String ID = "2BTXULRGNTBJ4CMZRS6PAN62KJHS6C";
-        	
+        	//String ID = "2BTXULRGNTBJ4CMZRS6PAN62KJHS6C";
+        	String ID = "2UTSPW1INMHGZG45XA1BDBFMFGS4HI";
+                
         	// Only users with a score of 25 or greater on the qualification test may complete the HIT
         	qualRec.setQualificationTypeId(ID);
         	qualRec.setComparator(Comparator.GreaterThan);

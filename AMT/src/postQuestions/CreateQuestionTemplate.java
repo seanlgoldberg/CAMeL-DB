@@ -164,6 +164,7 @@ public class CreateQuestionTemplate {
 		CSVReader reader = new CSVReader(new FileReader(inputCSVFile));
 	
 		int counter=0;
+                int counter2 = 0;
 		
 		while((tokenize=reader.readNext())!=null){
 			//positionToken.addElement(tokenize[1]);
@@ -171,12 +172,16 @@ public class CreateQuestionTemplate {
 			//citationText.addElement(tokenize[4]);
 			
                         //Using schema of (CitationID,Position(in characters), ClusterID, TruthLabel, TokenString, CitationString)
-                        if (!clusterID.contains(tokenize[2])) {
-                            citationID.addElement(tokenize[0]);
-                            positionToken.addElement(tokenize[1]);
-                            citationText.addElement(tokenize[5]);
-                            clusterID.addElement(tokenize[2]);
+                        System.out.println(tokenize[3]);
+                        System.out.println(tokenize[6]);
+                        if (!clusterID.contains(tokenize[3])) {
+                            citationID.addElement(tokenize[1]);
+                            positionToken.addElement(tokenize[2]);
+                            citationText.addElement(tokenize[6]);
+                            clusterID.addElement(tokenize[3]);
                             counter++;
+                            counter2++;
+                            System.out.println(tokenize[3]);
                         }
 			
 			if(counter==noOfQuesPerHit){
@@ -188,7 +193,7 @@ public class CreateQuestionTemplate {
 			}
 			
 		}
-		
+		System.out.println("Counter: " + counter2);
 		if(counter<noOfQuesPerHit)
 			generateQuestion(citationID, citationText, positionToken, index++,outputCSVFile,questionFileDir);
 		

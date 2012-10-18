@@ -21,7 +21,7 @@ public class AMTWorkflow {
 	public static final String postedCitationFileName=CURRENT_RESOURCE_DIRECTORY+"posted.txt";
         public static final String XML_DIRECTORY = "QuestionXML/";
 	
-	private static int NUM_QUESTIONS = 50;
+	private static int NUM_QUESTIONS = 140;
 	private static String delimiter = "***********************************";
 	/**
 	 * @param args inputCSV outputCSV
