@@ -2,11 +2,20 @@
 //header("Content-disposition: attachment; filename=highest_entropies.csv");
 
 //$pattern = "t 0,l 0,t-1,t+1";
-//$pattern = "t 0,l 0,l-1,l+1";
-$pattern = "E 0,L 0,L-1,L+1";
+$pattern = "t 0,l 0,l-1,l+1";
+//$pattern = "E 0,L 0,L-1,L+1";
 //$pattern = "t 0,l 0,t-1,l-1,t+1,l+1";
 //$pattern = "t 0,l 0";
-$result = doQuery("SELECT token_string_id, token_start, ts_string, tl_entropy, tl_label, citation_id, citation_text, token_gold_standard FROM tokens JOIN token_labelings ON token_current_labeling=tl_id JOIN token_strings ON ts_id=token_string_id JOIN citations ON token_citation_id=citation_id"/*ORDER BY token_citation_id, token_start"*/);
+
+$result = doQuery("SELECT ca_id FROM cluster_algorithms WHERE ca_pattern='$pattern'");
+if ($row = mysql_fetch_assoc($result)) {
+	$patternId = $row['ca_id'];
+} else {
+	doQuery("INSERT INTO cluster_algorithms (ca_pattern) VALUES ('$pattern')");
+	$patternId = mysql_insert_id();
+}
+
+$result = doQuery("SELECT token_id, token_start, ts_string, tl_entropy, tl_label, citation_id, citation_text, token_gold_standard FROM tokens JOIN token_labelings ON token_current_labeling=tl_id JOIN token_strings ON ts_id=token_string_id JOIN citations ON token_citation_id=citation_id"/*ORDER BY token_citation_id, token_start"*/);
 
 $lastCitation = 0;
 $lastCitationText = 0;
@@ -16,6 +25,7 @@ $highestEntropyEntityIndex = -1;
 $highestEntropyStart = 0;
 $highestEntropyCriteria = array();
 $highestEntropyGoldStandard = -1;
+$highestEntropyTokenId = -1;
 
 $tokenClassifierMapping = array();
 
@@ -35,14 +45,17 @@ $entityIndex = 0;
 
 $errors = 0;
 
+$tokenHisto = array();
+
 $labelMapping = array(0=>'Title', 1=>'Author', 2=>'Conference', 3=>'ISBN', 4=>'Publisher', 5=>'Series', 6=>'Proceedings', 7=>'Year');
 $colorMapping = array(0=>'red', 1=>'blue', 2=>'green', 3=>'grey', 4=>'orange', 5=>'violet', 6=>'pink', 7=>'maroon');
+print "<H2>$pattern</H2>";
 print "<B>Color Map</B><BR>";
 foreach ($colorMapping as $key=>$color) {
 	print "{$labelMapping[$key]} --&gt; <font color='$color'>$color</font><BR>";
 }
 while ($row = mysql_fetch_assoc($result)) {
-	$tokenId = $row['token_string_id'];
+	$tokenId = $row['token_id'];
 	$tokenString = $row['ts_string'];
 	$citationId = $row['citation_id'];
 	$citationText = $row['citation_text'];
@@ -53,6 +66,13 @@ while ($row = mysql_fetch_assoc($result)) {
 	
 	if ($lastCitation != $citationId) {
 		if ($lastCitation != 0) {
+			if (isset($tokenHisto[$tokens[$highestEntropyTokenIndex]])) {
+				$tokenHisto[$tokens[$highestEntropyTokenIndex]]++;
+			} else {
+				$tokenHisto[$tokens[$highestEntropyTokenIndex]] = 1;
+			}
+			
+			
 			$entities[] = trim($currentEntity);
 			$entityLabels[] = $currentEntityLabel;
 			$entityIndex++;
@@ -63,7 +83,8 @@ while ($row = mysql_fetch_assoc($result)) {
 			for ($i = 0; $i < count($entities); $i++) {
 				$citationText .= "<font color='{$colorMapping[$entityLabels[$i]]}'>";
 				if ($i == $highestEntropyEntityIndex) {
-					$citationText .= "<B>{$entities[$i]}</B>";
+					$entityText = str_replace(" ".$tokens[$highestEntropyTokenIndex]." ", " *{$tokens[$highestEntropyTokenIndex]}* ", $entities[$i]);
+					$citationText .= "<B>$entityText</B>";
 				} else {
 					$citationText .= $entities[$i];
 				}
@@ -121,13 +142,8 @@ while ($row = mysql_fetch_assoc($result)) {
 				$targetArray['count']++;
 				$targetArray['averageEntropy'] = ($targetArray['averageEntropy'] * ($targetArray['count'] - 1) + $highestEntropy) / $targetArray['count'];
 				$targetArray['citations'][] = $citationText;
-				if ($highestEntropy > $targetArray['highestEntropy']) {
-					$targetArray['highestEntropy'] = $highestEntropy;
-					$targetArray['highestEntropyIndex'] = $tokenId;
-					doQuery("UPDATE citations SET citation_highest_entropy_token=$tokenId WHERE citation_id=$citationId");
-				}
-				
-				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $citationId)");
+						
+				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $lastCitation)");
 				doQuery("UPDATE clusters SET cluster_entropy={$targetArray['averageEntropy']} WHERE cluster_id={$targetArray['clusterId']}");
 				if ($targetArray['goldStandard'] != $highestEntropyGoldStandard) {
 					print "<P>Error - this citation has gold standard of <B>{$labelMapping[$highestEntropyGoldStandard]}</B>, whereas the first in the sequence had <B>{$labelMapping[$targetArray['goldStandard']]}</B><BR>This citation: $citationText<BR>Original in series: {$targetArray['citations'][0]}</P>";
@@ -141,14 +157,13 @@ while ($row = mysql_fetch_assoc($result)) {
 				$targetArray['citations'] = array($citationText);
 				$targetArray['goldStandard'] = $highestEntropyGoldStandard;
 				$targetArray['highestEntropy'] = $highestEntropy;
-				$targetArray['highestEntropyIndex'] = $tokenId;
 				
-				doQuery("INSERT INTO clusters (cluster_entropy, cluster_algorithm) VALUES ({$targetArray['averageEntropy']}, 1)");
+				doQuery("INSERT INTO clusters (cluster_entropy, cluster_algorithm) VALUES ({$targetArray['averageEntropy']}, $patternId)");
 				$targetArray['clusterId'] = mysql_insert_id();
-				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $citationId)");	
+				doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id) VALUES ({$targetArray['clusterId']}, $lastCitation)");	
 				
-				doQuery("UPDATE citations SET citation_highest_entropy_token=$tokenId WHERE citation_id=$citationId");
 			}
+			doQuery("UPDATE citations SET citation_highest_entropy_token=$highestEntropyTokenId WHERE citation_id=$lastCitation");
 			
 			if (!$skip) {
 				$citationText = addSlashes($citationText);
@@ -188,6 +203,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		$highestEntropyEntityIndex = $entityIndex;
 		$highestEntropyStart = $tokenStart;
 		$highestEntropyGoldStandard = $goldStandard;
+		$highestEntropyTokenId = $tokenId;
 	} 
 	$lastCitation = $citationId;
 	$lastCitationText = $citationText;
@@ -201,12 +217,16 @@ function cmp($a, $b)
 	}
 	return ($a['averageEntropy'] > $b['averageEntropy']) ? -1 : 1;
 }
-/*usort($tokenClassifierMapping, "cmp");
+usort($tokenClassifierMapping, "cmp");
 
 print "<HTML><BODY>";
 print "Retained: $retained Skipped: $skipped Errors: $errors<P>";
+print "<P>Tokens:";
+asort($tokenHisto, SORT_DESC);
+print_r($tokenHisto);
+print "</P>";
 print "<PRE>";
 print_r($tokenClassifierMapping);
 print "</PRE></BODY></HTML>";
-*/
+
 ?>

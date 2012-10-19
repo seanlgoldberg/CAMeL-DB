@@ -4,8 +4,8 @@ if ($_FILES["crfFile"]["error"] > 0) {
 } else {
 	$fp = fopen($_FILES["crfFile"]["tmp_name"], 'r');
 	$i = 0;
-	while (($data = fgetcsv($fp, 1000, ',')) !== FALSE) {
-		if ($data[2] == '') {
+	while (($data = fgetcsv($fp, 5000, ',')) !== FALSE) {
+		if ($data[2] == '' || count($data) < 14) {
 			continue;
 		}
 		
