@@ -16,19 +16,17 @@
 
 package postQuestions;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+
+import com.amazonaws.mturk.requester.QualificationType;
+import com.amazonaws.mturk.requester.QualificationTypeStatus;
 import com.amazonaws.mturk.service.axis.RequesterService;
-
-
+import com.amazonaws.mturk.service.axis.RequesterServiceRaw;
 import com.amazonaws.mturk.service.exception.ServiceException;
 import com.amazonaws.mturk.util.PropertiesClientConfig;
-import com.amazonaws.mturk.requester.*;
-import com.amazonaws.mturk.service.axis.*;
-import com.amazonaws.mturk.addon.*;
-
-import java.io.*;
-import java.util.Scanner;
-import java.lang.*;
-
 /**
  * The MTurk Hello World sample application creates a simple HIT via the Mechanical Turk 
  * Java SDK. mturk.properties must be found in the current file path.
@@ -38,7 +36,7 @@ public class qualTestPost {
   private int NUM_QUESTIONS = 50;	
 	
   private RequesterService service;
-  private RequesterServiceRaw serviceRaw;
+  
 
   // Defining the attributes of the HIT to be created
   //private String title = "Bibliographic Labeling";
@@ -48,8 +46,6 @@ public class qualTestPost {
   //private double reward = 0.10;
 
   
-  //Defining the attributes of the Pre-Qualification
-  private String qualTitle = "Answer a Pre-Qualification Question";
   private String qualDescription = "This is a pre-qualification question.";
   
   /**
@@ -57,7 +53,7 @@ public class qualTestPost {
    * 
    */
   public qualTestPost() {
-    service = new RequesterService(new PropertiesClientConfig("../mturk.properties"));
+    service = new RequesterService(new PropertiesClientConfig(AMTWorkflow.MTURK_CONFIG_FILE));
   }
 
   /**

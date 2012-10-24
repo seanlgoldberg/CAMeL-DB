@@ -52,6 +52,9 @@ public class Segment {
 	FileWriter f;
         FileWriter f2;
         FileWriter f3;
+        
+        int totalToks;
+        int rightToks;
 
 	public FeatureGenerator featureGenerator() {
 		return featureGen;
@@ -61,10 +64,10 @@ public class Segment {
 		if (argv.length < 3) {
 			System.out
 					.println("Usage: java Tagger train|test|calc -f <conf-file>");
-			//return;
-                        argv[0] = "test";
-                        argv[1] = "-f";
-                        argv[2] = "/home/sean/EclipseWorkspace2/AMT/samples/us50.conf";                         
+			return;
+                        //argv[0] = "test";
+                        //argv[1] = "-f";
+                        //argv[2] = "/home/sean/CAMeL-DB/AMT/samples/us50.conf";                         
 		}
 		Segment segment = new Segment();
                 segment.parseConf(argv);
@@ -231,7 +234,9 @@ public class Segment {
 	public int[] segment(TestRecord testRecord, int[] groupedToks,
 			String collect[]) {
 		for (int i = 0; i < testRecord.length(); i++)
-			testRecord.seq[i] = AlphaNumericPreprocessor
+			
+                    //Apply pre-processing to text
+                    testRecord.seq[i] = AlphaNumericPreprocessor
 					.preprocess(testRecord.seq[i]);
 		crfModel.apply(testRecord);
 		featureGen.mapStatesToLabels(testRecord);
@@ -251,13 +256,37 @@ public class Segment {
 		}
 		return path;
 	}
-
-	public int[] segment(TestRecord testRecord, int[] groupedToks,
+        
+        public int[] segment(TestRecord testRecord, int[] groupedToks,
 			String collect[], int pos, int label, int labelLeft, int labelRight) {
 		for (int i = 0; i < testRecord.length(); i++)
 			testRecord.seq[i] = AlphaNumericPreprocessor
 					.preprocess(testRecord.seq[i]);
 		crfModel.apply(testRecord, pos, label, labelLeft, labelRight);
+		featureGen.mapStatesToLabels(testRecord);
+		int path[] = testRecord.path;
+		for (int i = 0; i < nlabels; i++)
+			collect[i] = null;
+		for (int i = 0; i < testRecord.length(); i++) {
+			// System.out.println(testRecord.seq[i] + " " + path[i]);
+			int snew = path[i];
+			if (snew >= 0) {
+				if (collect[snew] == null) {
+					collect[snew] = testRecord.seq[i];
+				} else {
+					collect[snew] = collect[snew] + " " + testRecord.seq[i];
+				}
+			}
+		}
+		return path;
+	}
+
+	public int[] segment(TestRecord testRecord, int[] groupedToks,
+			String collect[], int pos, int label) {
+		for (int i = 0; i < testRecord.length(); i++)
+			testRecord.seq[i] = AlphaNumericPreprocessor
+					.preprocess(testRecord.seq[i]);
+		crfModel.apply(testRecord, pos, label);
 		featureGen.mapStatesToLabels(testRecord);
 		int path[] = testRecord.path;
 		for (int i = 0; i < nlabels; i++)
@@ -387,77 +416,7 @@ public class Segment {
             }
         }
 
-	class CRFoutput {
-		int tokenID[];
-                int citationID;
-                //String rawLine;
-		String seqs[];
-                int token[];
-                int trueLabels[];
-                Double totalMarginal[][];
-                double entropy[];
-		//int numNodes;
-		//int maxEntropyNode;
-		//double maxEntropy;
-		//double beforeClampingScore;
-		//double afterClampingScore;
-		//double maxNum;
-                int autoLabels[];
-
-		CRFoutput(int tokenID[], int citationID, String seqs[], int token[], int trueLabels[], Double totalMarginal[][]) {
-			//this.rawLine = rawLine;
-			//seq = new String[sequence.length];
-			//seq = sequence;
-			//this.numNodes = numNodes;
-			//this.maxEntropyNode = maxEntropyNode;
-			//this.beforeClampingScore = beforeClampingScore;
-			//this.afterClampingScore = afterClampingScore;
-			//this.maxEntropy = maxEntropy;
-			//this.maxNum = maxNum;
-                        this.tokenID = tokenID;
-                        this.citationID = citationID;
-                        this.seqs = seqs;
-                        this.token = token;
-                        this.trueLabels = trueLabels;
-                        this.totalMarginal = totalMarginal;
-                }
-                
-                CRFoutput() {}
-                
-                public void setCitationID(int citationID) {
-                    this.citationID = citationID;
-                }
-                
-                public void setSeqs(String seqs[]) {
-                    this.seqs = new String[seqs.length];
-                    for (int ii=0; ii<seqs.length; ii++) {
-                        this.seqs[ii] = seqs[ii];
-                    }
-                }
-                
-                public void setToks(int token[]) {
-                    this.token = new int[token.length];
-                    for (int ii=0; ii<token.length; ii++) {
-                        this.token[ii] = token[ii];
-                    }
-                }
-                
-                public void setTrueLabels(int trueLabels[]) {
-                    this.trueLabels = trueLabels;
-                }
-                
-                public void setTotalMarginal(Double totalMarginal[][]) {
-                    this.totalMarginal = totalMarginal;
-                }
-                
-                public void setEntropy(double entropy[]) {
-                    this.entropy = entropy;
-                }
-                
-                public void setAutoLabels(int autoLabels[]) {
-                        this.autoLabels = autoLabels;
-                }
-	}
+	
 
 	//List<CRFoutput> CRFoutput;
 
@@ -466,15 +425,12 @@ public class Segment {
 	///////////////////////////////////////////
 	
 	public void doTestWithClamping() throws Exception {
-		TreeMap<Integer, Integer> NodeCountMap = new TreeMap<Integer, Integer>();
+		totalToks = 0;
+                rightToks = 0;
+            
+                //TreeMap<Integer, Integer> NodeCountMap = new TreeMap<Integer, Integer>();
 		
-		//Set up Reader stream for reading in raw test data
-		BufferedReader reader = new BufferedReader(new FileReader(baseDir
-				+ "/data/" + inName + "/" + inName + ".test.raw"));
-		
-		String rawline = null;
-		
-		//Initialize List of CRFoutput a to be sorted
+		//Initialize List of CRFoutput to be sorted
 		//CRFoutput = new ArrayList<CRFoutput>();
 		CRFoutput CRFout = new CRFoutput();
 		
@@ -497,31 +453,48 @@ public class Segment {
 				+ "/data/" + inName + "/" + inName + ".test", delimit,
 				tagDelimit, impDelimit, labelMap);
 
-		String collect[] = new String[nlabels];
+		//testRecord holds String arrays of tagged data organized by tags 
+                String collect[] = new String[nlabels];
 		TestRecord testRecord = new TestRecord(collect);
-
-		TestDataWrite tdw1 = new TestDataWrite(baseDir + "/data/" + inName
-				+ "/" + "tempTagged" + ".test", baseDir + "/data/" + inName
-				+ "/" + inName + ".test", delimit, tagDelimit, impDelimit,
-				labelMap);
-		TestDataWrite tdw2;
-		
-		
+                
+                //Create structures for storing information about top clusters
+                String citation;
+                Hashtable<Integer, ArrayList<String>> topClusters = new Hashtable<Integer, ArrayList<String>>();
+                
+                //Read in top clusters to be clamped and add to Hashtable
+                FileInputStream fInStream = new FileInputStream(baseDir + "/data/top_clusters.csv");                        
+                DataInputStream in = new DataInputStream(fInStream);
+		BufferedReader br = new BufferedReader(new InputStreamReader(in));               
+                while ((citation = br.readLine()) != null) {
+                    StringTokenizer strTok = new StringTokenizer(citation,",");
+                    //if (strTok.countTokens()!=7){
+			//throw new Exception ("Expected 7 tokens in CSV line, got "+ strTok.countTokens());
+                    //}
+                    //Relative cluster ID (not needed)
+                    strTok.nextToken();
+                    int citID = Integer.parseInt(strTok.nextToken().trim());
+                    ArrayList<String> clusterValues = new ArrayList<String>();
+                    for (int idx=0; idx<4; idx++) {
+                        clusterValues.add(idx,strTok.nextToken().replaceAll("\"",""));
+                    }
+                    
+                    topClusters.put(citID, clusterValues);  
+                }
+                
 		int instance = 1;
 		
 		//Loop takes in tagged data record by record
 		// seq[] is an array of tokens
                 for (String seq[] = testData.nextRecord(); seq != null && seq.length != 0; seq = testData
 				.nextRecord()) {
-			//Create tokenized record object
+			
+                        //Create tokenized record object
 			testRecord.init(seq);
                         
+                        //Set values for output classes, CRFout and CitationTable
                         CRFout.setCitationID(instance);
-                        CitationTable citTable = new CitationTable(instance, testData.line);
-
                         CRFout.setSeqs(seq);
-                        
-
+                        CitationTable citTable = new CitationTable(instance, testData.line);
 			
 			if (options.getInt("debugLvl") > 1) {
 				//Util.printDbg("Invoking segment on " + seq);
@@ -537,6 +510,7 @@ public class Segment {
 					+ ".test", delimit, tagDelimit, impDelimit, labelMap);
 
 			/* Without Clamping */
+                        //Use raw record and CRF model to populate collect array with path labels
 			int path[] = segment(testRecord, testData.groupedTokens(), collect);
 			/////////////////////
 
@@ -547,8 +521,9 @@ public class Segment {
 			
 			tdw.writeRecord(path, testRecord.length(), instance);
 			tdw.close();
-
-			tdw1 = new TestDataWrite(baseDir + "/data/" + inName + "/"
+                        
+                        //Sunny code: outputting tokens?
+			TestDataWrite tdw1 = new TestDataWrite(baseDir + "/data/" + inName + "/"
 					+ "tempTagged" + ".test", baseDir + "/data/" + inName + "/"
 					+ inName + ".test", delimit, tagDelimit, impDelimit,
 					labelMap);
@@ -556,6 +531,7 @@ public class Segment {
 			tdw1.writeRecord(token, token.length, instance);
 			tdw1.close();
                         
+                        //Computing and determining all marginals
 			Marginals marginal = new Marginals(crfModel, testRecord, null);
 			marginal.compute();
 			marginal.printBetaVector();
@@ -565,6 +541,7 @@ public class Segment {
 			marginal.calculateEntropy(method);
 			//System.out.println("\n");
 			
+                        //Compute entropy
                         Double[][] totalMarginal = new Double[token.length][nlabels];
                         double[] ent = new double[token.length];
                         for (int i=0; i<token.length; i++) {
@@ -574,6 +551,7 @@ public class Segment {
                             ent[i] = marginal.getEntropy(i);
                         }
                         
+                        //Set Marginal and Entropy values
                         CRFout.setTotalMarginal(totalMarginal);
                         CRFout.setEntropy(ent);
                       
@@ -581,7 +559,6 @@ public class Segment {
 			//NodeCountMap.put(instance, marginal.numHighEntropyNodes(0.2));
 			//////////////
 			
-			rawline = reader.readLine();
 			
 			//////////////
 			//double THRESH = 0.2;
@@ -625,7 +602,11 @@ public class Segment {
                                 int tokenAuto[] = allLabels(trAuto);
                                 CRFout.setTrueLabels(tokenMan);
                                 CRFout.setAutoLabels(tokenAuto);
-                                
+                                for (int idx2=0; idx2<tokenMan.length; idx2++) {
+                                    totalToks++;
+                                    if (tokenMan[idx2]==tokenAuto[idx2])
+                                        rightToks++;
+                                }
                             //}
                         }
                         
@@ -634,8 +615,33 @@ public class Segment {
 /////
 /////                              CLAMPING CODE
 /////
+///// Clamping Plan: 
+////       1. Read in list of selected citations and tokens to be clamped
+////       2. Only clamp if citationID is in list
 ///////////////////////////////////////////////////////////////////////////////////////////////                        
-//			for (int i = 0; i < token.length; i++) {
+                        
+                        
+                        if (topClusters.containsKey(citTable.citationID)) {
+                            ArrayList<String> citValues = topClusters.get(citTable.citationID);
+                            
+                            //FIGURE OUT TOKEN POSITION FROM CHARACTER POSITION HERE
+                            int charPos = Integer.parseInt(citValues.get(0).trim());
+                            int charLength = 0;
+                            int pos = 0;
+                            while (charLength < charPos) {
+                                charLength += CRFout.seqs[pos].length() + 1;
+                                pos++;
+                            }
+
+                            //path = segment(testRecord, testData.groupedTokens(), collect,
+			//					pos, 
+                         //                                       Integer.parseInt(citValues.get(2).trim()));
+                        FileWriter testf = new FileWriter(baseDir + "/data/testf.txt", true);
+                        
+                        testf.write(citValues.get(3) + " - " + CRFout.seqs[pos] + "\n");
+                        testf.close();
+                        }
+                        //			for (int i = 0; i < token.length; i++) {
 //				if (i == marginal.getMaxEntropyNode()) {
 //					tdw1 = new TestDataWrite(baseDir + "/data/" + inName + "/"
 //						+ "tempTagged" + ".test", baseDir + "/data/" + inName
@@ -700,10 +706,11 @@ public class Segment {
 
 			instance++;
                         
-                          f2.write(citTable.citationID + ", " + citTable.rawText + "\n");
+                          f2.write(citTable.citationID + ", \"" + citTable.rawText + "\"\n");
                         for (int line=0; line<CRFout.seqs.length; line++) {
                             f.write(CRFout.citationID + ", " 
-                                + citTable.rawText.indexOf(CRFout.seqs[line]) + ", \""
+                                //+ citTable.rawText.indexOf(CRFout.seqs[line]) + ", \""
+                                + line + ", \""
                                 + CRFout.seqs[line] + "\", " 
                                 + Integer.toString(CRFout.trueLabels[line]) + ", "
                                 + Integer.toString(CRFout.autoLabels[line]) + ", "
@@ -788,6 +795,10 @@ public class Segment {
 		f.close();
                 f2.close();
                 f3.close();
+                double acc = (double)rightToks/(double)totalToks;
+                System.out.println("Correct tokens: " + rightToks);
+                System.out.println("Total tokens: " + totalToks);
+                System.out.println("Accuracy: " + acc);
 	}
 
 	
@@ -1177,3 +1188,75 @@ public class Segment {
 
 	}
 };
+
+class CRFoutput {
+		int tokenID[];
+                int citationID;
+                //String rawLine;
+		String seqs[];
+                int token[];
+                int trueLabels[];
+                Double totalMarginal[][];
+                double entropy[];
+		//int numNodes;
+		//int maxEntropyNode;
+		//double maxEntropy;
+		//double beforeClampingScore;
+		//double afterClampingScore;
+		//double maxNum;
+                int autoLabels[];
+
+		CRFoutput(int tokenID[], int citationID, String seqs[], int token[], int trueLabels[], Double totalMarginal[][]) {
+			//this.rawLine = rawLine;
+			//seq = new String[sequence.length];
+			//seq = sequence;
+			//this.numNodes = numNodes;
+			//this.maxEntropyNode = maxEntropyNode;
+			//this.beforeClampingScore = beforeClampingScore;
+			//this.afterClampingScore = afterClampingScore;
+			//this.maxEntropy = maxEntropy;
+			//this.maxNum = maxNum;
+                        this.tokenID = tokenID;
+                        this.citationID = citationID;
+                        this.seqs = seqs;
+                        this.token = token;
+                        this.trueLabels = trueLabels;
+                        this.totalMarginal = totalMarginal;
+                }
+                
+                CRFoutput() {}
+                
+                public void setCitationID(int citationID) {
+                    this.citationID = citationID;
+                }
+                
+                public void setSeqs(String seqs[]) {
+                    this.seqs = new String[seqs.length];
+                    for (int ii=0; ii<seqs.length; ii++) {
+                        this.seqs[ii] = seqs[ii];
+                    }
+                }
+                
+                public void setToks(int token[]) {
+                    this.token = new int[token.length];
+                    for (int ii=0; ii<token.length; ii++) {
+                        this.token[ii] = token[ii];
+                    }
+                }
+                
+                public void setTrueLabels(int trueLabels[]) {
+                    this.trueLabels = trueLabels;
+                }
+                
+                public void setTotalMarginal(Double totalMarginal[][]) {
+                    this.totalMarginal = totalMarginal;
+                }
+                
+                public void setEntropy(double entropy[]) {
+                    this.entropy = entropy;
+                }
+                
+                public void setAutoLabels(int autoLabels[]) {
+                        this.autoLabels = autoLabels;
+                }
+	}

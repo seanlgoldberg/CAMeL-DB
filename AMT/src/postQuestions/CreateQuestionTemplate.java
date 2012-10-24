@@ -156,6 +156,7 @@ public class CreateQuestionTemplate {
 		Vector<String> citationText=new Vector<String>();
 		Vector<String> citationID=new Vector<String>();
 		Vector<String> positionToken=new Vector<String>();
+                Vector<String> clusterID = new Vector<String>();
 		int index=1;
 		
 		System.out.println("Reading from current CSV file "+inputCSVFile);
@@ -163,12 +164,25 @@ public class CreateQuestionTemplate {
 		CSVReader reader = new CSVReader(new FileReader(inputCSVFile));
 	
 		int counter=0;
+                int counter2 = 0;
 		
 		while((tokenize=reader.readNext())!=null){
-			positionToken.addElement(tokenize[1]);
-			citationID.addElement(tokenize[3]);
-			citationText.addElement(tokenize[4]);
-			counter++;
+			//positionToken.addElement(tokenize[1]);
+			//citationID.addElement(tokenize[3]);
+			//citationText.addElement(tokenize[4]);
+			
+                        //Using schema of (CitationID,Position(in characters), ClusterID, TruthLabel, TokenString, CitationString)
+                        System.out.println(tokenize[3]);
+                        System.out.println(tokenize[6]);
+                        if (!clusterID.contains(tokenize[3])) {
+                            citationID.addElement(tokenize[1]);
+                            positionToken.addElement(tokenize[2]);
+                            citationText.addElement(tokenize[6]);
+                            clusterID.addElement(tokenize[3]);
+                            counter++;
+                            counter2++;
+                            System.out.println(tokenize[3]);
+                        }
 			
 			if(counter==noOfQuesPerHit){
 				generateQuestion(citationID, citationText, positionToken, index++,outputCSVFile,questionFileDir);
@@ -179,7 +193,7 @@ public class CreateQuestionTemplate {
 			}
 			
 		}
-		
+		System.out.println("Counter: " + counter2);
 		if(counter<noOfQuesPerHit)
 			generateQuestion(citationID, citationText, positionToken, index++,outputCSVFile,questionFileDir);
 		
@@ -191,8 +205,9 @@ public class CreateQuestionTemplate {
 	public static void main(String[] args) throws Exception {
 		
 		CreateQuestionTemplate cqt=new CreateQuestionTemplate();
-		String inputCSVFile="highest_entropies.csv";
-		String outputCSVFile="outputCSV.csv";
+		//String inputCSVFile="highest_entropies.csv";
+		String inputCSVFile = "top_clusters.csv";
+                String outputCSVFile="outputCSV.csv";
 		String questionFileDir="QuestionXML";
 		File dir=new File(questionFileDir);
 		questionFileDir=dir.getAbsolutePath();

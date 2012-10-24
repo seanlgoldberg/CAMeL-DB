@@ -1,5 +1,6 @@
 package postQuestions;
 
+
 /**
  * @author abhiramj
  * This class stores mapping of citation to HIT 
@@ -54,11 +55,7 @@ public String getCitationID() {
 	}
 	
 	public String convertToOutSchema(){
-		return citationID+","+position+","+HITID+"\n";
+		return citationID+","+position+","+HITID+System.getProperty("line.separator");
 	}
-
-
-
-
 
 }
