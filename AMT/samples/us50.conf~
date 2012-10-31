@@ -1,0 +1,7 @@
+basedir=/home/sean/CAMeL-DB/AMT/samples
+numlabels=8
+inname=dblp
+outdir=dblp
+delimit=,	/ -():.;'?\#`&"_
+impdelimit=,
+debugLvl=2
