@@ -45,7 +45,7 @@ public class Viterbi implements Serializable {
 			solns = new Soln[beamsize];
 			for (int i = 0; i < solns.length; i++)
 				solns[i] = newSoln(id, pos);
-			System.out.println(beamsize + " " + solns.length);
+			//System.out.println(beamsize + " " + solns.length);
 		}
 
 		protected Soln newSoln(int label, int pos) {
@@ -92,7 +92,7 @@ public class Viterbi implements Serializable {
 		protected int findInsert(int insertPos, float score, Soln prev) {
 
 			for (; insertPos < size(); insertPos++) {
-				System.out.print(score + " " + get(insertPos).score + " | ");
+				////System.out.print(score + " " + get(insertPos).score + " | ");
 				if (score >= get(insertPos).score) {
 					insert(insertPos, score, prev);
 					insertPos++;
@@ -122,7 +122,7 @@ public class Viterbi implements Serializable {
 			for (int i = 0; i < size(); i++)
 				str += ("[" + i + " " + solns[i].score + " i:" + solns[i].pos
 						+ " y:" + solns[i].label + "]");
-			System.out.println(str);
+			////System.out.println(str);
 		}
 	};
 
@@ -400,11 +400,11 @@ public class Viterbi implements Serializable {
 		double corrScore = fillArray(dataSeq, lambda, pos, label);
 		System.out.println("Winning label\n");
 		for (int i = 0; i < winningLabel.length; i++) {
-			for (int j = 0; j < dataSeq.length(); j++)
-				System.out.print(winningLabel[i][j].solns[0].score + " "
-						+ winningLabel[i][j].solns[0].prevLabel() + " "
-						+ winningLabel[i][j].solns[0].label + " | ");
-			System.out.println("\n");
+			////for (int j = 0; j < dataSeq.length(); j++)
+				////System.out.print(winningLabel[i][j].solns[0].score + " "
+						////+ winningLabel[i][j].solns[0].prevLabel() + " "
+						////+ winningLabel[i][j].solns[0].label + " | ");
+			////System.out.println("\n");
 		}
 		finalSoln.clear();
 		finalSoln.valid = true;
@@ -437,9 +437,9 @@ public class Viterbi implements Serializable {
 		System.out.println("Winning label\n");
 		for (int i = 0; i < winningLabel.length; i++) {
 			for (int j = 0; j < dataSeq.length(); j++)
-				System.out.print(winningLabel[i][j].solns[0].score + " "
-						+ winningLabel[i][j].solns[0].prevLabel() + " "
-						+ winningLabel[i][j].solns[0].label + " | ");
+				////System.out.print(winningLabel[i][j].solns[0].score + " "
+						////+ winningLabel[i][j].solns[0].prevLabel() + " "
+						////+ winningLabel[i][j].solns[0].label + " | ");
 			System.out.println("\n");
 		}
 		finalSoln.clear();
@@ -473,9 +473,9 @@ public class Viterbi implements Serializable {
 		System.out.println("Winning label\n");
 		for (int i = 0; i < winningLabel.length; i++) {
 			for (int j = 0; j < dataSeq.length(); j++)
-				System.out.print(winningLabel[i][j].solns[0].score + " "
-						+ winningLabel[i][j].solns[0].prevLabel() + " "
-						+ winningLabel[i][j].solns[0].label + " | ");
+				////System.out.print(winningLabel[i][j].solns[0].score + " "
+						////+ winningLabel[i][j].solns[0].prevLabel() + " "
+						////+ winningLabel[i][j].solns[0].label + " | ");
 			System.out.println("\n");
 		}
 		finalSoln.clear();

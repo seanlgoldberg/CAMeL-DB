@@ -235,8 +235,6 @@ public class Segment {
 	public int[] segment(TestRecord testRecord, int[] groupedToks,
 			String collect[]) {
 		for (int i = 0; i < testRecord.length(); i++)
-			
-                    //Apply pre-processing to text
                     testRecord.seq[i] = AlphaNumericPreprocessor
 					.preprocess(testRecord.seq[i]);
 		crfModel.apply(testRecord);
@@ -370,7 +368,7 @@ public class Segment {
 		f = new FileWriter(baseDir + "/CRFoutput.csv", false);
                 f2 = new FileWriter(baseDir + "/citationTable.csv", false);
                 f3 = new FileWriter(baseDir + "/labelTable.csv", false);
-                facc = new FileWriter(baseDir + "/clamped_before_after.csv", false);
+                //facc = new FileWriter(baseDir + "/clamped12.csv", false);
                 doTestWithClamping();
 		//doTest();
 	}
@@ -383,7 +381,7 @@ public class Segment {
 	}
 
 	public void doTest() throws Exception {
-		System.out.println("Here for some reason.");
+		
                 File dir = new File(baseDir + "/out/" + outDir);
 		dir.mkdirs();
 		TestData testData = new TestData(baseDir + "/data/" + inName + "/"
@@ -464,21 +462,23 @@ public class Segment {
                 Hashtable<Integer, ArrayList<String>> topClusters = new Hashtable<Integer, ArrayList<String>>();
                 
                 //Read in top clusters to be clamped and add to Hashtable
-                FileInputStream fInStream = new FileInputStream(baseDir + "/data/top_clusters.csv");                        
+                FileInputStream fInStream = new FileInputStream(baseDir + "/cluster12.csv");                        
                 DataInputStream in = new DataInputStream(fInStream);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));               
+                String algorithm = br.readLine();
                 while ((citation = br.readLine()) != null) {
                     StringTokenizer strTok = new StringTokenizer(citation,",");
                     //if (strTok.countTokens()!=7){
 			//throw new Exception ("Expected 7 tokens in CSV line, got "+ strTok.countTokens());
                     //}
                     //Relative cluster ID (not needed)
-                    strTok.nextToken();
+                    String relClusterID = strTok.nextToken();
                     int citID = Integer.parseInt(strTok.nextToken().trim());
                     ArrayList<String> clusterValues = new ArrayList<String>();
                     for (int idx=0; idx<4; idx++) {
                         clusterValues.add(idx,strTok.nextToken().replaceAll("\"",""));
                     }
+                    clusterValues.add(4,relClusterID);
                     
                     topClusters.put(citID, clusterValues);  
                 }
@@ -596,6 +596,7 @@ public class Segment {
 				+ "/" + inName + ".test", delimit, tagDelimit, impDelimit,
 				labelMap);
                         
+                        //Accuracy Calculation for Clamping
                         for (int idx=0; idx<tdAuto.size(); idx++) {
                             TrainRecord trMan = tdMan.nextRecord();
                             TrainRecord trAuto = tdAuto.nextRecord();
@@ -634,9 +635,36 @@ public class Segment {
                                 charLength += CRFout.seqs[pos].length() + 1;
                                 pos++;
                             }
-
-                            path = segment(testRecord, testData.groupedTokens(), collect,pos, 
-                                    Integer.parseInt(citValues.get(2).trim()));
+                            
+                            //Convert from text to truth label
+                            String lab = citValues.get(2).toLowerCase().trim();
+                            int label = -1;
+                            if (lab.equals("title")) {
+                                label = 0;
+                            }
+                            else if (lab.equals("author")) {
+                                label = 1;
+                            }
+                            else if (lab.equals("conference")) {
+                                label = 2;
+                            }
+                            else if (lab.equals("isbn")) {
+                                label = 3;
+                            }
+                            else if (lab.equals("publisher")) {
+                                label = 4;
+                            }
+                            else if (lab.equals("series")) {
+                                label = 5;
+                            }
+                            else if (lab.equals("proceedings")) {
+                                label = 6;
+                            }
+                            else if (lab.equals("year")) {
+                                label = 7;
+                            }
+                            
+                            path = segment(testRecord, testData.groupedTokens(), collect, pos, label);
                         //FileWriter testf = new FileWriter(baseDir + "/data/testf.txt", true);
                         
                         //testf.write(citValues.get(3) + " - " + CRFout.seqs[pos] + "\n");
@@ -734,7 +762,7 @@ public class Segment {
                                     + CRFout.token[line] + "\n");
                         }
                         
-                        int clamped;
+                        int clamped = -1;
                         if (topClusters.containsKey(citTable.citationID)) {
                             clamped = 1;
                         }
@@ -742,8 +770,12 @@ public class Segment {
                             clamped = 0;
                         }
                         
-                        facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", " + clamped + "\n");
+                        ArrayList<String> citValue = topClusters.get(citTable.citationID);
                         
+                        if (citValue.get(4)!=null) {
+//                            facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", "
+//                                + citValue.get(4) + ", " + citValue.get(1) + "\n");
+                        }
                         //if (marginal.getMaxEntropyNode() < token.length){
 				//f.write(Double.toString(f1[marginal.getMaxEntropyNode()]) + " ");
 			//}
@@ -806,6 +838,7 @@ public class Segment {
 		f.close();
                 f2.close();
                 f3.close();
+//                facc.close();
                 double acc = (double)rightToks/(double)totalToks;
                 System.out.println("Correct tokens: " + rightToks);
                 System.out.println("Total tokens: " + totalToks);
@@ -926,8 +959,9 @@ public class Segment {
 		int totalMarkedPos[] = new int[nlabels + 1];
 		int totalPos[] = new int[nlabels + 1];
 		int confuseMatrix[][] = new int[nlabels][nlabels];
-		boolean printDetails = (options.getInt("debugLvl") > 0);
-		if (tdAuto.size() != tdMan.size()) {
+		//boolean printDetails = (options.getInt("debugLvl") > 0);
+		boolean printDetails = false;
+                if (tdAuto.size() != tdMan.size()) {
 			// Sanity Check
 			System.out.println("Length Mismatch - Raw: " + len + " Auto: "
 					+ tdAuto.size() + " Man: " + tdMan.size());
