@@ -13,7 +13,8 @@ foreach ($iterator as $path) {
 		$parts = array('title'=>'', 'source'=>'', 'author'=>'', 'issue'=>'', 'volume'=>'', 'pages'=>'', 'year'=>'');
 		$indexes = array('title'=>0, 'source'=>0, 'author'=>'', 'issue'=>0, 'volume'=>0, 'year'=>0);
 		$skipCitation = 0;		
-
+		$buffer = '';
+	
 		foreach ($json->recordList as $record) {
 			read($record);			
 		}
@@ -64,11 +65,13 @@ foreach ($iterator as $path) {
 			}*/	
 			
 						
-			fwrite($handle, "\n");	
+			fwrite($handle, "$buffer\n");	
 			//fwrite($handle, "\n{$parts['title']}|0\n{$parts['author']}|1\n{$parts['source']}|2\n{$parts['year']}|3\n{$parts['issue']}|4\n{$parts['volume']}|5\n{$parts['pages']}|6\n");
 			fwrite($rawHandle, "$fakeCitation\n");
 		}
-
+		if ($count == 300000) {
+			break;
+		}
 }
 fclose($handle);
 fclose($rawHandle);
@@ -76,7 +79,7 @@ fclose($rawHandle);
 print "Number of interesting citations: $count";
 
 function read( $array ) {
-	global $citation, $labels, $handle, $fakeCitation, $parts, $latestSurname, $nextOutput, $indexInCitation;
+	global $citation, $labels, $buffer, $handle, $fakeCitation, $parts, $latestSurname, $nextOutput, $indexInCitation;
 	foreach( (array) $array as $key => $value ) {
 		if( is_array( $value ) ) {
 			read( $value );
@@ -84,9 +87,11 @@ function read( $array ) {
 			if ($key === 'citation') {
 				$citation = $value;
 			} elseif ($key === 'title') {
-				$parts['title'] = $value;
-				$fakeCitation .= ' '.$value;
-				fwrite($handle, $value.'|'.$labels[$key]."\n"); 
+				if ($parts['title'] === '') {
+					$parts['title'] = $value;
+					$fakeCitation .= ' '.$value;
+					$buffer .= $value.'|'.$labels[$key]."\n"; 
+				}
 			} elseif ($key === 'x-surname') {
 				$latestSurname = $value;
 			} elseif ($key === 'x-given-names') {
@@ -94,29 +99,38 @@ function read( $array ) {
 					$parts["author"] .= $latestSurname.' '.$value.' ';
 					$fakeCitation .= ' '.$latestSurname.' '.$value;
 					
-					fwrite($handle, $latestSurname.' '.$value.'|'.$labels['author']."\n"); 
+					$buffer .= $latestSurname.' '.$value.'|'.$labels['author']."\n"; 
 				}
 			} elseif ($key === 'source') {
+				if ($parts['source'] === '') {
 				$parts['source'] = $value;
 				$fakeCitation .= ' '.$value;
-				fwrite($handle, $value.'|'.$labels[$key]."\n"); 
+				$buffer .= $value.'|'.$labels[$key]."\n"; 
+				}
 			} elseif ($key === 'issue') {
+				if ($parts['issue'] === '') {
 				$parts['issue'] = $value;
 				$fakeCitation .= ' '.$value;
-				fwrite($handle, $value.'|'.$labels[$key]."\n"); 
+				$buffer .= $value.'|'.$labels[$key]."\n"; 
+				}
 			} elseif ($key === 'volume') {
+				if ($parts['volume'] === '') {
 				$parts['volume'] = $value;
 				$fakeCitation .= ' '.$value;
-				fwrite($handle, $value.'|'.$labels[$key]."\n"); 
+				$buffer .= $value.'|'.$labels[$key]."\n"; 
+				}
 			} elseif ($key === 'pages') {
+				if ($parts['pages'] === '') {
 				$parts['pages'] = $value;
 				$fakeCitation .= ' '.$value;
-				fwrite($handle, $value.'|'.$labels[$key]."\n"); 
+				$buffer .= $value.'|'.$labels[$key]."\n";
+				} 
 			} elseif ($key === 'year') {
+				if ($parts['year'] === '') {
 				$parts['year'] = $value;
 				$fakeCitation .= ' '.$value;
-				fwrite($handle, $value.'|'.$labels[$key]."\n"); 
-			
+				$buffer .= $value.'|'.$labels[$key]."\n"; 
+				}
 			}
 		}
 	}

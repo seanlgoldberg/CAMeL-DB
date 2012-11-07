@@ -12,7 +12,9 @@
 		$i = 0;
 		foreach ($tokenArray AS $token) {
 			$index = stripos($text, $token, $currentPos);
-			doQuery("UPDATE tokens SET token_start=$index WHERE token_id={$tokenIdArray[$i]}");
+			if ($index !== FALSE && isset($tokenIdArray[$i]) && $tokenIdArray[$i]) {
+				doQuery("UPDATE tokens SET token_start=$index WHERE token_id={$tokenIdArray[$i]}");
+			}
 			$currentPos = $index + 1;
 			$i++;
 		}

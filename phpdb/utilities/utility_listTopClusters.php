@@ -1,7 +1,10 @@
 <?php
+
+	require('../utilities.php');
+
 	$labelMapping = array(0=>'Title', 1=>'Author', 2=>'Conference', 3=>'ISBN', 4=>'Publisher', 5=>'Series', 6=>'Proceedings', 7=>'Year');
 	
-	header("Content-disposition: attachment; filename=top_clusters.csv");
+	//header("Content-disposition: attachment; filename=top_clusters.csv");
 	
 	$clusterCount = 1;
 	$dataset = 3;

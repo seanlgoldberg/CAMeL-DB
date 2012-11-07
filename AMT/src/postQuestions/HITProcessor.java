@@ -102,14 +102,14 @@ public class HITProcessor {
 			}
 		
 		
-		try
-		  {
-		  Thread.sleep(timedelay*1000);  
-		 
-		  }catch (InterruptedException ie)
-		  {
-		  System.out.println(ie.getMessage());
-		  }
+//		try
+//		  {
+//		  Thread.sleep(timedelay*10000);  
+//		 
+//		  }catch (InterruptedException ie)
+//		  {
+//		  System.out.println(ie.getMessage());
+//		  }
 		
 		}
 		

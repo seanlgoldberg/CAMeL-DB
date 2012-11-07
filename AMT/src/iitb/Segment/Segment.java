@@ -52,6 +52,7 @@ public class Segment {
 	FileWriter f;
         FileWriter f2;
         FileWriter f3;
+        FileWriter facc;
         
         int totalToks;
         int rightToks;
@@ -369,6 +370,7 @@ public class Segment {
 		f = new FileWriter(baseDir + "/CRFoutput.csv", false);
                 f2 = new FileWriter(baseDir + "/citationTable.csv", false);
                 f3 = new FileWriter(baseDir + "/labelTable.csv", false);
+                facc = new FileWriter(baseDir + "/clamped_before_after.csv", false);
                 doTestWithClamping();
 		//doTest();
 	}
@@ -633,13 +635,12 @@ public class Segment {
                                 pos++;
                             }
 
-                            //path = segment(testRecord, testData.groupedTokens(), collect,
-			//					pos, 
-                         //                                       Integer.parseInt(citValues.get(2).trim()));
-                        FileWriter testf = new FileWriter(baseDir + "/data/testf.txt", true);
+                            path = segment(testRecord, testData.groupedTokens(), collect,pos, 
+                                    Integer.parseInt(citValues.get(2).trim()));
+                        //FileWriter testf = new FileWriter(baseDir + "/data/testf.txt", true);
                         
-                        testf.write(citValues.get(3) + " - " + CRFout.seqs[pos] + "\n");
-                        testf.close();
+                        //testf.write(citValues.get(3) + " - " + CRFout.seqs[pos] + "\n");
+                        //testf.close();
                         }
                         //			for (int i = 0; i < token.length; i++) {
 //				if (i == marginal.getMaxEntropyNode()) {
@@ -667,14 +668,14 @@ public class Segment {
 //								i, token[i], token[i-1], token[i+1]);
 //						////////////////////
 //					}
-//					tdw2 = new TestDataWrite(baseDir + "/out/" + outDir + "/"
-//						+ inName + ".test", baseDir + "/data/" + inName + "/"
-//						+ inName + ".test", delimit, tagDelimit, impDelimit,
-//						labelMap);
-//					tdw2.writeRecord(path, testRecord.length(), instance);
-//					tdw2.close();
+              			TestDataWrite tdw2 = new TestDataWrite(baseDir + "/out/" + outDir + "/"
+						+ inName + ".test", baseDir + "/data/" + inName + "/"
+						+ inName + ".test", delimit, tagDelimit, impDelimit,
+						labelMap);
+					tdw2.writeRecord(path, testRecord.length(), instance);
+					tdw2.close();
 //
-//					//f1[i] = calcWith(testRecord);
+					double f1After = calcWith(testRecord);
 //				
 //				
 //				// Prints the accuracy after clamping the maximum entropy node //
@@ -732,6 +733,16 @@ public class Segment {
                                     + "\"" + CRFout.seqs[line] + "\", "
                                     + CRFout.token[line] + "\n");
                         }
+                        
+                        int clamped;
+                        if (topClusters.containsKey(citTable.citationID)) {
+                            clamped = 1;
+                        }
+                        else {
+                            clamped = 0;
+                        }
+                        
+                        facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", " + clamped + "\n");
                         
                         //if (marginal.getMaxEntropyNode() < token.length){
 				//f.write(Double.toString(f1[marginal.getMaxEntropyNode()]) + " ");
