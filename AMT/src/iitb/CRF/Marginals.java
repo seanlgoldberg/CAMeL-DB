@@ -127,7 +127,7 @@ public class Marginals {
 		}
 
 		double thisSeqLogli = 0;
-		System.out.println("\n");
+		//System.out.println("\n");
 		// Mi_YY.assign(0);
 		alpha_temp = new DenseDoubleMatrix1D[2 * dataSeq.length()];
 		for (int i = 0; i < dataSeq.length(); i++)
@@ -249,7 +249,7 @@ public class Marginals {
 		}
 
 		double thisSeqLogli = 0;
-		System.out.println("\n");
+		////System.out.println("\n");
 		// Mi_YY.assign(0);
 		alpha_temp = new DenseDoubleMatrix1D[2 * dataSeq.length()];
 		for (int i = 0; i < dataSeq.length(); i++)
@@ -389,7 +389,7 @@ public class Marginals {
 		}
 
 		double thisSeqLogli = 0;
-		System.out.println("\n");
+		////System.out.println("\n");
 		// Mi_YY.assign(0);
 		alpha_temp = new DenseDoubleMatrix1D[2 * dataSeq.length()];
 		for (int i = 0; i < dataSeq.length(); i++)
@@ -537,7 +537,7 @@ public class Marginals {
 		}
 
 		double thisSeqLogli = 0;
-		System.out.println("\n");
+		////System.out.println("\n");
 		// Mi_YY.assign(0);
 		alpha_temp = new DenseDoubleMatrix1D[2 * dataSeq.length()];
 		for (int i = 0; i < dataSeq.length(); i++)
@@ -632,7 +632,7 @@ public class Marginals {
 						/ Zx;
 				//System.out.print(pr[i][j] + " ");
 			}
-			System.out.print("\n");
+			////System.out.print("\n");
 		}
 	}
 
@@ -664,7 +664,7 @@ public class Marginals {
 					entropy[i] += -margPr[i][j] * Math.log(margPr[i][j]);
 				}
 				else {
-					System.out.println("i: " + i + ", j: " + j);
+					////System.out.println("i: " + i + ", j: " + j);
 					// Neighborhoods Method
 					if (i==0) {
 						//System.out.println("margPr: " + margPr[i][j]);

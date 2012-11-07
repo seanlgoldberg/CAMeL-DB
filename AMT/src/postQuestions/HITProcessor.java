@@ -95,10 +95,10 @@ public class HITProcessor {
 				System.out.println("Getting HIT Results for Result ID :" + hitStatus.x);
 				numAvailable=hitProcessor.getHITAnswer(hitStatus.x);
 				System.out.println("Num available "+ numAvailable + "  hitTracker size :" + hitTracker.size());
-				if (numAvailable==0){
+				//if (numAvailable==0){
 						hitStatus.y=true;
 						hitProcessor.writeHITOutput (hitStatus.x);	
-				}
+				//}
 			}
 		
 		
@@ -141,7 +141,7 @@ public class HITProcessor {
 		}
 		System.out.println("Writing to XML");
 		for (Assignment currAssignment:hitRetreived){
-			//System.out.println("Answer   "  + currAssignment.getAnswer());
+			System.out.println("Answer   "  + currAssignment.getAnswer());
 			try {
 				fwriter.write(currAssignment.getAnswer());
 			} catch (IOException e) {
