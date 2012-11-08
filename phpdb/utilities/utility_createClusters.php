@@ -30,7 +30,7 @@ foreach ($patterns as $pattern) {
 	$highestEntropyGoldStandard = -1;
 	$highestEntropyTokenId = -1;
 	
-	$tokenClassifierMapping = array();
+$tokenClassifierMapping = array();
 	
 	$skipped = 0;
 	$retained = 0;
@@ -152,7 +152,7 @@ foreach ($patterns as $pattern) {
 					$targetArray['totalEntropy'] += $highestEntropy; 
 					//$targetArray['citations'][] = $citationText;
 							
-					doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id, cc_clustering_id) VALUES ({$targetArray['clusterId']}, $lastCitation, $clusteringId)");
+					doQuery("INSERT INTO citation_clusters (cc_cluster_id, cc_citation_id, cc_clustering_id, cc_dataset_id) VALUES ({$targetArray['clusterId']}, $lastCitation, $clusteringId, $dataset)");
 	
 					doQuery("UPDATE cluster_rankings SET cr_value={$targetArray['highestEntropy']} WHERE cr_cluster_id={$targetArray['clusterId']} AND cr_function=1 AND cr_clustering_id=$clusteringId");
 					doQuery("UPDATE cluster_rankings SET cr_value={$targetArray['count']} WHERE cr_cluster_id={$targetArray['clusterId']} AND cr_function=2 AND cr_clustering_id=$clusteringId");
