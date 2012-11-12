@@ -42,7 +42,7 @@
 		$pattern = $row['ca_pattern'];
 		$function = $row['rf_label'];
 		if ($lastClusteringId != $clusteringId || $lastFunction != $function) {
-			print "\n#Clusters: $clustersForThisFunction #Citations: $citationsForThisFunction #Errors:";
+			print "\n#Clusters: $clustersForThisFunction #Citations: $citationsForThisFunction #Errors: $errorsForThisFunction";
 			print "\nAlgorithm: $pattern \tFunction: $function\n";
 			
 			$lastFunction = $function;
