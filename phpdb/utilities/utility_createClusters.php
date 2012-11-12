@@ -1,9 +1,11 @@
 <?php
 
 require('../utilities.php');
-$dataset = 3;
+$dataset = 1;
 
 $patterns = array("t 0,l 0,t-1,t+1", "t 0,l 0,l-1,l+1", "E 0,L 0,L-1,L+1", "t 0,l 0,t-1,l-1,t+1,l+1");
+
+$nextClusterIndex = 1;
 
 foreach ($patterns as $pattern) {
 	$result = doQuery("SELECT ca_id FROM cluster_algorithms WHERE ca_pattern='$pattern'");
@@ -16,7 +18,6 @@ foreach ($patterns as $pattern) {
 
 	doQuery("INSERT INTO clusterings (clustering_algorithm) VALUES ($patternId)");
 	$clusteringId = mysql_insert_id();
-	$nextClusterIndex = 1;
 	
 	$result = doQuery("SELECT token_id, token_start, ts_string, tl_entropy, tl_label, citation_id, token_gold_standard FROM tokens JOIN token_labelings ON token_current_labeling=tl_id JOIN token_strings ON ts_id=token_string_id JOIN citations ON token_citation_id=citation_id AND citation_dataset=$dataset"/*ORDER BY token_citation_id, token_start"*/);
 	
@@ -192,6 +193,8 @@ $tokenClassifierMapping = array();
 				}
 			}
 			$highestEntropy = 0;
+			$highestEntropyTokenId = 0;
+			$highestEntropyStart = 0;
 			$tokenIndex = 0;
 			$entityIndex = 0;
 			$currentEntityLabel = -1;
@@ -214,7 +217,7 @@ $tokenClassifierMapping = array();
 		}
 		$currentEntity .= ' '.$tokenString;
 		
-		if ($entropy > $highestEntropy && $tokenString != ',') {
+		if ($tokenString != ',' && random() > .5) {
 			$highestEntropy = $entropy;
 			$highestEntropyTokenIndex = $tokenIndex;
 			$highestEntropyEntityIndex = $entityIndex;

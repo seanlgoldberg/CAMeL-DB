@@ -7,7 +7,7 @@
 	//header("Content-disposition: attachment; filename=top_clusters.csv");
 	
 	$clusterCount = 1;
-	$dataset = 3;
+	$dataset = 1;
 	
 	$errorCount = 0;
 	
@@ -18,6 +18,10 @@
 	$errorCount = 0;
 	$lastClusteringId = 0;
 	$lastFunction = 0;
+	
+	$clustersForThisFunction = 0;
+	$citationsForThisFunction = 0;
+	$errorsForThisFunction = 0;
 	
 	while ($row = mysql_fetch_assoc($result)) {
 		$clusteringId = $row['clustering_id'];
@@ -38,10 +42,14 @@
 		$pattern = $row['ca_pattern'];
 		$function = $row['rf_label'];
 		if ($lastClusteringId != $clusteringId || $lastFunction != $function) {
+			print "\n#Clusters: $clustersForThisFunction #Citations: $citationsForThisFunction #Errors:";
 			print "\nAlgorithm: $pattern \tFunction: $function\n";
 			
 			$lastFunction = $function;
 			$lastClusteringId = $clusteringId;
+			$clustersForThisFunction = 0;
+			$citationsForThisFunction = 0;
+			$errorsForThisFunction = 0;
 		}
 			
 		for ($i = 0; $i < count($citationArray); $i++) {
@@ -60,13 +68,16 @@
 			$nextCitationText = substr($nextCitationText, 0, $nextTokenStart)."<b>".substr($nextCitationText, $nextTokenStart, strlen($tokenString))."</b>".substr($nextCitationText, $nextTokenStart + strlen($tokenString));
 				
 			$count++;
+			$citationsForThisFunction++;
 			print "$clusterCount, $nextCitationId, $nextTokenStart, $clusterId, $labelMapping[$nextGoldStandard], $labelMapping[$nextMachineLabel], \"$tokenString\", $nextCitationText\n";
 			if ($nextGoldStandard != $nextMachineLabel) {
 				$errorCount++;
+				$errorsForThisFunction++;
 			}
 		}
 		if ($i > 1) {
 			$clusterCount++;
+			$clustersForThisFunction++;
 		}
 		
 		//print " $tokenString ($tokenGoldStandard: $count)";
