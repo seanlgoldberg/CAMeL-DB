@@ -52,7 +52,7 @@
 			$errorsForThisFunction = 0;
 		}
 			
-		for ($i = 0; $i < count($citationArray); $i++) {
+		for ($i = 0; $i < count($citationTextArray); $i++) {
 			$nextCitationId = $citationArray[$i];
 			$nextCitationText = $citationTextArray[$i];
 			$nextTokenStart = $startArray[$i];
