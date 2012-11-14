@@ -1,12 +1,78 @@
 \section{Selection}
+\sean{Add some reference to Guestrin's paper and selection over dependent vs. independent examples.}
+\sysName is unique from other crowdsourced databases in that it doesn't require fields be empty to crowdsource the value.  Its strength lies in its ability to analyze the probabilistic distributions of over its fields and determine where the largest benefit from human feedback would occur.  Our approach is similar to uncertainty sampling, where high entropy examples are most informative to the model and are chosen to be labeled and added to the training set.  We make a slightly different assumption.  Here, we map entropy inversely into confidence.  The more spiked a distribution over a single label, corresponding to low entropy, the greater the confidence in the result.  More uniformity is characteristic of higher confusion and more likely to lead to an incorrect result.  The focus is thus on ordering tokens by greatest entropy so the top-k can be submitted to the crowd given a set budget.
 
-Process for selecting a token from each citation \newline
+\subsection{Calculating Entropy}
 
-\noindent Clustering of tokens by various metrics (same token neighborhood, same label neighborhood, etc) \newline
+There are many subprocesses which go into the calculation of token entropy.  The first is creation of two new tables for the Forward and Backward values, colloquially known as the $\alpha$ and $\beta$ values.  In linear-chain CRFs, $\alpha(j,s)$ represents the sum of scores of all paths from position $1$ to position $j$ that pass through label $s$.  It's calculated by the recurrence:
+\begin{equation}
+\alpha(0,y_{i}) = \frac{1}{|L|}
+\end{equation}
+\begin{equation}
+\label{alpha}
+\alpha(j,y_{i}) = \sum_{y_{i-1}}[\sum_{k}\lambda_{k}f_{k}(y_{i},y_{i-1},x_{i}) + \alpha(j-1,y_{i-1})]
+\end{equation}
 
-\noindent Ranking of clusters by various metrics (high entropy, size of cluster)
+where $|L|$ denotes the size of the label space.  Initialization simply makes all transitions into the first set of labels equally likely.  The function produceForwardTable(docID) uses the factor table and token table to populate F{\small ORWARD}T{\small BL}, represented as a matrix of size $|N|\times|L|$ based on the recurrence in (~\ref{alpha}).
 
+The set of Backward values are calculated with a similar recurrence:
 
+\begin{equation}
+\beta(N,y_{i}) = 1
+\end{equation}
+\begin{equation}
+\label{beta}
+\beta(j,y_{i}) = \sum_{y_{i-1}}[\sum_{k}\lambda_{k}f_{k}(y_{i},y_{i-1},x_{i}) + \beta(j+1,y_{i-1})]
+\end{equation}
 
+The $\beta$ values represent the sum of scores of all paths from position $i$ to position $N$.  B{\small ACKWARD}T{\small BL} is the same size as F{\small ORWARD}T{\small BL} and similarly computed from its own recurrence upon calling produceBackwardTable(docID).
 
+The marginal distributions are represented as an element-by-element product of F{\small ORWARD}T{\small BL} and B{\small ACKWARD}T{\small BL}.  Explicitly, for each element of M{\small ARGINAL}T{\small BL}:
 
+\begin{equation}
+M(j,y_{i}) = \alpha(j,y_{i})\times\beta(j,y_{i})
+\end{equation}
+
+Normalizing over the columns gives a marginal distribution for each position $j$. Finally, entropy is calculated and stored in the relational E{\small NTROPY}T{\small BL}.
+
+\vspace{.1in}
+\centerline{E{\small NTROPY}T{\small BL}(docID, pos, token, entropy)}
+\vspace{.1in}
+
+Though computed over a probabilistic distribution, entropy is a deterministic quantity in the database.  It's values at position $j$ are calculated in the usual way:
+
+\begin{equation}
+E(j) = -\sum_{y_{i}}M(j,y_{i})log(M(j,y_{i})
+\end{equation}
+
+\subsection{Optimizations}
+
+\subsubsection{Seeding}
+
+The probabilistic component of each token tuple, label$^{p}$, is determined by the feature functions in F{\small ACTOR}T{\small BL} through the Viterbi algorithm.  Far from being independent, field values are deeply connected between tuples and modifying one label field in a document $d$ has wide-ranging implications for the other probabilistic fields, most importantly for those tokens preceeding and suceeding it.
+
+For example, consider the incorrectly labeled document in Figure \ref{}.  In cleaning up this document at the token level, it appears we would need to ask a question about both tokens "X" and "Y" and have them changed from a Title label to an Author label.  Running the constrained Viterbi inference algorithm provides additional power to be harnessed.  Say just the token "X" were queried and submitted to the crowd and the label received back was an Author.  The CRF has learned that sequences such as Title-Author-Title do not appear in the corpus and inference constraining "X" to be an Author would also select "Y" as Author.  This is an example of killing two birds with one stone and is just a simple example.  Crowd answers that differ more drastically from the original inference result will experience even greater changes in the constrained inference, further enhancing the power of just a single question. 
+
+This strength coming from constrained inference leads to a possible weakness in the question selection process.  Selecting both tokens "X" and "Y" leads to twice the cost compared to just asking one of them.  Figure ~\ref{} shows the entropy distribution over tokens for a typical text-string in \sysName .  Entropy typically peaks to high values at the boundaries where labels change and multiple high values appear in the same neighborhood.  To reduce redundancy in asking multiple tokens at nearly the same position, we limit each batch of questions to include at most one token from each document.
+
+Thus we have a one-to-one mapping between documents $d$ and the highest entropy token $\hat{t}$.  From here on own we use the phrases "querying a document" and "querying a token" interchangeably, there the token in question always refers to the highest entropy token $\hat{t}\in\mathcal{T}$ associated with $d$
+
+\subsubsection{Clustering}
+
+In our data model, tokens represent the underlying primitives of the database.  Previously, we described calculation of a token's label entropy for the purpose of discovering the tokens most in need of human correction or confirmation.  Selection based purely on entropy, however, leads to less than optimal results in practice.
+
+In information extraction, and particularly citation extraction, important entities show up again and again.  Repeated authors, conferences, publishers, etc. lead to a certain level of redundancy among individual tokens.  It would be inefficient for the crowd to label the same token multiple times from different questions, leading to higher costs and longer wait times for relatively minimal improvement.
+
+In \sysName we eliminate this problem with a novel clustering scheme.  We say $d\in\mathcal{C}$, for some cluster $\mathcal{C}$ if the following conditions are satisfied $\forall d_{i}\in\mathcal{C}$:
+
+1. d.token = d$_{i}$.token
+
+2. d.prevLabel = d$_{i}$.prevLabel
+
+3. d.label = d$_{i}$.label
+
+4. d.nextLabel = d$_{i}$.nextLabel 
+
+Thus clusters of documents whose high entropy tokens are equivalent and share similar contexts are grouped together.  Answers retrieved for one document are applied to all documents in the same cluster.  Utilizing context is important because the same token may appear in more than one field location, such as a Title in one and a Conference in another.  It's also common for Conferences and Proceedings to share tokens within the same citation.  This is the basis behind requiring labels for all tokens in the cluster to be the same.  The inclusion of previous and succeeding labels lowers the probability of a mislabeling leading to a false clustering, ensuring that the relative positions of all tokens in a cluster are the same.
+
+\subsubsection{Ranking}

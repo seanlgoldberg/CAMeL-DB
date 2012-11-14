@@ -6,8 +6,6 @@
 \newcommand{\daisy}[1]{{\textcolor{magenta}{#1 -- DZW}}}
 \newcommand{\sean}[1]{{\textcolor{blue}{#1--SLG}}}
 
-% CASTLE
-\newcommand{\sysName}{\textsc{CASTLE}\xspace}
 
 % general
 \renewcommand{\ttdefault}{cmtt}

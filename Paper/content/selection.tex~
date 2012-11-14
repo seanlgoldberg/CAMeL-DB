@@ -1,7 +1,32 @@
-\section{Introduction}
-Introduce problem we are trying to solve, which is to improve machine learning results using the crowd.
+\section{Information Theoretic Selection}
 
-Describe automatic information extraction as being an example application.
+References:
+Michael J. Franklin, Donald Kossmann, Tim Kraska, Sukriti Ramesh, Reynold Xin: CrowdDB: answering queries with crowdsourcing. SIGMOD Conference 2011: 61-72
+Jiannan Wang, Tim Kraska, Michael J. Franklin, Jianhua Feng: CrowdER: Crowdsourcing Entity Resolution. PVLDB 5(11): 1483-1494 (2012)
+Beth Trushkowsky, Tim Kraska, Michael J. Franklin, Purnamrita Sarkar: Getting It All from the Crowd. CoRR abs/1202.2335 (2012)
+Barzan Mozafari, Purnamrita Sarkar, Michael J. Franklin, Michael I. Jordan, Samuel Madden: Active Learning for Crowd-Sourced Databases. CoRR abs/1209.3686 (2012)
+
+1. Restate DB goal of cleaning up the database.
+
+2. Refer to other attempts at using crowd cleaning (CrowdDB), but crowd is used deterministically.
+
+3. Discuss similarities to problems in active learning in choosing best examples.
+
+4. Introduce marginal probability over labels as ratios of # of paths through each label.
+
+5. Refer to information theory as a tool for selection.
+
+6. Discuss use of marginal entropy.  Show equations.
+
+7. Discuss why we decided cleaning process should only be one token per citation (move elsewhere?).  Added benefit of clamped inference.
+
+8. Introduce clustering to remove redundancy.
+
+9. Discuss ranking clusters.
+
+10. Segue into crowd section.
+
+
 
 
 

@@ -1,0 +1,55 @@
+\begin{thebibliography}{1}
+
+\bibitem{citeulike:9437699}
+B.~Carpenter.
+\newblock {Multilevel Bayesian Models of Categorical Data Annotation}.
+\newblock Technical report, Alias-i, 2008.
+
+\bibitem{1979}
+A.~P. Dawid and A.~M. Skene.
+\newblock Maximum likelihood estimation of observer error-rates using the em
+  algorithm.
+\newblock {\em Journal of the Royal Statistical Society. Series C (Applied
+  Statistics)}, 28(1):pp. 20--28, 1979.
+
+\bibitem{DBLP:journals/ai/HalpernF92}
+J.~Y. Halpern and R.~Fagin.
+\newblock Two views of belief: Belief as generalized probability and belief as
+  evidence.
+\newblock {\em Artif. Intell.}, 54(2):275--317, 1992.
+
+\bibitem{Ipeirotis:2010:QMA:1837885.1837906}
+P.~G. Ipeirotis, F.~Provost, and J.~Wang.
+\newblock Quality management on amazon mechanical turk.
+\newblock In {\em Proceedings of the ACM SIGKDD Workshop on Human Computation},
+  HCOMP '10, pages 64--67, New York, NY, USA, 2010. ACM.
+
+\bibitem{DBLP:conf/icml/LaffertyMP01}
+J.~D. Lafferty, A.~McCallum, and F.~C.~N. Pereira.
+\newblock Conditional random fields: Probabilistic models for segmenting and
+  labeling sequence data.
+\newblock In {\em ICML}, pages 282--289, 2001.
+
+\bibitem{Quinn10crowdflow:integrating}
+E.~J. Quinn, B.~B. Bederson, T.~Yeh, and J.~Lin.
+\newblock Crowdflow: Integrating machine learning with mechanical turk for
+  speed-cost-quality flexibility.
+\newblock Technical report, 2010.
+
+\bibitem{DBLP:journals/jmlr/RaykarY12}
+V.~C. Raykar and S.~Yu.
+\newblock Eliminating spammers and ranking annotators for crowdsourced labeling
+  tasks.
+\newblock {\em Journal of Machine Learning Research}, 13:491--518, 2012.
+
+\bibitem{shafer1976mathematical}
+G.~Shafer.
+\newblock {\em A Mathematical Theory of Evidence}.
+\newblock Princeton University Press, Princeton, 1976.
+
+\bibitem{DBLP:journals/pvldb/WangFGH10}
+D.~Z. Wang, M.~J. Franklin, M.~N. Garofalakis, and J.~M. Hellerstein.
+\newblock Querying probabilistic information extraction.
+\newblock {\em PVLDB}, 3(1):1057--1067, 2010.
+
+\end{thebibliography}

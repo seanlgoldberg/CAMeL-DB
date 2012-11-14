@@ -1,0 +1,507 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.8.16)  11 NOV 2012 13:15
+entering extended mode
+ %&-line parsing enabled.
+**paper2
+(./paper2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(./sig-alternate.cls (/usr/share/texmf-texlive/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen102
+\Gin@req@width=\dimen103
+)
+\epsfxsize=\dimen104
+\epsfysize=\dimen105
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\@emptytoks=\toks15
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip41
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks16
+\ex@=\dimen106
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen107
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count79
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count80
+\leftroot@=\count81
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count82
+\DOTSCASE@=\count83
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen108
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count84
+\c@MaxMatrixCols=\count85
+\dotsspace@=\muskip10
+\c@parentequation=\count86
+\dspbrk@lvl=\count87
+\tag@help=\toks17
+\row@=\count88
+\column@=\count89
+\maxfields@=\count90
+\andhelp@=\toks18
+\eqnshift@=\dimen109
+\alignsep@=\dimen110
+\tagshift@=\dimen111
+\tagwidth@=\dimen112
+\totwidth@=\dimen113
+\lineht@=\dimen114
+\@envbody=\toks19
+\multlinegap=\skip42
+\multlinetaggap=\skip43
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+Document Class 'sig-alternate' <23rd. May '12>. Modified by G.K.M. Tobin/Gerry 
+Murray
+Based in part upon document Style `acmconf' <22 May 89>. Hacked 4/91 by
+shivers@cs.cmu.edu, 4/93 by theobald@cs.mcgill.ca
+Excerpts were taken from (Journal Style) 'esub2acm.cls'.
+****** Bugs/comments/suggestions/technicalities to Gerry Murray -- murray@hq.ac
+m.org ******
+Questions on the style, SIGS policies, etc. to Adrienne Griscti griscti@acm.org
+
+\footheight=\dimen115
+\@maxsep=\dimen116
+\@dblmaxsep=\dimen117
+\aucount=\count91
+\originalaucount=\count92
+\auwidth=\dimen118
+\auskip=\dimen119
+\auskipcount=\count93
+\auskip=\dimen120
+\allauboxes=\dimen121
+\addauthors=\toks21
+\addauflag=\count94
+\subtitletext=\toks22
+\savesection=\count95
+\sectioncntr=\count96
+\c@figure=\count97
+\c@table=\count98
+\titleboxnotes=\toks23
+\titleboxnoteflag=\count99
+Document Class: sig-alternate 2012/05/23 - V2.5 - based on acmproc.cls V1.3 <No
+v. 30 '99>
+(/usr/share/texmf-texlive/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+\@acmtitlebox=\box28
+\titlenotecount=\count100
+\tntoks=\toks24
+\tntokstwo=\toks25
+\tntoksthree=\toks26
+\tntoksfour=\toks27
+\tntoksfive=\toks28
+\catcount=\count101
+\copyrightnotice=\toks29
+\conf=\toks30
+\confinfo=\toks31
+\c@part=\count102
+\c@section=\count103
+\c@subsection=\count104
+\c@subsubsection=\count105
+\c@paragraph=\count106
+
+Using 'Abbrev' bibliography style
+LaTeX Info: Redefining \cite on input line 1211.
+\bibindent=\dimen122
+\colcntr=\count107
+\saveb@x=\box29
+\copyrtyr=\toks32
+\acmcopyr=\toks33
+\boilerplate=\toks34
+\copyrightetc=\toks35
+(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
+
+(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
+File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+)
+LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
+
+(/usr/share/texmf-texlive/tex/latex/ae/t1aer.fd
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+))) (./shorthands.tex
+\c@thm=\count108
+\c@lem=\count109
+\c@ex=\count110
+\c@df=\count111
+)
+(./packages.tex (/usr/share/texmf-texlive/tex/latex/psnfss/times.sty
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(./ams.sty
+Package: ams 1996/01/09
+
+Package `ams' <09 Jan 1996 13:53:56 BST>.
+Copyright (C) 1990,1995 Mike Piff, University of Sheffield, England
+Use option defs to define all the AMS symbol names
+) (./algo.sty
+Package: algo 2002/06/21 v1.0 Algorithm typesetting package (JG)
+\algo@box=\box30
+\c@algo@nr=\count112
+\algo@left=\skip44
+\algo@margin=\skip45
+\algo@indent=\skip46
+\algo@cur=\skip47
+\algo@next=\skip48
+) (./appendix.sty
+Package: appendix 2002/08/06 v1.2 extra appendix facilities
+\c@@pps=\count113
+\c@@ppsavesec=\count114
+\c@@ppsaveapp=\count115
+) (./xspace.sty
+Package: xspace 1997/10/13 v1.06 Space after command names (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/etc/texmf/tex/latex/config/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: dvips.def on input line 130.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+)) (./subfigure.sty
+Package: subfigure 1995/03/06 v2.0 subfigure package
+
+Package: subfigure 1995/03/06 v2.0
+\c@subfigure=\count116
+\c@lofdepth=\count117
+\c@subtable=\count118
+\c@lotdepth=\count119
+) (./titlesec.sty
+Package: titlesec 2005/01/22 v2.6 Sectioning titles
+\ttl@box=\box31
+\beforetitleunit=\skip49
+\aftertitleunit=\skip50
+\ttl@plus=\dimen123
+\ttl@minus=\dimen124
+\titlewidth=\dimen125
+\titlewidthlast=\dimen126
+\titlewidthfirst=\dimen127
+)) (./algorithm2e.sty
+Package: algorithm2e 2008/00/00 v3.10 algorithms environments
+\c@AlgoLine=\count120
+
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+
+
+Package relsize Warning: Failed to get list of font sizes.
+(relsize)                Falling back to old definition. on input line 81.
+
+)
+********************************************************
+Package `algorithm2e' Release 4.01 -- december 14 2009 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip51
+\skiplinenumber=\skip52
+\skiprule=\skip53
+\skiphlne=\skip54
+\skiptext=\skip55
+\skiplength=\skip56
+\algomargin=\skip57
+\skipalgocfslide=\skip58
+\algowidth=\dimen128
+\inoutsize=\dimen129
+\inoutindent=\dimen130
+\interspacetitleruled=\dimen131
+\interspacealgoruled=\dimen132
+\interspacetitleboxruled=\dimen133
+\algocf@inoutbox=\box32
+\algocf@inputbox=\box33
+\AlCapSkip=\skip59
+\AlCapHSkip=\skip60
+\algocf@nlbox=\box34
+\algocf@hangingbox=\box35
+\algocf@capbox=\box36
+\algoheightruledefault=\skip61
+\algoheightrule=\skip62
+\algotitleheightruledefault=\skip63
+\algotitleheightrule=\skip64
+\c@algocfline=\count121
+\c@algocfproc=\count122
+\c@algocf=\count123
+\algocf@algoframe=\box37
+\algocf@algobox=\box38
+) (/usr/share/texmf-texlive/tex/latex/bbm-macros/bbm.sty
+Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
+LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
+(Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
+(Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
+) (./paper2.aux)
+\openout1 = `paper2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 52.
+LaTeX Font Info:    ... okay on input line 52.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 52.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+LaTeX Font Info:    Try loading font information for U+msa on input line 165.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 165.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for U+lasy on input line 165.
+
+(/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+) (./content/abstract.tex
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
+)
+(./content/introduction.tex
+Overfull \hbox (15.01196pt too wide) in paragraph at lines 3--4
+[]\T1/ptm/m/n/9 Need to fig-ure out where to put HIT main-te-nance and API info
+rmation.--
+ []
+
+
+LaTeX Warning: Reference `uncertainty' on page \thepage  undefined on input lin
+e 26.
+
+[1
+
+
+]
+
+LaTeX Warning: Reference `system' on page \thepage  undefined on input line 38.
+
+
+
+LaTeX Warning: Reference `uncertainty' on page \thepage  undefined on input lin
+e 38.
+
+
+LaTeX Warning: Reference `hit' on page \thepage  undefined on input line 38.
+
+
+LaTeX Warning: Reference `integration' on page \thepage  undefined on input lin
+e 38.
+
+
+LaTeX Warning: Reference `experiments' on page \thepage  undefined on input lin
+e 38.
+
+
+LaTeX Warning: Reference `conclusion' on page \thepage  undefined on input line
+ 38.
+
+
+LaTeX Warning: Reference `future' on page \thepage  undefined on input line 38.
+
+
+) (./content/related_work.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--4
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--8
+
+ []
+
+) (./content/background.tex) (./content/system_overview.tex
+Overfull \hbox (1.25008pt too wide) in paragraph at lines 11--12
+\T1/ptm/m/n/9 tributes. The to-ken also con-tains one prob-a-bilis-tic attribut
+e^^Vlabel$[]$.
+ []
+
+
+Overfull \hbox (44.57384pt too wide) in paragraph at lines 17--18
+\T1/ptm/m/n/9 weighted sum of fea-ture func-tions: $\OML/cmm/m/it/9 '\OT1/cmr/m
+/n/9 [\OML/cmm/m/it/9 y[]; y[]\OMS/cmsy/m/n/9 j\OML/cmm/m/it/9 x[]\OT1/cmr/m/n/
+9 ] = [][] \OML/cmm/m/it/9 ^^U[]f[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 y[]; y[]; x[
+]\OT1/cmr/m/n/9 )$\T1/ptm/m/n/9 . 
+ []
+
+
+LaTeX Warning: Reference `hit' on page \thepage  undefined on input line 25.
+
+
+LaTeX Warning: Reference `integration' on page \thepage  undefined on input lin
+e 31.
+
+
+Overfull \hbox (17.05798pt too wide) in paragraph at lines 31--32
+\T1/ptm/m/n/9 vid-ual la-bels $\OML/cmm/m/it/9 l \OMS/cmsy/m/n/9 2 L$ \T1/ptm/m
+/n/9 re-trieved for each HIT are stored in C\T1/ptm/m/n/8 ROWD\T1/ptm/m/n/9 A\T
+1/ptm/m/n/8 NS\T1/ptm/m/n/9 T\T1/ptm/m/n/8 BL
+ []
+
+
+Overfull \hbox (22.3744pt too wide) in paragraph at lines 31--32
+\T1/ptm/m/n/9 the Turker her-self (work-erID). Per-form-ing a JOIN with C\T1/pt
+m/m/n/8 ROWD\T1/ptm/m/n/9 P\T1/ptm/m/n/8 OST\T1/ptm/m/n/9 T\T1/ptm/m/n/8 BL
+ []
+
+
+LaTeX Warning: Reference `integration' on page \thepage  undefined on input lin
+e 37.
+
+[2]
+LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <9> not available
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 43.
+
+Overfull \hbox (8.64066pt too wide) in paragraph at lines 51--52
+[]\T1/ptm/m/n/9 Finally, in-te-gra-tion al-lows the database to use the crowd-a
+ggregated
+ []
+
+) (./content/selection.tex
+Overfull \hbox (17.14304pt too wide) in paragraph at lines 28--29
+\T1/ptm/m/n/9 tion $\OML/cmm/m/it/9 i$ \T1/ptm/m/n/9 to po-si-tion $\OML/cmm/m/
+it/9 N$\T1/ptm/m/n/9 . B\T1/ptm/m/n/8 ACKWARD\T1/ptm/m/n/9 T\T1/ptm/m/n/8 BL \T
+1/ptm/m/n/9 is the same size as F\T1/ptm/m/n/8 ORWARD\T1/ptm/m/n/9 T\T1/ptm/m/n
+/8 BL
+ []
+
+
+Overfull \hbox (12.06918pt too wide) in paragraph at lines 30--31
+[]\T1/ptm/m/n/9 The marginal dis-tri-bu-tions are rep-re-sented as an element-b
+y-element
+ []
+
+
+Overfull \hbox (3.11896pt too wide) in paragraph at lines 30--31
+\T1/ptm/m/n/9 prod-uct of F\T1/ptm/m/n/8 ORWARD\T1/ptm/m/n/9 T\T1/ptm/m/n/8 BL 
+\T1/ptm/m/n/9 and B\T1/ptm/m/n/8 ACKWARD\T1/ptm/m/n/9 T\T1/ptm/m/n/8 BL\T1/ptm/
+m/n/9 . Ex-plic-itly, for each
+ []
+
+
+LaTeX Warning: Reference `' on page \thepage  undefined on input line 54.
+
+[3]
+
+LaTeX Warning: Reference `' on page \thepage  undefined on input line 56.
+
+) (./content/integration.tex [4]
+LaTeX Font Info:    Try loading font information for U+bbm on input line 46.
+
+(/usr/share/texmf-texlive/tex/latex/bbm-macros/ubbm.fd
+File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
+)
+Overfull \hbox (3.80234pt too wide) detected at line 54
+\OML/cmm/m/it/9 P\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 L[] \OT1/cmr/m/n/9 = \OML/cmm/
+m/it/9 l\OMS/cmsy/m/n/9 j\OML/cmm/m/it/9 A[] \OT1/cmr/m/n/9 = \OML/cmm/m/it/9 a
+[]; :::; A[] \OT1/cmr/m/n/9 = \OML/cmm/m/it/9 a[]\OT1/cmr/m/n/9 ) = \OML/cmm/m/
+it/9 P\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 L[] \OT1/cmr/m/n/9 = \OML/cmm/m/it/9 l\OT
+1/cmr/m/n/9 ) [] \OMS/cmsy/m/n/9 j\U/bbm/m/n/9 1[] \OMS/cmsy/m/n/9 ^^@ \OML/cmm
+/m/it/9 Q[]\OMS/cmsy/m/n/9 j
+ []
+
+[5]
+Overfull \hbox (3.55597pt too wide) in paragraph at lines 91--92
+\T1/ptm/m/n/9 Even hu-man com-pu-ta-tion is not per-fect. The pre-vi-ous sec-ti
+on looked
+ []
+
+) (./content/experiments.tex) (./content/conclusion.tex)
+(./content/future_work.tex) (./paper2.bbl) (./content/appendix.tex) [6]
+(./paper2.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 4005 strings out of 495062
+ 47913 string characters out of 1182644
+ 127763 words of memory out of 3000000
+ 7087 multiletter control sequences out of 15000+50000
+ 48642 words of font info for 56 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 39i,15n,29p,1077b,220s stack positions out of 5000i,500n,10000p,200000b,50000s
+
+Output written on paper2.dvi (6 pages, 56384 bytes).

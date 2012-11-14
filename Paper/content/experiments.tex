@@ -1,24 +1,27 @@
 \section{Experiments}
+\sean{Introduction to various experiments. Description of data sets.}
+In this section we demonstrate the efficacy of our selection and integration approaches on sets of both synthetic and real data.  We extracted 14,000 labeled citations from DBLP \sean{footnote 1} and 500,000 from the PubMed database \sean{footnote 2}.  The data originally came in XML and JSON formats respectively.  For unlabeled testing data, we extracted and concatenated text from each of the available fields.  Order of fields was occasionally mixed in keeping with real-life inconsistency of citation structure.
 
-Compare four different clustering algorithms.
+\subsection{Synthetic Experiments}
+\subsubsection{Selection}
+\sean{Exp1: Comparison of clustering algorithms.}
 
-t 0,l 0,t-1,t+1 Retained: 5221 Skipped: 1778 Errors: 1
+\sean{Exp2: Comparison of ranking/seeding functions.}
 
-t 0,l 0,l-1,l+1 Retained: 3224 Skipped: 3775 Errors: 67
+\sean{Exp3: Accuracy before and after introduction of crowd edits and clamped inference}
 
-E 0,L 0,L-1,L+1 Retained: 6197 Skipped: 802 Errors: 0
+\subsubsection{Integration}
+\sean{Describe process for producing synthetic workload and justify simplifying assumptions.}
 
-t 0,l 0,t-1,l-1,t+1,l+1 Retained: 5236 Skipped: 1763 Errors: 0 \newline
+\sean{Exp4: DS vs. MV vs. Bayes for varying number of Turkers.}
 
-\noindent Selection: Compare accuracy before and after replacing tokens with ground truth. \newline
+\sean{Exp5: DS vs. MV vs. Bayes for varying levels of mean Turker quality.}
 
-\noindent Selection: Compare accuracy before and after re-running inference. \newline
+\sean{Exp6: Recall vs. accuracy for varying entropy thresholds.}
 
-\noindent Selection: Measure accuracy vs. clusters asked to find where diminishing returns occur. \newline
+\subsection{Real Experiments}
+\sean{Description of real experiment methodology.}
 
-\noindent Integration: Compare DS vs. MV for 3, 5, 7, and 9 Turkers per question. \newline
+\sean{Exp7: Table of accuracy comparisons for DS, MV, and Bayes before and after edits plus clamped inference for both data sets.}
 
-\noindent Integration: Find appropriate entropy threshold to use as decision boundary. \newline
-
-\noindent Integration: Compare accuracy before, after w/o entropy threshold, and after applying entropy. threshold.
-
+\sean{Exp8: Recall vs. accuracy for varying entropy thresholds for both data sets.}

@@ -1,7 +1,12 @@
-\section{Introduction}
-Introduce problem we are trying to solve, which is to improve machine learning results using the crowd.
+\section{Integration}
 
-Describe automatic information extraction as being an example application.
+Assessing Turker quality via EM \newline
+
+\noindent Mapping Turkers to probability distributions \newline
+
+\noindent Combining distributions using Dawid-Skene \newline
+
+\noindent Integration into DB (Clamped Viterbi for new best path)
 
 
 

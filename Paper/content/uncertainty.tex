@@ -1,0 +1,44 @@
+\section{Information Theoretic Selection}
+\label{uncertainty}
+
+\sean{Should differentiate between "batch" of questions vs. "on-line" requiring running inference many times.}
+
+\sean{Future work should draw uncertainty from multiply trained models.}
+
+\sean{Contrast difference between a priori selection (Crowdflow) and a posteriori selection (CASTLE).}
+
+\sean{Expand on problem of minimizing number of HITs used.}
+A key component that separates \sysName from other hybrid \textit{human-machine} systems is the ability to operate over an already complete database.  The identification and ranking of the most uncertain database values is crucial towards minimizing the number of HITs used and in turn the cost of the cleansing process.  In this section we describe our approach to selecting tokens based on information theory as well as additional heuristics designed to improve performance on large data sets.  We also examine the operators designed to accomplish these tasks within \sysName .
+
+% Different forms of uncertainty sampling: Least confident, smallest-margin, and entropy
+\subsection{Uncertainty}
+
+\sean{Any kind of derivation or motivation for entropy required?}
+
+Selecting examples to be labeled based on their level of uncertainty has a long history in pool-based active learning \cite{DBLP:conf/ijcai/EngelsonD95}. In active learning, a subset of the unlabeled data is selected to be labeled by an expert for use in re-training the model.  The main difference is that selected examples here are not used in re-training, but the selection process is similar.  Examples are chosen based on the belief that they represent the largest information gain compared to other examples in the pool.  For a probabilistic model, this corresponds to selecting examples with the greatest entropy.
+
+In \sysName , marginal probabilities over the label space are included in the output of the CRF and stored alongside each token.  These marginal probabilities can be used to calculate marginal entropies using the GENERATE\_ENTROPY operator and rank by certainty every token in the database.
+
+\sean{Discuss reason for initially only selecting one token per citation.}
+
+As chosen samples are returned from the crowd with their labels, constrained inference is run over the non-labeled portions of each citation.  This process has the ability to affect more than just the original token that was labeled.  Changing the label of a token from the machine-computed result has ramifications to its surrounding neighborhood.  For instance, if a token is labeled as an Author it becomes more likely than its neighborhood is also an Author.  If, however, that token is changed to a Title, its neighborhood will now be more likely to be labeled a Title by the CRF.  As a result of this chain reaction effect and to reduce redunancy in asking questions, we limit queried tokens to only a one per citation.
+
+Thus, rather than selecting from the whole space of tokens, we initially select the highest entropy token from each citation and then select from that space.  From here on out we refer to selecting tokens and selecting citations interchangeably because each citation is mapped into its highest entropy token.  "Selecting a citation" is akin to selecting this token.  The RANK\_CITATION operator also performs its ranking based on the values of this highest entropy token.
+
+\subsection{Clustering}
+
+It's natural in most databases to have set of fields with values that are repeated across multiple entries.  An address book might have many people that live in the same city.  Employee lists may have many employees part of the same division.  As well in citation databases, repeated fields may be numerous for papers with the same author or that belong to the same conference, etc.  For such repeated fields that appear as the highest entropy tokens in a citation, it makes little sense to package multiple redundant questions as separate HITs.  \sysName has the ability to recognize when such clusters of similar tokens are present using its CLUSTER\_QUESTION operator.  Clustering citations together has the benefit allowing the answer to a single question to be applied to all citations in a particular cluster, greatly advancing the effectiveness of the crowd's answer.
+
+The possible clustering algorithms we considered are presented below.  
+
+\textbf{Same Token Neighborhood:} Intuition says that citations that share the same high entropy token are more likely to be clustered together and ought to share the same labeling.  This algorithm hardens the constraint slightly by imposing that citations must share not only the same high entropy token, but also the same token neighborhood to the left and right.  This reduces the likelihood of generic terms that can appear in more than one field from appearing together. 
+
+\textbf{Same Label Neighborhood:} The constraint on same token neighborhood is relaxed here, but in addition to sharing the same single token, those tokens must share the same label and label neighborhood.  That is, the CRF output should have labeled each high entropy token as well as its succeeding and preceeding token with the same label.  The intuition is that tokens appearing in slightly different contexts (ie. with different surrounding words), but that were labeled the same by the machine are more likely to appear in similar physical positions in the citation and more likely to have the same underlying ground truth value.
+
+\textbf{Same Token \& Label Neighborhood:} A harder constraint imposing both requirements listed above.
+
+\textbf{Same Field:} Our definition of a field in this scenario includes the high entropy token and all surrounding tokens that were labeled with the same value.  Thus, a high entropy Proceedings token, would include as its field all other tokens also labeled a Proceedings.  This is the hardest constraint among the four algorithms and corresponds to the safest, with the smallest possibility for tokens to be incorrectly clustered together. 
+
+\sean{Selection is per cluster instead of per citation.}
+
+\sean{Describe operators for producing clusters.}
