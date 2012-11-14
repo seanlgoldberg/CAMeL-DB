@@ -368,7 +368,11 @@ public class Segment {
 		f = new FileWriter(baseDir + "/CRFoutput.csv", false);
                 f2 = new FileWriter(baseDir + "/citationTable.csv", false);
                 f3 = new FileWriter(baseDir + "/labelTable.csv", false);
+<<<<<<< HEAD
+                facc = new FileWriter(baseDir + "/clamped_before_after.csv", false);
+=======
                 //facc = new FileWriter(baseDir + "/clamped12.csv", false);
+>>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
                 doTestWithClamping();
 		//doTest();
 	}
@@ -635,6 +639,11 @@ public class Segment {
                                 charLength += CRFout.seqs[pos].length() + 1;
                                 pos++;
                             }
+<<<<<<< HEAD
+
+                            path = segment(testRecord, testData.groupedTokens(), collect,pos, 
+                                    Integer.parseInt(citValues.get(2).trim()));
+=======
                             
                             //Convert from text to truth label
                             String lab = citValues.get(2).toLowerCase().trim();
@@ -665,6 +674,7 @@ public class Segment {
                             }
                             
                             path = segment(testRecord, testData.groupedTokens(), collect, pos, label);
+>>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
                         //FileWriter testf = new FileWriter(baseDir + "/data/testf.txt", true);
                         
                         //testf.write(citValues.get(3) + " - " + CRFout.seqs[pos] + "\n");
@@ -762,7 +772,11 @@ public class Segment {
                                     + CRFout.token[line] + "\n");
                         }
                         
+<<<<<<< HEAD
+                        int clamped;
+=======
                         int clamped = -1;
+>>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
                         if (topClusters.containsKey(citTable.citationID)) {
                             clamped = 1;
                         }
@@ -770,12 +784,17 @@ public class Segment {
                             clamped = 0;
                         }
                         
+<<<<<<< HEAD
+                        facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", " + clamped + "\n");
+                        
+=======
                         ArrayList<String> citValue = topClusters.get(citTable.citationID);
                         
                         if (citValue.get(4)!=null) {
 //                            facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", "
 //                                + citValue.get(4) + ", " + citValue.get(1) + "\n");
                         }
+>>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
                         //if (marginal.getMaxEntropyNode() < token.length){
 				//f.write(Double.toString(f1[marginal.getMaxEntropyNode()]) + " ");
 			//}

@@ -1,0 +1,4 @@
+<?php
+	require('../utilities.php');
+	$result = doQuery("SELECT ca_pattern, rf_label, tt_label, COUNT(cluster_id) AS count FROM cluster_rankings JOIN citation_clusters ON cr_cluster_id=cc_cluster_id AND cr_clustering_id=cc_clustering_id JOIN citations ON cc_citation_id=citation_id JOIN tokens ON citation_highest_entropy_token=token_id JOIN ranking_functions ON cr_function=rf_id JOIN clusterings ON cr_clustering_id=clustering_id JOIN cluster_algorithms ON clustering_algorithm=ca_id JOIN token_types ON tt_id=token_gold_standard GROUP BY cr_clustering_id, cr_function, token_gold_standard ORDER BY cr_clustering_id, cr_function, count DESC");
+?>
