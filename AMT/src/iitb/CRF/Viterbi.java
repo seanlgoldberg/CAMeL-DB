@@ -371,7 +371,11 @@ public class Viterbi implements Serializable {
 		finalSoln.clear();
 		finalSoln.valid = true;
 		for (int yi = 0; yi < model.numY; yi++) {
-			finalSoln.add(winningLabel[yi][dataSeq.length() - 1], 0);
+                    if (dataSeq.length()==0) {
+                        System.out.println("STOP");
+                    }
+                    
+                    finalSoln.add(winningLabel[yi][dataSeq.length() - 1], 0);
 		}
 		/*
 		 * System.out.println("final solution"); for (int i = 0; i <

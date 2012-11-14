@@ -165,23 +165,32 @@ public class CreateQuestionTemplate {
 	
 		int counter=0;
                 int counter2 = 0;
-		
+                //Read first line description
+		reader.readNext();
+                
 		while((tokenize=reader.readNext())!=null){
 			//positionToken.addElement(tokenize[1]);
 			//citationID.addElement(tokenize[3]);
 			//citationText.addElement(tokenize[4]);
 			
                         //Using schema of (CitationID,Position(in characters), ClusterID, TruthLabel, TokenString, CitationString)
-                        System.out.println(tokenize[3]);
-                        System.out.println(tokenize[6]);
+                        //System.out.println(tokenize[3]);
+                        //System.out.println(tokenize[7]);
                         if (!clusterID.contains(tokenize[3])) {
                             citationID.addElement(tokenize[1]);
                             positionToken.addElement(tokenize[2]);
-                            citationText.addElement(tokenize[6]);
+                            String citText = "";
+                            int L = tokenize.length;
+                            for (int i=7; i<L; i++) {
+                                System.out.println(tokenize[i]);
+                                citText = citText.concat(tokenize[i]);
+                                System.out.println(citText);
+                            }
+                            citationText.addElement(citText);
                             clusterID.addElement(tokenize[3]);
                             counter++;
                             counter2++;
-                            System.out.println(tokenize[3]);
+                            //System.out.println(tokenize[3]);
                         }
 			
 			if(counter==noOfQuesPerHit){
@@ -197,7 +206,7 @@ public class CreateQuestionTemplate {
 		if(counter<noOfQuesPerHit)
 			generateQuestion(citationID, citationText, positionToken, index++,outputCSVFile,questionFileDir);
 		
-		System.out.println("Output CSV fime "+outputCSVFile+ "is written successfully");
+		System.out.println("Output CSV fime "+outputCSVFile+ " is written successfully");
 		reader.close();
 		
 	}
@@ -206,9 +215,9 @@ public class CreateQuestionTemplate {
 		
 		CreateQuestionTemplate cqt=new CreateQuestionTemplate();
 		//String inputCSVFile="highest_entropies.csv";
-		String inputCSVFile = "top_clusters.csv";
+		String inputCSVFile = "cluster6.csv";
                 String outputCSVFile="outputCSV.csv";
-		String questionFileDir="QuestionXML";
+		String questionFileDir="QuestionXML_DBLP500";
 		File dir=new File(questionFileDir);
 		questionFileDir=dir.getAbsolutePath();
 		if (dir.exists() || dir.mkdirs())

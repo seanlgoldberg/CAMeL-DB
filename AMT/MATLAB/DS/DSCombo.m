@@ -1,4 +1,4 @@
-function comboAns = DSCombo(NUM_QUESTIONS,NUM_LABELS,NUM_TURKERS,mass,Sets,ONE_TURKER)
+function [comboAns, uncertainty] = DSCombo(NUM_QUESTIONS,NUM_LABELS,NUM_TURKERS,mass,Sets,ONE_TURKER)
 
 Running = zeros(NUM_QUESTIONS,NUM_LABELS+1);
 MASS_SIZE = NUM_LABELS+1;
@@ -28,7 +28,7 @@ for i=1:NUM_QUESTIONS,
                             disp('Error: Outer<0');
                         end
                         
-                        if (intersect(Sets{k2},Sets{k3})==k)
+                        if (~isempty(find(intersect(Sets{k2},Sets{k3})==k,1)))
                             Rsum(k) = Rsum(k) + Outer;
                         elseif isempty(intersect(Sets{k2},Sets{k3}))
                             K = K + Outer;
@@ -62,7 +62,8 @@ comboAns = Running;
 for i=1:NUM_LABELS,
     comboAns(:,i) = comboAns(:,i) + comboAns(:,NUM_LABELS+1);
 end
-N = sum(comboAns,2);
+uncertainty = comboAns(:,NUM_LABELS+1);
+N = sum(comboAns(:,1:NUM_LABELS),2);
 for i=1:NUM_LABELS,
     comboAns(:,i) = comboAns(:,i)./N;
 end

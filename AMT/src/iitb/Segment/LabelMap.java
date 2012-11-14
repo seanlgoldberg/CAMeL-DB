@@ -6,9 +6,14 @@ package iitb.Segment;
  */ 
 
 class LabelMap {
-    int map(int l) {return l-1;}
-    int revMap(int l) {return l+1;}
+//    int map(int l) {return l-1;}
+//    int revMap(int l) {return l+1;}
+    
+    int map(int l) {return l;}
+    int revMap(int l) {return l;}
 };
+
+
 
 class BinaryLabelMap extends LabelMap {
     int posClass;
