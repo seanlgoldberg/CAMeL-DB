@@ -235,4 +235,21 @@
   bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 
-
+@article{1979,
+     jstor_articletype = {research-article},
+     title = {Maximum Likelihood Estimation of Observer Error-Rates Using the EM Algorithm},
+     author = {Dawid, A. P. and Skene, A. M.},
+     journal = {Journal of the Royal Statistical Society. Series C (Applied Statistics)},
+     jstor_issuetitle = {},
+     volume = {28},
+     number = {1},
+     jstor_formatteddate = {1979},
+     pages = {pp. 20-28},
+     url = {http://www.jstor.org/stable/2346806},
+     ISSN = {00359254},
+     abstract = {In compiling a patient record many facets are subject to errors of measurement. A model is presented which allows individual error-rates to be estimated for polytomous facets even when the patient's "true" response is not available. The EM algorithm is shown to provide a slow but sure way of obtaining maximum likelihood estimates of the parameters of interest. Some preliminary experience is reported and the limitations of the method are described.},
+     language = {English},
+     year = {1979},
+     publisher = {Wiley-Blackwell for the Royal Statistical Society},
+     copyright = {Copyright © 1979 Royal Statistical Society},
+    }
