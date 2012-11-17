@@ -1,11 +1,11 @@
 \section{Integration}
 
 \sean{Add paragraph on "frequentist" (MV) versus "Bayesian" approach}
-One of the difficulties in relying on information from a crowd of sources is the possibility of a high degree of noise due to unreliable and in some cases even malicious sources.  One of the standard procedures for increasing quality control is to increase the redundancy of questions.  By asking the same question to multiple sources and aggregating the answers, one achieves a higher probability of a high quality answer.
+One of the difficulties in relying on information from a crowd of sources is the possibility of a high degree of noise due to unreliable and in some cases even malicious sources.  One of the standard procedures for increasing quality control is to increase the redundancy of questions.  By asking the same question to multiple sources and aggregating the answers, we can achieve a higher probability of a good answer.
 
-In many cases, it suffices to collect 3 or 5 votes on each question and use the majority opinion.  There are potential scenarios in which this ceases to be an effective strategy.  If the probability of receiving low quality work is equal to or greater than that of receiving higher quality, it is detrimental to treat every vote of equal merit.  Confusing or difficult questions may also cause conflict among the workers and result in a mix of answers.  Taking the deterministic mode results in a loss of information about the controversy of the question, information which may prove useful in applications such as sentiment analysis or opinionated questions.
+In many cases, it suffices to collect, say, 3 or 5 votes on each question and use the majority opinion.  There are potential scenarios in which this ceases to be an effective strategy.  If the probability of receiving low quality work is equal to or greater than that of receiving higher quality, it's detrimental to treat every vote of equal merit.  Confusing or difficult questions can also cause conflict among the workers and result in a mix of answers.  Taking the deterministic mode results in a loss of information about the controversy of the question, information which may prove useful in applications such as sentiment analysis or opinion-dominated questions.
 
-Thus we are led to a desire to manifest the crowd response probabilistically, weighting votes proportionately and making decisions when it is conflicted on a question.  We develop a principled framework rooted in belief theory for combining crowd data.  There are two fundamentally different ways of interpreting belief theory \cite{DBLP:journals/ai/HalpernF92}, that of a generalized probability distribution (Bayesian) and as a means to combine different forms of evidence (Dempster-Shafer).  We show these to be equivalent if crowd answers are mapped to a certain distribution based on the quality of each worker.  We describe our method for uncovering this quality in the next section.
+Thus we are led to a desire to manifest the crowd response probabilistically, weighing votes proportionately and making decisions when conflicted on a question.  We implement two approaches for this data integration task, drawing separately from probability theory and belief theory.  The first maintains a single probability function, establishing a prior based on the machine's labeling, and updating the posterior using Bayes's Rule.  Alternatively, we combine the Turker response in the absence of the machine prior using Dempster-Shafer theory.  Both methods require an identification of the level of quality of each individual Turker.  We describe previous work that we've leveraged in the next section before outlining our two integration methods.\sean{Still may want to add Halpern & Fagin reference.}
 
 \subsection{Evaluating Turker Quality}
 
@@ -17,11 +17,13 @@ In order to obtain a sufficient number of answers to similar questions by, HITs 
 
 The algorithm initializes each Turker's accuracy to 1.  It takes a majority vote among the answers to each question to define an initial answer set.  Based on this agreed upon answer set, each Turker's accuracy $\pi^{k}$ is computed.  Another majority vote weighted by $\pi^{k}$ determines a possibly different answer set.  The Turker accuracies are re-computed.  This process continues until convergence in both the "true" answer set and the $\pi^{k}$ accuracies.  The full pseudo-code can be found in the appendix.
 
-\subsection{Two Views of Belief Theory for Aggregation}
+\subsection{Two Approaches to Integration}
+%~ \eat{
+%~ The reason for submitting to belief theory as our main tool in the aggregation of the Turkers and machine is that it provides a natural framework arriving at a posterior distribution composed of various pieces of evidence.  While the roots of belief theory first centered around the Dempster-Shafer model, much criticism has been laid upon the model for turning up erroneous or inaccurate results.  Halpern and Fagin \cite{DBLP:journals/ai/HalpernF92} argue this is purely from a misuse of appropriating one interpretation for another.  The first view of belief function one can take is that of a generalized probability function, starting with a prior probability and updating as new evidence comes along to arrive at a conditional posterior.  On the other hand, viewing belief functions as evidence themselves leads one to use Dempster's Rule of Combination.  One presents the \textit{updating} of evidence while they other presents the \textit{combining}.  One utilizes a prior while the other does not.
+%~ 
+%~ We use this as inspiration for studying two different approaches to aggregating humans and machines akin to the differing interpretations.  In our Bayesian formulation, the CRF marginal distribution is used as a prior and \textit{updated} based on Turker responses.  Using an alternative Dempster-Shafer model, we forego the use of a prior and \textit{combine} Turker responses using Dempster's Rule of Combination.  
+%}
 
-The reason for submitting to belief theory as our main tool in the aggregation of the Turkers and machine is that it provides a natural framework arriving at a posterior distribution composed of various pieces of evidence.  While the roots of belief theory first centered around the Dempster-Shafer model, much criticism has been laid upon the model for turning up erroneous or inaccurate results.  Halpern and Fagin \cite{DBLP:journals/ai/HalpernF92} argue this is purely from a misuse of appropriating one interpretation for another.  The first view of belief function one can take is that of a generalized probability function, starting with a prior probability and updating as new evidence comes along to arrive at a conditional posterior.  On the other hand, viewing belief functions as evidence themselves leads one to use Dempster's Rule of Combination.  One presents the \textit{updating} of evidence while they other presents the \textit{combining}.  One utilizes a prior while the other does not.
-
-We use this as inspiration for studying two different approaches to aggregating humans and machines akin to the differing interpretations.  In our Bayesian formulation, the CRF marginal distribution is used as a prior and \textit{updated} based on Turker responses.  Using an alternative Dempster-Shafer model, we forego the use of a prior and \textit{combine} Turker responses using Dempster's Rule of Combination.  
 
 
 \subsubsection{Bayesian Conditional Probability}
@@ -56,20 +58,29 @@ P(L^{n}=l|A^{n}_{1}=a_{1},...,A^{n}_{K}=a_{k}) = P(L^{n}=l)\prod_{k}|\mathbbm{1}
 Using equation~\ref{eq:full_bayes} for all possible labels $l$ and renormalizing produces a new posterior distribution accounting for both the initial ML extracted result and evidence gathered from the crowd.  The product can be extended and updated as new evidence comes in over time.  While currently evidence is designed to come from the crowd in \sysName , there is no explicit restriction preventing future updates from incorporating evidence from a number of different extractions as well as the crowd.
 
 \subsubsection{Dempster-Shafer Evidential Combination}
+%~ \eat{
+%~ A viable alternative is to exhibit no faith in the machine's initial marginal calculation.  After all, one could argue that by selecting only the most uncertain tokens that metric loses its value.  
+%~ }
 
-A viable alternative is to exhibit no faith in the machine's initial marginal calculation.  After all, one could argue that by selecting only the most uncertain tokens that metric loses its value.  Tossing out the CRF prior, we're left with the task of \textit{combining} disparate evidence from a group of Turkers.  This can be accomplished using Dempster's Rule of Combination.  
+Without explicit reference to the CRF prior, we're left with the task of \textit{combining} disparate evidence from a group of Turkers.  This can be accomplished using Dempster's Rule of Combination, which operates over a set of mass functions.  Mass functions differ from probability functions by relaxing the Kolmogorov axiom that functions must sum to 1.
 
-While the Bayesian approach was inspired by an alternative interpretation of belief functions, the actual implementation is still a probability function through and through, with all of Kolmogorov's axioms defining a probability function still holding.  For evidential combination, however, we leverage the full power of belief theory and relax some of those axioms to map to a set of belief functions.  The main difference between a belief function and a probability function is that probability functions are defined only over the \textit{measurable} subsets of a set while belief functions are defined over \textit{all} subsets (the power set) of a set \cite{shafer1976mathematical}.
+%~ While the Bayesian approach was inspired by an alternative interpretation of belief functions, the actual implementation is still a probability function through and through, with all of Kolmogorov's axioms defining a probability function still holding.  For evidential combination, however, we leverage the full power of belief theory and relax some of those axioms to map to a set of belief functions.  
 
-Mapping the data from Turkers into belief or mass functions is relatively straightforward.  Like with the Bayesian approach, our confidence in them getting the answer correct is reflected in their Quality score.  The mass function $m(a_{k})$ gets assigned the score $Q_{k}$.  Let $\mathcal{A}$ be the set of all possible labels ${1,2,...,L}$.  Intuitively, $m(\mathcal{A})$ is the mass associated with a random guess and all $L$ labels being equally likely.  We assume in this framework that Turkers are either reliable, getting the answer correct with belief score $Q_{k}$, or unreliable, reflected in a random guess with belief score $1-Q_{k}$.  Explicitly, for a Turker $k$ with provided answer $a_{k}$:
+%~ The main difference between a belief function and a probability function is that probability functions are defined only over the \textit{measurable} subsets of a set while belief functions are defined over \textit{all} subsets (the power set) of a set \cite{shafer1976mathematical}.
+
+We now describe mapping of the Turker data these mass functions.  Like with the Bayesian approach, our confidence in them getting the answer correct is reflected in their Quality score.  The mass function $m(a_{k})$ gets assigned the score $Q_{k}$.  Let $\mathcal{A}$ be the set of all possible labels ${1,2,...,L}$.  Intuitively, $m(\mathcal{A})$ is the mass associated with a random guess and all $L$ labels being equally likely.  We assume in this framework that Turkers are either reliable, getting the answer correct with belief score $Q_{k}$, or unreliable, reflected in a random guess with belief score $1-Q_{k}$.  Explicitly, for a Turker $k$ with provided answer $a_{k}$:
 
 \begin{equation}
-m^{n}(2^{L}) = 0\\
-m^{n}(a_{k}) = Q_{k}\\
+m^{n}(2^{L}) = 0
+\end{equation}
+\begin{equation}
+m^{n}(a_{k}) = Q_{k}
+\end{equation}
+\begin{equation}
 m^{n}(\mathcal{A}) = 1-Q_{k}
 \end{equation}
 
-The first equation simply states that initialize all mass functions to zero before setting the two values below.  The mass function $m(\mathcal{A}$ has no meaning in standard probability theory, as the set of all outcomes is not a measurable in the probabilistic sense.  We use it mainly as bookkeeping for the uncertainty in the result before normalizing it out when the aggregation computation is completed.  The set of mass functions from multiple Turkers can be combined using Dempster's Rule of Combination between Turker 1 and Turker 2 for each set $A\in2^{L}$:
+The first equation simply states that initialize all mass functions to zero before setting the two values below.  The mass function $m(\mathcal{A})$ has no meaning in standard probability theory, as the set of all outcomes is not a measurable in the probabilistic sense.  We use it mainly as bookkeeping for the uncertainty in the result before normalizing it out when the aggregation computation is completed.  The set of mass functions from multiple Turkers can be combined using Dempster's Rule of Combination between Turker 1 and Turker 2 for each set $A\in2^{L}$:
 
 \begin{equation}
 \begin{split}
@@ -86,9 +97,9 @@ The procedure is to map all HIT responses to mass functions and combine them one
 
 While we introduce Dempster-Shafer theory in the context of our simpler one-answer-per-question framework currently found in \sysName , the method will become more powerful in future work when we plan to extend functionality to allow the Turkers to provide more than one response per question when uncertain.  Reasoning over such fuzzy sets exemplifies the real power for using belief theory over probability theory.
 
-\subsection{Thresholding the Turkers}
+\subsection{Quantifying Turker Performance}
 
-Even human computation is not perfect.  The previous section looked at ways to combine Turker answers probabilistically to arrive at a final result that is not deterministic.  This is useful for when there is controversy or confusion elicited over the answers of a question.  Placing a cap on the entropy of the final probability function is a good way to guarantee only high quality returns on crowdsourced answers.  Answer aggregations not falling under the cap have their answers retained and questions are re-submitted during the next batch to gain further evidence in reaching a decision.  
+Even human computation is not perfect.  The previous section looked at ways to combine Turker answers probabilistically to arrive at a final result that is not deterministic.  This is useful for when there is controversy or confusion elicited over the answers of a question.  We use the entropy of the final label distribution to arrive at confidence value for each question.  Depending on the required accuracy of the application, a threshold on the confidence may be placed to assure only the highest quality results make it through.  In the experiments we highlight Receiver Operating Characteristic (ROC) curves that measure performance vs. answer recall.  Answers not making the cut may have their questions re-submitted to attain more information in discerning the result. 
 
 \subsection{Probabilistic Integration}
 
