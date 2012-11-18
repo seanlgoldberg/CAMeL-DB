@@ -15,7 +15,9 @@ We focus on a modified version of latter, attributable to Dawid and Skene \cite{
 
 In order to obtain a sufficient number of answers to similar questions by, HITs are designed in higher cost blocks.  The single task of supplying a label to a token is worth around \$0.01.  HITs are packaged in groups of 10 questions at \$0.10 each.  This ensures that if $K$ Turkers answer the HIT, relative performance can be judged across all 10 questions.
 
-The algorithm initializes each Turker's accuracy to 1.  It takes a majority vote among the answers to each question to define an initial answer set.  Based on this agreed upon answer set, each Turker's accuracy $\pi^{k}$ is computed.  Another majority vote weighted by $\pi^{k}$ determines a possibly different answer set.  The Turker accuracies are re-computed.  This process continues until convergence in both the "true" answer set and the $\pi^{k}$ accuracies.  The full pseudo-code can be found in the appendix.
+The algorithm initializes each Turker's accuracy to 1.  It takes a majority vote among the answers to each question to define an initial answer set.  Based on this agreed upon answer set, each Turker's accuracy $\pi^{k}$ is computed.  Another majority vote weighted by $\pi^{k}$ determines a possibly different answer set.  The Turker accuracies are re-computed.  This process continues until convergence in both the "true" answer set and the $\pi^{k}$ accuracies.
+
+Let us take a moment to define precisely how we interpret Turker quality in the context of results of the EM algorithm.  While the Dawid \& Skene approach ultimately is calculated as correct or incorrect accuracies from a set of questions, we assume a different characteristic behavior associated with this score.  Instead of the quality being a measure of whether we believe the Turker is "correct" or not, we take quality to be a measure of \textit{reliability}.  The quality score models the probability the Turker knows the correct answer and selects accordingly, while the inverse is the probability of a \textit{random guess} from the set of possible answers.  The two approaches in the next section tackle the problem of combining responses once we have an estimate of the Turkers' quality or reliability. 
 
 \subsection{Two Approaches to Integration}
 %~ \eat{
@@ -30,13 +32,13 @@ The algorithm initializes each Turker's accuracy to 1.  It takes a majority vote
 
 The fundamental assumption taken with the Bayesian model is that the ML extracted values present a serviceable prior to the model.  For a well-trained model, this view is that the machine is \textit{close enough} and the crowd's response is presented as a tweak, pushing its decision in one direction or another.  One interpretation is of the machine as a regularizer and the more peaked any aspect of the machine distribution is the more impact the prior plays and consequently the greater trust is placed in the original model.
 
-Let $A^{n}_{1}$,...,$A^{n}_{K}$ be a set of categorical random variables corresponding to answers received from $K$ Turkers for question $n$.  The CRF's prior, a random variable $L$ which also follows a categorical distribution over the label space, is our current estimate of the true distribution of labels for the token in question.  The aggregation problem is to find the posterior $P(L^{n}|A^{n}_{1}$,...,$A^{n}_{K})$ conditioned on the answers provided by the Turkers.  This can be found using Bayes's Rule:     
+Let $A^{n}_{1}$,...,$A^{n}_{K}$ be a set of categorical random variables corresponding to answers received from $K$ Turkers for question $n$.  The CRF's prior, a random variable $L$ which also follows a categorical distribution over the label space, is our current estimate of the true distribution of labels fora specific token.  The integration problem is to find the posterior $P(L^{n}|A^{n}_{1}$,...,$A^{n}_{K})$ conditioned on the answers provided by the Turkers.  This can be found using Bayes's Rule:     
 
 \begin{equation}
 P(L^{n}|A^{n}_{1},...,A^{n}_{K}) = \frac{P(A^{n}_{1},...,A^{n}_{K}|L^{n})P(L^{n})}{P(A)}
 \end{equation}
 
-We make the simplifying assumption without loss of generality that marginal probability of any set of answers $P(A)$ is uniform and only focus on the numerator.  It's already been stated that $P(L)$ is just the CRF's marginal probability before considering any new evidence.  The evidence term can be modeled with the same assumption that was made in using Dawid and Skene to estimate Turker quality.
+We make the simplifying assumption without loss of generality that marginal probability of any set of answers $P(A)$ is uniform and only focus on the numerator.  It's already been stated that $P(L)$ is just the CRF's marginal probability before considering any new evidence.  The evidence term can be modeled with the same assumption that was made in using Dawid and Skene to estimate Turker quality,
 
 \begin{equation}
 \label{eq:independence}
@@ -45,14 +47,16 @@ P(A^{n}_{1},...,A^{n}_{K}|L^{n}) = \prod_{k}P(A^{n}_{k}|L^{n})
 
 \begin{equation}
 \label{eq:bayes_evidence}
-P(A^{n}_{k}=a|L^{n}=l) = |\mathbbm{1}_{{a}\neq l} - Q_{k}|
+%%%P(A^{n}_{k}=a|L^{n}=l) = |\mathbbm{1}_{{a}\neq l} - Q_{k}| + |\mathbbm{1}_{a=l}-Q_{k}|*\frac{1}{|L|}
 \end{equation}
 
-where $a$ and $l$ are values drawn from the label space and $Q_{k}$ is the quality of the k$^{th}$ worker.  Equation~\ref{eq:independence} follows from all Turker answers being independent of each other and equation~\ref{eq:bayes_evidence} simply restates our assumption about the use of Turkery quality $Q_{k}$.  The probability of a Turker's answer $a$ agreeing with the true label $l$ equals $Q_{k}$, while the probability of an incorrect answer where they disagree is $1-Q_{k}$.  The full model is
+where $a$ and $l$ are values drawn from the label space and $Q_{k}$ is the quality of the k$^{th}$ worker.  Equation~\ref{eq:independence} follows from all Turker answers being independent of each other and equation~\ref{eq:bayes_evidence} simply restates our assumption about the use of Turkery quality $Q_{k}$.  The first term on the right hand side is the probability the Turker is reliable and answers the question truthfully.  The second term incorporates the probability they are unreliable or a spammer and through \textit{random guessing} get the question correct anyways with probability $1/|L|$, $|L|$ being the number of possible labels.
+ 
+The full model is
 
 \begin{equation}
 \label{eq:full_bayes}
-P(L^{n}=l|A^{n}_{1}=a_{1},...,A^{n}_{K}=a_{k}) = P(L^{n}=l)\prod_{k}|\mathbbm{1}_{{a_{k}}\neq l} - Q_{k}|
+%%%P(L^{n}=l|A^{n}_{1}=a_{1},...,A^{n}_{K}=a_{k}) = P(L^{n}=l)\prod_{k}\big(|\mathbbm{1}_{{a_{k}}\neq l} - Q_{k}|  + |\mathbbm{1}_{a_{k}=l}-Q_{k}|*\frac{1}{|L|}\big)
 \end{equation}
 
 Using equation~\ref{eq:full_bayes} for all possible labels $l$ and renormalizing produces a new posterior distribution accounting for both the initial ML extracted result and evidence gathered from the crowd.  The product can be extended and updated as new evidence comes in over time.  While currently evidence is designed to come from the crowd in \sysName , there is no explicit restriction preventing future updates from incorporating evidence from a number of different extractions as well as the crowd.  We conclude this section with an explicit example.
@@ -60,16 +64,16 @@ Using equation~\ref{eq:full_bayes} for all possible labels $l$ and renormalizing
 \sean{Probably want to change these numbers.  What differences between DS and Bayes do I want to exhibit by using specific numbers?}
 EXAMPLE 1. \textit{
 Assume a binary question is answered by two Turkers.  Turker A has quality 0.8 and answers label 0, while Turker B has quality 0.6 and answers label 1.  The prior CRF marginal probability over \{0,1\} is \{0.3,0.7\}.  We want to ascertain the combined distribution for the label $L$.  According to equation~\ref{eq:full_bayes}, 
-\begin{equation}
+%\begin{equation}
 \begin{align}
-P(L=0|A,B) &= \frac{1}{Z}P(L=0)P(L=0|A)P(L=0|B)
-	        &= (0.4)*(0.9)*(0.2)*\frac{1}{Z}
-	        &= .072*\frac{1}{Z}
-P(L=1|A,B) &= \frac{1}{Z}P(L=1)P(L=1|A)P(L=1|B)
-	        &= (0.6)*(0.1)*(0.8)*\frac{1}{Z}
+P(L=0|A,B) &= \frac{1}{Z}P(L=0)P(L=0|A)P(L=0|B)\\
+	        &= (0.4)*(0.9)*(0.2)*\frac{1}{Z}\\
+	        &= .072*\frac{1}{Z}\\
+P(L=1|A,B) &= \frac{1}{Z}P(L=1)P(L=1|A)P(L=1|B)\\
+	        &= (0.6)*(0.1)*(0.8)*\frac{1}{Z}\\
 	        &= .048*\frac{1}{Z}
 \end{align}
-\end{equation}
+%\end{equation}
 After combining and normalizing, the final distribution over \{0,1\} is \{0.6,0.4\}.  While the CRF originally favored label 1, the new distribution favors label 0.
 }
 
@@ -90,9 +94,11 @@ We now describe mapping of the Turker data these mass functions.  Like with the 
 m^{n}(2^{L}) = 0
 \end{equation}
 \begin{equation}
+\label{eq:mass1}
 m^{n}(a_{k}) = Q_{k}
 \end{equation}
 \begin{equation}
+\label{eq:mass2}
 m^{n}(\mathcal{A}) = 1-Q_{k}
 \end{equation}
 
@@ -100,6 +106,7 @@ The first equation simply states that initialize all mass functions to zero befo
 
 \begin{equation}
 \begin{split}
+\label{eq:DS_combo}
 m_{0,1}(A) &=(m_{1}\oplus m_{2})(A)\\
                    &=\frac{1}{1-K} \sum_{B\cap C=A\neq\emptyset} m_{1}(B)m_{2}(C)
 \end{split}
@@ -110,9 +117,23 @@ K=\sum_{B\bigcap C=\emptyset}m_{1}(B)m_{2}(C)
 \end{equation}
 
 The procedure is to map all HIT responses to mass functions and combine them one-by-one in turn to produce a single combined mass function.  Any remaining uncertainty in $m_{comb}(\mathcal{A})$ is added to all the singleton functions and re-normalized to produce a single probability function.  The original belief formulation is maintained in \sysName for easy combination if new evidence arrives at a later time.
-\sean{Insert example here.}
 
-While we introduce Dempster-Shafer theory in the context of our simpler one-answer-per-question framework currently found in \sysName , the method will become more powerful in future work when we plan to extend functionality to allow the Turkers to provide more than one response per question when uncertain.  Reasoning over such fuzzy sets exemplifies the real power for using belief theory over probability theory.
+\textit{
+EXAMPLE 2. Given the same Turkers and answers from EXAMPLE 1, Dempster's Rule of Combination may also be used to combine them.  First, we map them to mass functions using equations~\ref{eq:mass1} and ~\ref{eq:mass2}:
+\begin{align*}
+m_{A}(0) = 0.8,  m_{A}(1) = 0,  m_{A}(0,1) = 0.2\\
+m_{B}(0) = 0,  m_{B}(1) = 0.6,  m_{B}(0,1) = 0.4
+\end{align*}
+We apply equation~\ref{eq:DS_combo} to combine Turkers A and B.
+\begin{align*}
+m_{A,B}(0) = m_{A}(0)*m_{B}(0,1) = 0.32\\
+m_{A,B}(1) = m_{B}(1)*m_{A}(0,1) = 0.12\\
+m_{A,B}(0,1) = m_{A}(0,1)*m_{B}(0,1) = 0.08
+\end{align*}
+To convert to a probability distribution, we add $m_{A,B}(0,1)$ to each of the individual components and normalize.  The final distribution over \{0,1\} is \{0.66,0.34\}.  The contrasts with the result of EXAMPLE 1 by the exclusion of a machine prior.
+}
+
+While we introduce Dempster-Shafer theory here in the context of our simpler one-answer-per-question framework currently found in \sysName , it is not to be taken in contrast with its Bayesian counterpart, but as a generalization of it.  The method will become more powerful in future work when we plan to extend functionality to allow the Turkers to provide more than one response per question when uncertain.  Reasoning over such fuzzy sets exemplifies the real power for using belief theory over probability theory.
 
 \subsection{Quantifying Turker Performance}
 
@@ -120,5 +141,33 @@ Even human computation is not perfect.  The previous section looked at ways to c
 
 \subsection{Probabilistic Integration}
 
+\begin{algorithm}[fillcomment]
+\label{alg:integration}
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+\Input{Array of turker answers A,\\
+ML prior label dist. M,\\
+CRF model C,\\
+Unlabeled document d,\\
+Token t}
+\Output{Labeled document d\_labeled}
+\BlankLine
+\CommentSty{//Estimate Turker qualities from answers}\;
+Q = Dawid\_Skene(A)\;
+\CommentSty{//Compute posterior distribution of answers}\;
+\If{Bayesian}{
+	combination = Bayesian\_integrate(M,A,Q)\;
+}
+\If{Dempster-Shafer}{
+	combination = DS\_integrate(A,Q)\;
+}
+\CommentSty{//Integrate back into model}\;
+label = index\_of\_max(combination)\;
+d\_labeled = constrained\_Viterbi(C,d,t,label)\;
+
+\caption{Probabilistic integration through constrained Viterbi.}
+\end{algorithm}
+
 Not only does \sysName have the ability to aggregate answers from multiple sources, but also the ability to reinsert the resulting distribution back into the CRF. Since the underlying architecture of the system is a CRF, the dependence properties of each field are made explicit and re-running the inference algorithm has the potential to change surrounding fields as well.  This "constrained inference" substitutes the aggregated marginal distribution of a token in for the computed transition probabilities.  This highlights a very strong advantage of \sysName system, in that large errors can be corrected by small, incremental changes.
+
+Algorithm~\ref{alg:integration} shows the basic outline of our probabilistic integration scheme.  Turker answers pulled from AMT are a set of labels for token $t$ from document $d$.  They're used in the Dawid \& Skene EM method to estimate the Turkers' individual quality measures.  Depending on the integration technique chosen, either Bayesian or Dempster-Shafer is used to compute the final posterior distribution over $t$'s possible labels.  The max likelihood label is used in the constrained Viterbi function over $d$.  This function computes Viterbi in a similar manner as the original, except that all paths not passing through the max likelihood label for $t$ are set to zero.
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.2.25)  18 NOV 2012 01:31
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.2.25)  18 NOV 2012 03:58
 entering extended mode
 **paper2.tex
 (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.tex
@@ -309,12 +309,8 @@ subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 \c@algocf=\count124
 \algocf@algoframe=\box37
 \algocf@algobox=\box38
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\bbm.sty
-Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
-LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
-(Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
-LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
-(Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
+) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\ubbm.sty
+File: Ubbm.fd 1994/12/22 V 1.01 Font definition for bbm font - TH
 )
 (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
@@ -375,14 +371,6 @@ rmation.--
  []
 
 
-LaTeX Warning: Citation `DBLP:conf/icml/LaffertyMP01' on page \thepage  undefin
-ed on input line 15.
-
-
-LaTeX Warning: Citation `Quinn10crowdflow:integrating' on page \thepage  undefi
-ned on input line 21.
-
-
 LaTeX Warning: Reference `uncertainty' on page \thepage  undefined on input lin
 e 26.
 
@@ -434,15 +422,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
 ) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/background.tex)
 (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/system_overview.tex
-
-LaTeX Warning: Citation `DBLP:journals/pvldb/WangFGH10' on page \thepage  undef
-ined on input line 3.
-
-
-LaTeX Warning: Citation `DBLP:journals/pvldb/WangFGH10' on page \thepage  undef
-ined on input line 9.
-
-
 Overfull \hbox (1.25008pt too wide) in paragraph at lines 11--12
 \T1/ptm/m/n/9 tributes. The to-ken also con-tains one prob-a-bilis-tic attribut
 elabel$[]$.
@@ -482,4 +461,88 @@ e 37.
 
 [2]
 LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <9> not available
-(Font)              Font shape `T1/ptm/b/sc' tri
+(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 43.
+
+Overfull \hbox (8.64066pt too wide) in paragraph at lines 51--52
+[]\T1/ptm/m/n/9 Finally, in-te-gra-tion al-lows the database to use the crowd-a
+ggregated
+ []
+
+) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/selection.tex
+
+LaTeX Warning: Citation `DBLP:conf/sigmod/FranklinKKRX11' on page \thepage  und
+efined on input line 4.
+
+
+LaTeX Warning: Citation `DBLP:conf/sigmod/MarcusWKMM11' on page \thepage  undef
+ined on input line 4.
+
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 18.
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1pcr.fd"
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+) [3]
+
+LaTeX Warning: Reference `' on page \thepage  undefined on input line 78.
+
+
+LaTeX Warning: Reference `' on page \thepage  undefined on input line 82.
+
+
+LaTeX Warning: Reference `' on page \thepage  undefined on input line 84.
+
+
+LaTeX Warning: Reference `' on page \thepage  undefined on input line 86.
+
+
+LaTeX Warning: Reference `' on page \thepage  undefined on input line 95.
+
+) [4] (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/integration.tex
+[5]
+Overfull \hbox (5.26498pt too wide) in paragraph at lines 62--76
+\T1/ptm/m/n/9 tween DS and Bayes do I want to ex-hibit by us-ing spe-cific numb
+ers?--
+ []
+
+
+Overfull \hbox (3.55597pt too wide) in paragraph at lines 138--139
+\T1/ptm/m/n/9 Even hu-man com-pu-ta-tion is not per-fect. The pre-vi-ous sec-ti
+on looked
+ []
+
+[6]) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/experiments.tex)
+(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/conclusion.tex)
+(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/future_work.tex)
+(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.bbl)
+(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/appendix.tex) [7]
+(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 4482 strings out of 494045
+ 56594 string characters out of 3148390
+ 141076 words of memory out of 3000000
+ 7659 multiletter control sequences out of 15000+200000
+ 67738 words of font info for 70 fonts, out of 3000000 for 9000
+ 715 hyphenation exceptions out of 8191
+ 41i,16n,29p,1055b,417s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><C:/Program Files/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+sy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/ur
+w/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pf
+b><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper2.pdf (7 pages, 210312 bytes).
+PDF statistics:
+ 83 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
