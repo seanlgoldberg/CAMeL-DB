@@ -47,17 +47,18 @@ P(A^{n}_{1},...,A^{n}_{K}|L^{n}) = \prod_{k}P(A^{n}_{k}|L^{n})
 
 \begin{equation}
 \label{eq:bayes_evidence}
-%%%P(A^{n}_{k}=a|L^{n}=l) = |\mathbbm{1}_{{a}\neq l} - Q_{k}| + |\mathbbm{1}_{a=l}-Q_{k}|*\frac{1}{|L|}
+P(A^{n}_{k}=a|L^{n}=l) = |\mathbbm{1}_{{a}\neq l} - Q_{k}| + |\mathbbm{1}_{a=l}-Q_{k}|*\frac{1}{|L|}
 \end{equation}
 
 where $a$ and $l$ are values drawn from the label space and $Q_{k}$ is the quality of the k$^{th}$ worker.  Equation~\ref{eq:independence} follows from all Turker answers being independent of each other and equation~\ref{eq:bayes_evidence} simply restates our assumption about the use of Turkery quality $Q_{k}$.  The first term on the right hand side is the probability the Turker is reliable and answers the question truthfully.  The second term incorporates the probability they are unreliable or a spammer and through \textit{random guessing} get the question correct anyways with probability $1/|L|$, $|L|$ being the number of possible labels.
  
 The full model is
 
-\begin{equation}
+\begin{align}
 \label{eq:full_bayes}
-%%%P(L^{n}=l|A^{n}_{1}=a_{1},...,A^{n}_{K}=a_{k}) = P(L^{n}=l)\prod_{k}\big(|\mathbbm{1}_{{a_{k}}\neq l} - Q_{k}|  + |\mathbbm{1}_{a_{k}=l}-Q_{k}|*\frac{1}{|L|}\big)
-\end{equation}
+P(&L^{n}=l|A^{n}_{1}=a_{1},...,A^{n}_{K}=a_{k}) = \\
+&P(L^{n}=l)\prod_{k}\big(|\mathbbm{1}_{{a_{k}}\neq l} - Q_{k}|  + |\mathbbm{1}_{a_{k}=l}-Q_{k}|*\frac{1}{|L|}\big)
+\end{align}
 
 Using equation~\ref{eq:full_bayes} for all possible labels $l$ and renormalizing produces a new posterior distribution accounting for both the initial ML extracted result and evidence gathered from the crowd.  The product can be extended and updated as new evidence comes in over time.  While currently evidence is designed to come from the crowd in \sysName , there is no explicit restriction preventing future updates from incorporating evidence from a number of different extractions as well as the crowd.  We conclude this section with an explicit example.
 
