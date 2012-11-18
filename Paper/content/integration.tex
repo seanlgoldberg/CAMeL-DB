@@ -5,7 +5,7 @@ One of the difficulties in relying on information from a crowd of sources is the
 
 In many cases, it suffices to collect, say, 3 or 5 votes on each question and use the majority opinion.  There are potential scenarios in which this ceases to be an effective strategy.  If the probability of receiving low quality work is equal to or greater than that of receiving higher quality, it's detrimental to treat every vote of equal merit.  Confusing or difficult questions can also cause conflict among the workers and result in a mix of answers.  Taking the deterministic mode results in a loss of information about the controversy of the question, information which may prove useful in applications such as sentiment analysis or opinion-dominated questions.
 
-Thus we are led to a desire to manifest the crowd response probabilistically, weighing votes proportionately and making decisions when conflicted on a question.  We implement two approaches for this data integration task, drawing separately from probability theory and belief theory.  The first maintains a single probability function, establishing a prior based on the machine's labeling, and updating the posterior using Bayes's Rule.  Alternatively, we combine the Turker response in the absence of the machine prior using Dempster-Shafer theory.  Both methods require an identification of the level of quality of each individual Turker.  We describe previous work that we've leveraged in the next section before outlining our two integration methods.\sean{Still may want to add Halpern & Fagin reference.}
+Thus we are led to a desire to manifest the crowd response probabilistically, weighing votes proportionately and making decisions when conflicted on a question.  We implement two approaches for this data integration task, drawing separately from probability theory and belief theory.  The first maintains a single probability function, establishing a prior based on the machine's labeling, and updating the posterior using Bayes's Rule.  Alternatively, we combine the Turker response in the absence of the machine prior using Dempster-Shafer theory.  Both methods require an identification of the level of quality of each individual Turker.  We describe previous work that we've leveraged in the next section before outlining our two integration methods.\sean{Still may want to add Halpern and Fagin reference.}
 
 \subsection{Evaluating Turker Quality}
 
@@ -55,7 +55,23 @@ where $a$ and $l$ are values drawn from the label space and $Q_{k}$ is the quali
 P(L^{n}=l|A^{n}_{1}=a_{1},...,A^{n}_{K}=a_{k}) = P(L^{n}=l)\prod_{k}|\mathbbm{1}_{{a_{k}}\neq l} - Q_{k}|
 \end{equation}
 
-Using equation~\ref{eq:full_bayes} for all possible labels $l$ and renormalizing produces a new posterior distribution accounting for both the initial ML extracted result and evidence gathered from the crowd.  The product can be extended and updated as new evidence comes in over time.  While currently evidence is designed to come from the crowd in \sysName , there is no explicit restriction preventing future updates from incorporating evidence from a number of different extractions as well as the crowd.
+Using equation~\ref{eq:full_bayes} for all possible labels $l$ and renormalizing produces a new posterior distribution accounting for both the initial ML extracted result and evidence gathered from the crowd.  The product can be extended and updated as new evidence comes in over time.  While currently evidence is designed to come from the crowd in \sysName , there is no explicit restriction preventing future updates from incorporating evidence from a number of different extractions as well as the crowd.  We conclude this section with an explicit example.
+
+\sean{Probably want to change these numbers.  What differences between DS and Bayes do I want to exhibit by using specific numbers?}
+EXAMPLE 1. \textit{
+Assume a binary question is answered by two Turkers.  Turker A has quality 0.8 and answers label 0, while Turker B has quality 0.6 and answers label 1.  The prior CRF marginal probability over \{0,1\} is \{0.3,0.7\}.  We want to ascertain the combined distribution for the label $L$.  According to equation~\ref{eq:full_bayes}, 
+\begin{equation}
+\begin{align}
+P(L=0|A,B) &= \frac{1}{Z}P(L=0)P(L=0|A)P(L=0|B)
+	        &= (0.4)*(0.9)*(0.2)*\frac{1}{Z}
+	        &= .072*\frac{1}{Z}
+P(L=1|A,B) &= \frac{1}{Z}P(L=1)P(L=1|A)P(L=1|B)
+	        &= (0.6)*(0.1)*(0.8)*\frac{1}{Z}
+	        &= .048*\frac{1}{Z}
+\end{align}
+\end{equation}
+After combining and normalizing, the final distribution over \{0,1\} is \{0.6,0.4\}.  While the CRF originally favored label 1, the new distribution favors label 0.
+}
 
 \subsubsection{Dempster-Shafer Evidential Combination}
 %~ \eat{
@@ -94,6 +110,7 @@ K=\sum_{B\bigcap C=\emptyset}m_{1}(B)m_{2}(C)
 \end{equation}
 
 The procedure is to map all HIT responses to mass functions and combine them one-by-one in turn to produce a single combined mass function.  Any remaining uncertainty in $m_{comb}(\mathcal{A})$ is added to all the singleton functions and re-normalized to produce a single probability function.  The original belief formulation is maintained in \sysName for easy combination if new evidence arrives at a later time.
+\sean{Insert example here.}
 
 While we introduce Dempster-Shafer theory in the context of our simpler one-answer-per-question framework currently found in \sysName , the method will become more powerful in future work when we plan to extend functionality to allow the Turkers to provide more than one response per question when uncertain.  Reasoning over such fuzzy sets exemplifies the real power for using belief theory over probability theory.
 
