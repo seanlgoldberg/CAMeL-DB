@@ -1,31 +1,47 @@
-function qualityPredict = DawidSkene(turkerAnswers, QUESTIONS_PER_TURK, NUM_TURKERS, NUM_LABELS)
-qualityPredict = zeros(size(turkerAnswers,1)/QUESTIONS_PER_TURK,1);
-qual = zeros(1,NUM_TURKERS);
+function qualityBlock = DawidSkene(block, QUES_PER_HIT, NUM_TURKERS, SunnyFlag)
 
-for i=1:size(turkerAnswers,1)/QUESTIONS_PER_TURK,
-    block = turkerAnswers((QUESTIONS_PER_TURK*(i-1)+1):(QUESTIONS_PER_TURK*(i-1)+QUESTIONS_PER_TURK),:);
-    labels = mode(block,2);
-    for m=1:10,
-        %Expectation
-        for turk = 1:NUM_TURKERS,
-            qual(turk) = numel(block(block(:,turk)==labels))/QUESTIONS_PER_TURK;
-        end
-        
-        %Maximization
-        for j=1:QUESTIONS_PER_TURK,
-            tmp2 = zeros(1,NUM_LABELS);
-            for k=1:NUM_TURKERS,
-                for n=1:NUM_LABELS
-                    if (block(j,k)==n)
-                        tmp2(n) = tmp2(n) + qual(k);
-                    end
-                end
-            end
-            [~,ind] = max(tmp2);
-            labels(j) = ind;
+NUM_LABELS = 8;
+truth = zeros(QUES_PER_HIT,1);
+
+if SunnyFlag==0,
+    %Convert answer into matrix for ease of use
+    answerBlock = zeros(QUES_PER_HIT,NUM_TURKERS);
+    count = 1;
+    for i3=1:NUM_TURKERS,
+        for i2=1:QUES_PER_HIT,
+            answerBlock(i2,i3) = str2double(block{count});
+            count = count + 1;
         end
     end
-    qualityPredict(i:i+2) = qual;
+else
+    answerBlock = block;
 end
-                
-                
+qualityBlock = ones(1,NUM_TURKERS);
+prevIter = zeros(1,NUM_TURKERS);
+while(1)
+    
+    
+    %Expectation
+    for i=1:QUES_PER_HIT,
+        answerMap = zeros(NUM_LABELS,1);
+        for j=1:NUM_TURKERS,
+            answerMap(answerBlock(i,j)+1) = answerMap(answerBlock(i,j)+1) + qualityBlock(j);
+        end
+        [~,truth(i)] = max(answerMap);
+    end
+    
+    %Maximization
+    for j=1:NUM_TURKERS,
+        correct = 0;
+        for i=1:QUES_PER_HIT,
+            correct = correct + ((truth(i)-1)==answerBlock(i,j));
+        end
+        qualityBlock(j) = correct/QUES_PER_HIT;
+    end
+    
+    if ~(sum(sum(ones(size(qualityBlock))-(qualityBlock==prevIter))))
+        break;
+    else
+        prevIter = qualityBlock;
+    end
+end

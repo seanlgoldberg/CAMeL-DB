@@ -1,9 +1,9 @@
-function [avg_cor_DS,avg_cor_maj, avg_cor_B,avg_cor_Wmaj, RunningAvgCorrect, RunningAvgIncorrect] = calcAcc(NUM_QUESTIONS,comboAns, comboBayes, truth, majorityVote,wMV)
+function [avg_cor_DS,avg_cor_maj, avg_cor_B, RunningAvgCorrect, RunningAvgIncorrect] = calcAcc(comboAns, comboBayes, truth, majorityVote)
 
-correctDS = zeros(1,NUM_QUESTIONS);
-correctMaj = zeros(1,NUM_QUESTIONS);
-correctB = zeros(1,NUM_QUESTIONS);
-correctWmaj = zeros(1,NUM_QUESTIONS);
+NUM_QUESTIONS = size(comboAns,1);
+correctDS = zeros(NUM_QUESTIONS,1);
+correctMaj = zeros(NUM_QUESTIONS,1);
+correctB = zeros(NUM_QUESTIONS,1);
 RunningAvgCorrect = [0,0];
 RunningAvgIncorrect = [0,0];
 %Confusion = zeros(2);
@@ -25,11 +25,7 @@ for i=1:NUM_QUESTIONS,
         %correctMaj(i) = -1;
         %RunningAvgIncorrect(1) = RunningAvgIncorrect(1) + (correctDS(i) - correctMaj(i));
     end
-    if(wMV(i)==truth(i)),
-        correctWmaj(i) = 1;
-    else
-        correctWmaj(i) = 0;
-    end
+ 
 end
 
 
@@ -67,4 +63,4 @@ Confusion = Confusion;
 avg_cor_DS = sum(correctDS)/numel(correctDS);
 avg_cor_maj = sum(correctMaj)/numel(correctMaj);
 avg_cor_B = sum(correctB)/numel(correctB);
-avg_cor_Wmaj = sum(correctWmaj)/numel(correctWmaj);
+%avg_cor_Wmaj = sum(correctWmaj)/numel(correctWmaj);

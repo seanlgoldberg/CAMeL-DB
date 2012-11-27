@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.2.25)  18 NOV 2012 03:58
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.2.25)  22 NOV 2012 17:40
 entering extended mode
-**paper2.tex
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.tex
+**paper2
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\paper2.tex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -13,8 +13,9 @@ an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese,
 romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
 sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
 senglishmax, welsh, loaded.
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\sig-alternate.cls
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\epsfig.sty"
+
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\sig-alterna
+te.cls" ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\epsfig.sty"
 Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
@@ -195,23 +196,24 @@ LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\ae\t1aer.fd"
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\shorthands.tex
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\shorthands.
+tex"
 \c@thm=\count109
 \c@lem=\count110
 \c@ex=\count111
 \c@df=\count112
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\packages.tex
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\times.sty"
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\packages.te
+x" ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\times.sty"
 Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\ams.sty
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\ams.sty"
 Package: ams 1996/01/09
 
 Package `ams' <09 Jan 1996 13:53:56 BST>.
 Copyright (C) 1990,1995 Mike Piff, University of Sheffield, England
 Use option defs to define all the AMS symbol names
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\algo.sty
+) ("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\algo.sty"
 Package: algo 2002/06/21 v1.0 Algorithm typesetting package (JG)
 \algo@box=\box30
 \c@algo@nr=\count113
@@ -221,16 +223,16 @@ Package: algo 2002/06/21 v1.0 Algorithm typesetting package (JG)
 \algo@cur=\skip47
 \algo@next=\skip48
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\appendix.sty
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\appendix.st
+y"
 Package: appendix 2002/08/06 v1.2 extra appendix facilities
 \c@@pps=\count114
 \c@@ppsavesec=\count115
 \c@@ppsaveapp=\count116
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\xspace.sty
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\xspace.sty"
 Package: xspace 1997/10/13 v1.06 Space after command names (DPC)
-)
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
@@ -238,7 +240,8 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\subfigure.sty
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\subfigure.s
+ty"
 Package: subfigure 1995/03/06 v2.0 subfigure package
 
 Package: subfigure 1995/03/06 v2.0
@@ -246,7 +249,9 @@ Package: subfigure 1995/03/06 v2.0
 \c@lofdepth=\count118
 \c@subtable=\count119
 \c@lotdepth=\count120
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\titlesec.sty
+)
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\titlesec.st
+y"
 Package: titlesec 2005/01/22 v2.6 Sectioning titles
 \ttl@box=\box31
 \beforetitleunit=\skip49
@@ -257,11 +262,11 @@ Package: titlesec 2005/01/22 v2.6 Sectioning titles
 \titlewidthlast=\dimen126
 \titlewidthfirst=\dimen127
 ))
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\algorithm2e.sty
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\algorithm2e
+.sty"
 Package: algorithm2e 2008/00/00 v3.10 algorithms environments
 \c@AlgoLine=\count121
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\relsize.sty"
@@ -309,25 +314,41 @@ subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 \c@algocf=\count124
 \algocf@algoframe=\box37
 \algocf@algobox=\box38
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\ubbm.sty
-File: Ubbm.fd 1994/12/22 V 1.01 Font definition for bbm font - TH
-)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 53.
-LaTeX Font Info:    ... okay on input line 53.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 53.
+) ("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\paper2.au
+x"
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1ptm.fd"
+LaTeX Warning: Label `fig:first' multiply defined.
+
+
+LaTeX Warning: Label `fig:second' multiply defined.
+
+
+LaTeX Warning: Label `figure:selection1' multiply defined.
+
+
+LaTeX Warning: Label `fig:first' multiply defined.
+
+
+LaTeX Warning: Label `fig:second' multiply defined.
+
+
+LaTeX Warning: Label `figure:selection1' multiply defined.
+
+)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 55.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1ptm.fd"
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
@@ -344,27 +365,29 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 \makeMPintoPDFobject=\count130
 \everyMPtoPDFconversion=\toks37
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 166.
+LaTeX Font Info:    Try loading font information for U+msa on input line 168.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 166.
+LaTeX Font Info:    Try loading font information for U+msb on input line 168.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 166.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 168.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/abstract.tex
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/abs
+tract.tex"
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/introduction.tex
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/int
+roduction.tex"
 Overfull \hbox (15.01196pt too wide) in paragraph at lines 3--4
 []\T1/ptm/m/n/9 Need to fig-ure out where to put HIT main-te-nance and API info
 rmation.--
@@ -405,7 +428,9 @@ LaTeX Warning: Reference `conclusion' on page \thepage  undefined on input line
 LaTeX Warning: Reference `future' on page \thepage  undefined on input line 38.
 
 
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/related_work.tex
+)
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/rel
+ated_work.tex"
 Underfull \hbox (badness 10000) in paragraph at lines 2--4
 
  []
@@ -420,8 +445,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
  []
 
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/background.tex)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/system_overview.tex
+)
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/bac
+kground.tex")
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/sys
+tem_overview.tex"
 Overfull \hbox (1.25008pt too wide) in paragraph at lines 11--12
 \T1/ptm/m/n/9 tributes. The to-ken also con-tains one prob-a-bilis-tic attribut
 elabel$[]$.
@@ -468,7 +496,9 @@ Overfull \hbox (8.64066pt too wide) in paragraph at lines 51--52
 ggregated
  []
 
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/selection.tex
+)
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/sel
+ection.tex"
 
 LaTeX Warning: Citation `DBLP:conf/sigmod/FranklinKKRX11' on page \thepage  und
 efined on input line 4.
@@ -496,53 +526,126 @@ LaTeX Warning: Reference `' on page \thepage  undefined on input line 86.
 
 LaTeX Warning: Reference `' on page \thepage  undefined on input line 95.
 
-) [4] (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/integration.tex
+) [4]
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/int
+egration.tex"
+Overfull \hbox (3.17694pt too wide) in paragraph at lines 41--42
+\T1/ptm/m/n/9 rel-a-tive dif-fer-ences among dif-fer-ent la-bel pos-si-bil-i-ti
+es, we may with-
+ []
+
 [5]
-Overfull \hbox (5.26498pt too wide) in paragraph at lines 62--76
+Overfull \hbox (5.26498pt too wide) in paragraph at lines 66--80
 \T1/ptm/m/n/9 tween DS and Bayes do I want to ex-hibit by us-ing spe-cific numb
 ers?--
  []
 
-
-Overfull \hbox (3.55597pt too wide) in paragraph at lines 138--139
+[6]
+Overfull \hbox (3.55597pt too wide) in paragraph at lines 142--143
 \T1/ptm/m/n/9 Even hu-man com-pu-ta-tion is not per-fect. The pre-vi-ous sec-ti
 on looked
  []
 
-[6]) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/experiments.tex)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/conclusion.tex)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/future_work.tex)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.bbl)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/appendix.tex) [7]
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.aux)
+)
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/exp
+eriments.tex" <images/select_exp1_highE.png, id=35, 421.575pt x 316.18124pt>
+File: images/select_exp1_highE.png Graphic file (type png)
+
+<use images/select_exp1_highE.png>
+Package pdftex.def Info: images/select_exp1_highE.png used on input line 13.
+(pdftex.def)             Requested size: 252.0pt x 189.00099pt.
+
+<images/select_exp1_totalE.png, id=36, 421.575pt x 316.18124pt>
+File: images/select_exp1_totalE.png Graphic file (type png)
+
+<use images/select_exp1_totalE.png>
+Package pdftex.def Info: images/select_exp1_totalE.png used on input line 17.
+(pdftex.def)             Requested size: 252.0pt x 189.00099pt.
+
+<images/selection_exp2_highE.png, id=37, 421.575pt x 316.18124pt>
+File: images/selection_exp2_highE.png Graphic file (type png)
+
+<use images/selection_exp2_highE.png>
+Package pdftex.def Info: images/selection_exp2_highE.png used on input line 27.
+
+(pdftex.def)             Requested size: 252.0pt x 189.00099pt.
+
+<images/selection_exp2_totalE.png, id=38, 421.575pt x 316.18124pt>
+File: images/selection_exp2_totalE.png Graphic file (type png)
+
+<use images/selection_exp2_totalE.png>
+Package pdftex.def Info: images/selection_exp2_totalE.png used on input line 31
+.
+(pdftex.def)             Requested size: 252.0pt x 189.00099pt.
+
+<images/selection_exp3_highE.png, id=39, 421.575pt x 316.18124pt>
+File: images/selection_exp3_highE.png Graphic file (type png)
+
+<use images/selection_exp3_highE.png>
+Package pdftex.def Info: images/selection_exp3_highE.png used on input line 41.
+
+(pdftex.def)             Requested size: 252.0pt x 189.00099pt.
+
+<images/selection_exp3_random.png, id=40, 421.575pt x 316.18124pt>
+File: images/selection_exp3_random.png Graphic file (type png)
+
+<use images/selection_exp3_random.png>
+Package pdftex.def Info: images/selection_exp3_random.png used on input line 45
+.
+(pdftex.def)             Requested size: 252.0pt x 189.00099pt.
+)
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/con
+clusion.tex")
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/fut
+ure_work.tex")
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\paper2.bbl"
+[7])
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\content/app
+endix.tex") [8
+
+] [9 <C:/Documents and Settings/Sean/My Documents/GitHub/CAMeL-DB/Paper/images/
+select_exp1_highE.png (PNG copy)> <C:/Documents and Settings/Sean/My Documents/
+GitHub/CAMeL-DB/Paper/images/select_exp1_totalE.png (PNG copy)>]
+[10 <C:/Documents and Settings/Sean/My Documents/GitHub/CAMeL-DB/Paper/images/s
+election_exp2_highE.png (PNG copy)> <C:/Documents and Settings/Sean/My Document
+s/GitHub/CAMeL-DB/Paper/images/selection_exp2_totalE.png (PNG copy)>] [11 <C:/D
+ocuments and Settings/Sean/My Documents/GitHub/CAMeL-DB/Paper/images/selection_
+exp3_highE.png (PNG copy)> <C:/Documents and Settings/Sean/My Documents/GitHub/
+CAMeL-DB/Paper/images/selection_exp3_random.png (PNG copy)>]
+("C:\Documents and Settings\Sean\My Documents\GitHub\CAMeL-DB\Paper\paper2.aux"
+)
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 4482 strings out of 494045
- 56594 string characters out of 3148390
- 141076 words of memory out of 3000000
- 7659 multiletter control sequences out of 15000+200000
+ 4500 strings out of 494045
+ 58092 string characters out of 3148390
+ 141080 words of memory out of 3000000
+ 7672 multiletter control sequences out of 15000+200000
  67738 words of font info for 70 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 41i,16n,29p,1055b,417s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,16n,29p,1051b,417s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
 s/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex7.pfb><C:/Program Files/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/font
-s/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-sy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program File
-s/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/f
-onts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/ur
-w/times/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper2.pdf (7 pages, 210312 bytes).
+ 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/font
+s/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/u
+tmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:/Pro
+gram Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper2.pdf (11 pages, 260035 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
+ 105 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

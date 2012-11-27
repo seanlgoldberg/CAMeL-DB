@@ -2,8 +2,53 @@
 \sean{Introduction to various experiments. Description of data sets.}
 In this section we demonstrate the effectiveness of our selection and integration approaches on sets of both synthetic and real data.  We extracted 14,000 labeled citations from DBLP \sean{footnote 1} and 500,000 from the PubMed database \sean{footnote 2}.  For unlabeled testing data, we extracted and concatenated text from each of the available fields.  Order of fields was occasionally mixed in keeping with real-life inconsistency of citation structure.
 
-\subsection{Synthetic Experiments}
+\subsection{Experiments w/ Synthetic Data}
 \subsubsection{Selection}
+
+\begin{figure*}[t]
+	\centering
+	\subfigure[High Entropy] {
+		\includegraphics[width=0.5\textwidth]{images/select_exp1_highE.png}
+		\label{fig:first}
+	}
+	\subfigure[Total Entropy] {
+		\includegraphics[width=0.5\textwidth]{images/select_exp1_totalE.png}
+		\label{fig:second}
+	}
+	\caption{Seeding comparison for high entropy and total entropy ranking.}
+	\label{figure:selection1}
+\end{figure*}
+
+\begin{figure*}[t]
+	\centering
+	\subfigure[High Entropy] {
+		\includegraphics[width=0.5\textwidth]{images/selection_exp2_highE.png}
+		\label{fig:first}
+	}
+	\subfigure[Total Entropy] {
+		\includegraphics[width=0.5\textwidth]{images/selection_exp2_totalE.png}
+		\label{fig:second}
+	}
+	\caption{Seeding comparison for high entropy and total entropy ranking.}
+	\label{figure:selection1}
+\end{figure*}
+
+\begin{figure*}[t]
+	\centering
+	\subfigure[High Entropy] {
+		\includegraphics[width=0.5\textwidth]{images/selection_exp3_highE.png}
+		\label{fig:first}
+	}
+	\subfigure[Total Entropy] {
+		\includegraphics[width=0.5\textwidth]{images/selection_exp3_random.png}
+		\label{fig:second}
+	}
+	\caption{Seeding comparison for high entropy and total entropy ranking.}
+	\label{figure:selection1}
+\end{figure*}
+
+
+
 \sean{Exp1: Comparison of clustering algorithms.}
 
 \sean{Exp2: Comparison of ranking/seeding functions.}
@@ -19,7 +64,7 @@ In this section we demonstrate the effectiveness of our selection and integratio
 
 \sean{Exp6: Recall vs. accuracy for varying entropy thresholds.}
 
-\subsection{Real Experiments}
+\subsection{Experiments w/ Real Data}
 \sean{Description of real experiment methodology.}
 
 \sean{Exp7: Table of accuracy comparisons for DS, MV, and Bayes before and after edits plus clamped inference for both data sets.}
