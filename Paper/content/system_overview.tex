@@ -1,5 +1,12 @@
 \section{System Overview}
 
+\begin{figure*}[t]
+		\centering
+		\includegraphics[width=.65\textwidth]{images/system_design.png}
+		\label{fig:system}
+		\caption{Architecture of the \sysName system.} 
+\end{figure*}
+
 This section describes the basic setup of the system.  We extend the in-database CRF model of Wang et al.\cite{DBLP:journals/pvldb/WangFGH10}, giving an overview of the original data model and then discussing our extensions to handle crowd-inserted data and newly inferred evidence.  Afterwards we explore the various operators used to manipulate the data and perform functions such as selecting uncertain tokens, pushing to the crowd, aggregating the result, and integrating new evidence into the final query results. 
 
 \subsection{Data Model}
@@ -61,7 +68,7 @@ The remainder of this paper will be spent fleshing out the procedures behind sel
 
 \sysName is a system that combines the power of the crowd and machine learning to solve problems in text extraction and labeling.  At its core is a probabilistic database defined as a set of base tables capable storing the uncertainty in the extraction process as well as a set of operators over these tables that perform jobs such as the intial extraction, querying the crowd, and integrating new data from various sources.
 
-Figure ~\ref{} shows the main architecture of \sysName.  At the base is a set of uncertain tables connected by an underlying probabilistic graphical model interface.  \sean{Read Bayestore to get a better idea of how to describe this PGM model}.
+Figure ~\ref{fig:system} shows the main architecture of \sysName.  At the base is a set of uncertain tables connected by an underlying probabilistic graphical model interface.  \sean{Read Bayestore to get a better idea of how to describe this PGM model}.
   
 
 \eat{The upper block denotes a number of standard database functions populated by machine learning algorithms.  Initially unstructured text goes through a preprocessing stage where it is tokenized and converted to lower case.  The CRF performs segmentation and labeling adhering to a specified schema and deposits the results into the database along with number of statistical metadata including marginal probabilities for each token.\sean{Where to mention parallelizability?}}

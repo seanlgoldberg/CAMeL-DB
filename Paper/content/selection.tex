@@ -1,4 +1,5 @@
 \section{Selection}
+\label{sec:selection}
 
 \sean{Move to intro from here--}
 Current implementations of crowdsourcing in databases such as CrowdDB \cite{DBLP:conf/sigmod/FranklinKKRX11} and Qurk \cite{DBLP:conf/sigmod/MarcusWKMM11} have focused primarily on using human computation at the query processing level, enabling human workers to fill in missing tables when the data is queried.  The query itself allocates on-line which entries should be modified by humans.  \sysName contrasts with this methodology by pre-processing the crowdsourcing portions off-line.
@@ -75,7 +76,13 @@ The first part of the right hand side, $H(X,Y)$, is a constant since $X \cup Y =
 H^{i} = -\sum^{L}_{j=1}p^{i}_{j}log(p^{i}_{j})
 \end{equation}
 
-where the $p_{j}$ is the marginal probability of label $j$ being the correct label.  Marginal probabilities are calculated using the CRF-variant of the Forward-Backward algorithm \cite{}.  The marginal entropy provides a formulation for a token's individual certainty or uncertainty in its label.  Compare the distributions in Figure~\ref{}.  When the distribution is fairly peaked and we are certain of an answer, the entropy tends to be fairly low.  A more uniform distribution, however, leads to a higher entropy.
+\begin{figure}
+		\includegraphics[width=0.48\textwidth]{images/ent_dist1.png}
+		\label{fig:ent_dist}
+		\caption{Typical entropy distribution for a document in \sysName} 
+\end{figure}
+
+where the $p_{j}$ is the marginal probability of label $j$ being the correct label.  Marginal probabilities are calculated using the CRF-variant of the Forward-Backward algorithm \cite{}.  The marginal entropy provides a formulation for a token's individual certainty or uncertainty in its label.  Compare the distributions in Figure~\ref{fig:ent_dist}.  When the distribution is fairly peaked and we are certain of an answer, the entropy tends to be fairly low.  A more uniform distribution, however, leads to a higher entropy.
 
 \subsection{Reducing the Space of Questions}
 \subsubsection{Constraining Tokens Per Document}

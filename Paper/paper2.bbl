@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{citeulike:9437699}
 B.~Carpenter.
@@ -12,11 +12,10 @@ A.~P. Dawid and A.~M. Skene.
 \newblock {\em Journal of the Royal Statistical Society. Series C (Applied
   Statistics)}, 28(1):pp. 20--28, 1979.
 
-\bibitem{DBLP:journals/ai/HalpernF92}
-J.~Y. Halpern and R.~Fagin.
-\newblock Two views of belief: Belief as generalized probability and belief as
-  evidence.
-\newblock {\em Artif. Intell.}, 54(2):275--317, 1992.
+\bibitem{DBLP:conf/sigmod/FranklinKKRX11}
+M.~J. Franklin, D.~Kossmann, T.~Kraska, S.~Ramesh, and R.~Xin.
+\newblock Crowddb: answering queries with crowdsourcing.
+\newblock In Sellis et~al. \cite{DBLP:conf/sigmod/2011}, pages 61--72.
 
 \bibitem{Ipeirotis:2010:QMA:1837885.1837906}
 P.~G. Ipeirotis, F.~Provost, and J.~Wang.
@@ -30,6 +29,11 @@ J.~D. Lafferty, A.~McCallum, and F.~C.~N. Pereira.
   labeling sequence data.
 \newblock In {\em ICML}, pages 282--289, 2001.
 
+\bibitem{DBLP:conf/sigmod/MarcusWKMM11}
+A.~Marcus, E.~Wu, D.~R. Karger, S.~Madden, and R.~C. Miller.
+\newblock Demonstration of qurk: a query processor for humanoperators.
+\newblock In Sellis et~al. \cite{DBLP:conf/sigmod/2011}, pages 1315--1318.
+
 \bibitem{Quinn10crowdflow:integrating}
 E.~J. Quinn, B.~B. Bederson, T.~Yeh, and J.~Lin.
 \newblock Crowdflow: Integrating machine learning with mechanical turk for
@@ -42,10 +46,11 @@ V.~C. Raykar and S.~Yu.
   tasks.
 \newblock {\em Journal of Machine Learning Research}, 13:491--518, 2012.
 
-\bibitem{shafer1976mathematical}
-G.~Shafer.
-\newblock {\em A Mathematical Theory of Evidence}.
-\newblock Princeton University Press, Princeton, 1976.
+\bibitem{DBLP:conf/sigmod/2011}
+T.~K. Sellis, R.~J. Miller, A.~Kementsietsidis, and Y.~Velegrakis, editors.
+\newblock {\em Proceedings of the ACM SIGMOD International Conference on
+  Management of Data, SIGMOD 2011, Athens, Greece, June 12-16, 2011}. ACM,
+  2011.
 
 \bibitem{DBLP:journals/pvldb/WangFGH10}
 D.~Z. Wang, M.~J. Franklin, M.~N. Garofalakis, and J.~M. Hellerstein.

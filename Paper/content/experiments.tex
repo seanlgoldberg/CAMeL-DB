@@ -1,6 +1,5 @@
 \section{Experiments}
-\sean{Introduction to various experiments. Description of data sets.}
-In this section we demonstrate the effectiveness of our selection and integration approaches on sets of both synthetic and real data.  We extracted 14,000 labeled citations from DBLP \sean{footnote 1} and 500,000 from the PubMed database \sean{footnote 2}.  For unlabeled testing data, we extracted and concatenated text from each of the available fields.  Order of fields was occasionally mixed in keeping with real-life inconsistency of citation structure.
+In this section we demonstrate the effectiveness of our selection and integration approaches on sets of both synthetic and real data.  We extracted 14,000 labeled citations from DBLP \sean{footnote 1} and 500,000 from the PubMed database \sean{footnote 2}.  For unlabeled testing data, we removed the labels and concatenated text from each of the available fields.  Order of fields was occasionally mixed in keeping with real-life inconsistency of citation structure.
 
 \subsection{Experiments w/ Synthetic Data}
 \subsubsection{Selection}
@@ -8,54 +7,69 @@ In this section we demonstrate the effectiveness of our selection and integratio
 \begin{figure*}[t]
 	\centering
 	\subfigure[High Entropy] {
-		\includegraphics[width=0.5\textwidth]{images/select_exp1_highE.png}
-		\label{fig:first}
+		\includegraphics[width=0.48\textwidth]{images/selection_exp1_highE.png}
+		\label{fig:first1}
 	}
 	\subfigure[Total Entropy] {
-		\includegraphics[width=0.5\textwidth]{images/select_exp1_totalE.png}
-		\label{fig:second}
+		\includegraphics[width=0.48\textwidth]{images/selection_exp1_totalE.png}
+		\label{fig:second1}
 	}
 	\caption{Seeding comparison for high entropy and total entropy ranking.}
-	\label{figure:selection1}
+	\label{fig:select1}
 \end{figure*}
 
 \begin{figure*}[t]
 	\centering
 	\subfigure[High Entropy] {
-		\includegraphics[width=0.5\textwidth]{images/selection_exp2_highE.png}
-		\label{fig:first}
+		\includegraphics[width=0.48\textwidth]{images/selection_exp2_highE.png}
+		\label{fig:firs2t}
 	}
 	\subfigure[Total Entropy] {
-		\includegraphics[width=0.5\textwidth]{images/selection_exp2_totalE.png}
-		\label{fig:second}
+		\includegraphics[width=0.48\textwidth]{images/selection_exp2_totalE.png}
+		\label{fig:second2}
 	}
-	\caption{Seeding comparison for high entropy and total entropy ranking.}
-	\label{figure:selection1}
+	\caption{Clustering comparison for high entropy and total entropy ranking.}
+	\label{fig:select2}
 \end{figure*}
 
 \begin{figure*}[t]
 	\centering
 	\subfigure[High Entropy] {
-		\includegraphics[width=0.5\textwidth]{images/selection_exp3_highE.png}
-		\label{fig:first}
+		\includegraphics[width=0.48\textwidth]{images/selection_exp3_highE.png}
+		\label{fig:first3}
 	}
-	\subfigure[Total Entropy] {
-		\includegraphics[width=0.5\textwidth]{images/selection_exp3_random.png}
-		\label{fig:second}
+	\subfigure[Random] {
+		\includegraphics[width=0.48\textwidth]{images/selection_exp3_random.png}
+		\label{fig:second3}
 	}
-	\caption{Seeding comparison for high entropy and total entropy ranking.}
-	\label{figure:selection1}
+	\caption{Ranking comparison for high entropy and total entropy ranking.}
+	\label{fig:select3}
 \end{figure*}
 
+Figures~\ref{fig:select1},~\ref{fig:select2}, and~\ref{fig:select3} contain experiments comparing our various selection algorithms by detailing the accuracy improvements for each question asked.  Tokens were selected using a specific combination of seeding, clustering, and ranking approaches.  
+
+Initially, a token was selected from each document using some seeding mechanism.  The number of questions is prohibitively large to show the full range of our methods, so we automatically answer each question with its ground truth label.  It's shown in the next section that the high accuracy of Mechanical Turk answers allow this to be a working assumption.  The same answer (label) to the question (token) is applied to all subsequent tokens in its cluster.  A constrained Viterbi inference algorithm runs over all documents  containing tokens belonging to question clusters.  The accuracy value in each figure represents the final token accuracy after running constrained inference.
+
+In this paper, we proposed two possible functions for selecting a token from each document.  High Entropy chooses that which has the highest marginal entropy over its labels while Neighborhood Entropy selects the token in the center of the largest 3-window pocket of marginal entropies.  Figure~\ref{fig:select1} shows effectiveness of both methods when compared to randomly selecting a token for both High Entropy and Total Entropy ranking.  The default clustering is Same Label Neighborhood.  In both cases, Neighborhood Entropy maintains a consistently higher accuracy, lending evidence to the idea that constrained inference has a larger effect on pockets of high entropy than it does on the single highest entropy tokens.  Both methods double the overall possible accuracy improvement with fewer questions.  For some accuracy regions even orders of magnitude fewer questions are needed.
+
+Figure~\ref{fig:select2} compares the possible clustering algorithms for the High Entropy and Total Entropy ranking functions.  All use high entropy for seeding.  Clustering by similar tokens that have the same label and share preceding and succeeding labels produce the largest clusters with the greatest net effect.  For the DBLP set, there were zero clustering errors for Same Token and Same Field, and approximately 2\% of citations were clustered incorrectly using the Same Label approach.  As the figures prove, however, the benefit of larger clusters far outweigh the additional errors.
+
+The final set of synthetic selection experiments is shown in Figure~/ref{fig:selection3}.  While it initially seemed like a heuristic, the effectiveness of Total entropy for ranking should now be apparent.  For both high entropy and random seeding, total entropy combines the early question strength of large clusters and the late question power of high entropy.  Same Label Neighborhood is again the default clustering for all ranking comparisons.  It's important to note, that even for random seeding, Total Entropy outperforms everything else.
 
 
-\sean{Exp1: Comparison of clustering algorithms.}
-
-\sean{Exp2: Comparison of ranking/seeding functions.}
-
-\sean{Exp3: Accuracy before and after introduction of crowd edits and clamped inference}
 
 \subsubsection{Integration}
+\begin{figure}
+		\includegraphics[width=0.48\textwidth]{images/integration_exp1_numT.png}
+		\label{fig:integrate1}
+		\caption{Comparison of integration methods vs. number of Turkers per question.} 
+\end{figure}
+\begin{figure}
+		\includegraphics[width=0.48\textwidth]{images/integration_exp2_meanQ.png}
+		\label{fig:integrate2}
+		\caption{Comparison of integration methods vs. average Turker quality.} 
+\end{figure}
+
 \sean{Describe process for producing synthetic workload and justify simplifying assumptions.}
 
 \sean{Exp4: DS vs. MV vs. Bayes for varying number of Turkers.}
