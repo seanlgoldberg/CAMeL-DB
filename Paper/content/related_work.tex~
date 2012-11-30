@@ -1,9 +1,10 @@
-\section{Introduction}
+\section{Related Work}
+\sean{Reference further attempts at using CRF for IE.}
+\sean{Might switch related work and background or move related work to back}
+Discuss previous attempts at citation IE (esp. by McCallum) \newline
 
-Motivate need for automatic information extraction
+\noindent Identify various methods of data cleaning/integration \newline
 
-Discuss reasons for wanting to automatically segment citations
+\noindent Compare selection process to that used in active learning \newline
 
-Introduce system
-
-Briefly describe dataflow from extraction to selection and integration
+\noindent Introduce crowdsourcing and related quality control efforts

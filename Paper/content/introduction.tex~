@@ -1,9 +1,37 @@
 \section{Introduction}
 
-Motivate need for automatic information extraction
+%1. Introduce problem of information extraction
+The web is becoming an ever increasing expanse of information and knowledge.  Unfortunately, the majority of this data is not easily manipulated or analyzed by computers.  Granting structure to the trove of unstructured data for storage in a database is the key to efficient and complex searching, querying, and analysis.  Traditionally it's been the job of humans to provide such metadata and structure, filling out the database by hand, but this is typically a slow and expensive process.  Information Extraction is the method of performing this annotation automatically and at scale, rapidly increasing speed and dramatically lowering costs.
 
-Discuss reasons for wanting to automatically segment citations
+%2. Introduce subset of text segmentation
+\begin{example}
+\label{ex:citation}
+Consider the following example scientific citation:
+\vspace{5mm}
+\parbox{.45\textwidth}{\textit{Building New Tools for Synthetic Image Animation by Using Evolutionary Techniques. Xavier Provot, David Crochemore, Michael Boccara, Jean Louchet Artificial Evolution 3-540-61108-8 Springer Lecture Notes in Computer Science Artificial Evolution, European Conference, AE 95, Brest, France, September 4-6, 1995, Selected Papers 1996}}
+\vspace{5mm}
+\end{example}
 
-Introduce system
+Recognizing certain fields such as the title or author are simple tasks for most individuals, but represents a challenging problem for machines.  One of the leading automated techniques employs the use of linear-chain conditional random fields (CRFs) \cite{DBLP:conf/icml/LaffertyMP01}, a generalization of Hidden Markov Models, for sequential tagging.
 
-Briefly describe dataflow from extraction to selection and integration
+%4. Problem: even the best machine results introduce some error
+While there are many advantages to be gained from automation, even the most state-of-the-art algorithms are not without error.  There is a well known tradeoff \cite{Quinn10crowdflow:integrating} between the level of accuracy achieved by human processing and the speed and financial gains from machine processing.  
+
+%5. Introduce crowdsourcing
+Recently there has been increasing development of "human computation marketplaces" such as Amazon Mechanical Turk \cite{Ipeirotis:2010:AAM:1869086.1869094}.  Developing microtasks that can be distributed concurrently to thousands of people at once at reduced cost has greatly increased the utility of hiring human workers to do trivial tasks such as annotation, ranking, and searching on the internet.  While significantly cheaper than hiring human experts, the cost of crowdsourcing is still much greater than processing a task using automated techniques.  The ideal scenario would leverage the advantages of both human and machine computation efficiently.
+
+In this paper we introduce \sysName, a system designed to take advantage of the strengths of human and machine computation in a unified manner.  This is achieved by introducing human editing only after machine algorithms have run, cleaning up and improving those elements of the output that are the most uncertain.  Our specific notion of uncertainty is defined is expanded upon in Section ~\ref{sec:uncertainty}.
+
+There are many challenges which need to be met in designing a system such as \sysName .  Uncertainty needs to managed and maintained throughout the database.  The number of questions which represent the mapping from specific fields to the crowd should be minimized to control costs.  Lastly, quality should be maintained even when dealing with a possibly noisy and conflicting crowd.  \sysName makes a number of contributions to address these challenges.
+
+Uncertainty is inherent in the construction of the system.  Probabilities associated with the machine learning results are stored in the base tables and manipulations of the data behave probabilistically according to their underlying distributions.  There is a philosophical reflection to be had in the treatment of data this way.  Decisions about the structure of data are always inferred, never truthed, and incoming evidence, be it from additional learning algorithms, human experts, or crowdsourced responses, always has the ability to update these decision processes.
+
+Even with the advent of the crowd, contracting an entire data set out could still prove costly.  Only selecting those fields for which there is a reasonable enough assumption of incorrectness would drastically reduce the cost and allow those examples "easy enough" to be done by mechanical methods to be done swiftly and cheap.  \sysName uses information theory in a manner similar to uncertainty sampling in active learning for this selection process.  It also has the power to recognize redundancy and map multiple fields into a single question.
+
+The greatest drawback to using a crowd of non-experts is the noisiness of the response.  The economics of the Amazon Mechanical Turk marketplace provides little incentive for a worker to submit high quality work and weeding out the response of lazy and malicious workers is an area of active research in the crowdsourcing community.  One of the standard techniques is to take a majority vote among a collection of workers, but such a deterministic approach is still highly susceptible if all workers are of low quality and removes possible controversy or conflict over challenging questions.  Since \sysName is a probabilistic database, we use Bayesian and Dempster-Shafer approaches to integrate responses probabilistically.  As far we know, we are the first to pursue such an integration among crowd responses.   
+
+Success and utility of the system is envinced in two ways: decreasing of the number of HITs needed to clean a database and increasing of the accuracy of worker results.  Using a combination of high entropy selection and multi-token clustering, we were able to reduce the number of HITs by many orders of magnitude compared to a random baseline.  Also, in addition to being more informative in terms of overall crowd response, our probabilistic integration method using Dempster-Shafer exhibited a XX\% gain in accuracy over its deterministic counterpart, majority voting. 
+
+This paper is organized as follows.  Section ~\ref{system} chronicles an overview of the system and its various probabilistic components.  Selection and clustering of fields is discussed in Section ~\ref{uncertainty}.  HIT management from within the system is contained in Section ~\ref{hit}.  We discuss our approach to probabilistic integration in Section ~\ref{integration}, while Section ~\ref{experiments} contains our experiments.  Finally, Section ~\ref{conclusion} contains the conclusion and Section ~\ref{future} our future work.  
+
+

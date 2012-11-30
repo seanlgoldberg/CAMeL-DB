@@ -335,7 +335,7 @@ public class Viterbi implements Serializable {
 		Soln ybest = finalSoln.get(0);
 		ybest = ybest.prevSoln;
 		int pos = -1;
-		System.out.println("Assigning Labels");
+		//System.out.println("Assigning Labels");
 		while (ybest != null) {
 			pos = ybest.pos;
 			setSegment(dataSeq, ybest.prevPos(), ybest.pos, ybest.label);
@@ -402,7 +402,7 @@ public class Viterbi implements Serializable {
 		}
 
 		double corrScore = fillArray(dataSeq, lambda, pos, label);
-		System.out.println("Winning label\n");
+		//System.out.println("Winning label\n");
 		for (int i = 0; i < winningLabel.length; i++) {
 			////for (int j = 0; j < dataSeq.length(); j++)
 				////System.out.print(winningLabel[i][j].solns[0].score + " "
@@ -415,10 +415,10 @@ public class Viterbi implements Serializable {
 		for (int yi = 0; yi < model.numY; yi++) {
 			finalSoln.add(winningLabel[yi][dataSeq.length() - 1], 0);
 		}
-		System.out.println("final solution");
-		for (int i = 0; i < finalSoln.solns.length; i++)
-			System.out.println(finalSoln.solns[i].label + " "
-					+ finalSoln.solns[i].score + " ");
+		//System.out.println("final solution");
+		//for (int i = 0; i < finalSoln.solns.length; i++)
+			//System.out.println(finalSoln.solns[i].label + " "
+					//+ finalSoln.solns[i].score + " ");
 		return corrScore;
 	}
 	

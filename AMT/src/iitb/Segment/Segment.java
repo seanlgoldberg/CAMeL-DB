@@ -10,6 +10,7 @@ import javax.xml.transform.TransformerException;
 import iitb.CRF.*;
 import iitb.Model.*;
 import iitb.Utils.*;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * 
@@ -95,7 +96,8 @@ public class Segment {
 			options.load(new FileInputStream(argv[2]));
 		}
 		options.add(3, argv);
-		processArgs();
+		
+                processArgs();
 	}
 
 	public void processArgs() throws Exception {
@@ -185,9 +187,9 @@ public class Segment {
 
 		void init(String s[]) {
 			seq = s;
-			if ((path == null) || (path.length < seq.length)) {
+			//if ((path == null) || (path.length < seq.length)) {
 				path = new int[seq.length];
-			}
+			//}
 		}
 
 		public void set_y(int i, int l) {
@@ -365,14 +367,10 @@ public class Segment {
 		allocModel();
 		featureGen.read(baseDir + "/learntModels/" + outDir + "/features");
 		crfModel.read(baseDir + "/learntModels/" + outDir + "/crf");
-		f = new FileWriter(baseDir + "/CRFoutput.csv", false);
-                f2 = new FileWriter(baseDir + "/citationTable.csv", false);
-                f3 = new FileWriter(baseDir + "/labelTable.csv", false);
-<<<<<<< HEAD
-                facc = new FileWriter(baseDir + "/clamped_before_after.csv", false);
-=======
+		
+
                 //facc = new FileWriter(baseDir + "/clamped12.csv", false);
->>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
+
                 doTestWithClamping();
 		//doTest();
 	}
@@ -385,12 +383,12 @@ public class Segment {
 	}
 
 	public void doTest() throws Exception {
-		
-                File dir = new File(baseDir + "/out/" + outDir);
+		String outDir = "out2";
+                File dir = new File(baseDir + "/" + outDir + "/" + outDir);
 		dir.mkdirs();
 		TestData testData = new TestData(baseDir + "/data/" + inName + "/"
 				+ inName + ".test", delimit, impDelimit, groupDelimit);
-		TestDataWrite tdw = new TestDataWrite(baseDir + "/out/" + outDir + "/"
+		TestDataWrite tdw = new TestDataWrite(baseDir + "/" + outDir + "/" + outDir + "/"
 				+ inName + ".test", baseDir + "/data/" + inName + "/" + inName
 				+ ".test", delimit, tagDelimit, impDelimit, labelMap);
 
@@ -431,30 +429,47 @@ public class Segment {
 	public void doTestWithClamping() throws Exception {
 		totalToks = 0;
                 rightToks = 0;
+                int flag1 = 0;
+                //String combo = "pubmed_cluster6";
+                //String comboNum = "5";
+                String filename = "xPubMed_ByHighestEntropy_t0l0l1l1_totalEntropy_3.csv";
+                
+                
             
                 //TreeMap<Integer, Integer> NodeCountMap = new TreeMap<Integer, Integer>();
 		
 		//Initialize List of CRFoutput to be sorted
 		//CRFoutput = new ArrayList<CRFoutput>();
-		CRFoutput CRFout = new CRFoutput();
+
+                CRFoutput CRFout = new CRFoutput();
 		
 		//Make output directory
-		File dir = new File(baseDir + "/out/" + outDir);
+		String outDirec = "out2";
+                File dir = new File(baseDir + "/" + outDirec + "/" + outDir);
 		dir.mkdirs();
 		
 		//Opens file that will read in tagged test data
-		TestData testData = new TestData(baseDir + "/data/" + inName + "/"
-				+ inName + ".test", delimit, impDelimit, groupDelimit);
+//		TestData testData = new TestData(baseDir + "/data/" + inName + "/"
+//				+ inName + ".test", delimit, impDelimit, groupDelimit);
+                TestData testData = new TestData(baseDir + "/data/PubMed_HighEntropy/" 
+                        + filename + ".test", delimit, impDelimit, groupDelimit);
 		
 		//Writes a tagged exp test in the same format as the tagged data
-		TestDataWrite tdw = new TestDataWrite(baseDir + "/out/" + outDir + "/"
-				+ "tempTagged" + ".test", baseDir + "/data/" + inName + "/"
-				+ inName + ".test", delimit, tagDelimit, impDelimit, labelMap);
+//		TestDataWrite tdw = new TestDataWrite(baseDir + "/" + outDirec + "/" + outDir + "/"
+//				+ "tempTagged" + ".test", baseDir + "/data/" + inName + "/"
+//				+ inName + ".test", delimit, tagDelimit, impDelimit, labelMap);
+                TestDataWrite tdw = new TestDataWrite(baseDir + "/" + outDirec + "/" + outDir + "/"
+				+ "tempTagged" + ".test", baseDir + "/data/PubMed_HighEntropy/"
+				+ filename + ".test", delimit, tagDelimit, impDelimit, labelMap);
 
 		//Reads in the original tagged testing set
-		TrainData taggedTestData = DataCruncher.readTagged(nlabels, baseDir
-				+ "/data/" + inName + "/" + inName + ".test", baseDir
-				+ "/data/" + inName + "/" + inName + ".test", delimit,
+//		TrainData taggedTestData = DataCruncher.readTagged(nlabels, baseDir
+//				+ "/data/" + inName + "/" + inName + ".test", baseDir
+//				+ "/data/" + inName + "/" + inName + ".test", delimit,
+//				tagDelimit, impDelimit, labelMap);
+                TrainData taggedTestData = DataCruncher.readTagged(nlabels, baseDir
+				+ "/data/PubMed_HighEntropy/" + filename + ".test", baseDir
+				+ "/data/PubMed_HighEntropy/" + filename + ".test", delimit,
 				tagDelimit, impDelimit, labelMap);
 
 		//testRecord holds String arrays of tagged data organized by tags 
@@ -465,11 +480,21 @@ public class Segment {
                 String citation;
                 Hashtable<Integer, ArrayList<String>> topClusters = new Hashtable<Integer, ArrayList<String>>();
                 
+                //Initialize files to be written
+                f = new FileWriter(baseDir + "/CRFoutput2.csv", false);
+                f2 = new FileWriter(baseDir + "/citationTable2.csv", false);
+                f3 = new FileWriter(baseDir + "/labelTable2.csv", false);
+
+                //facc = new FileWriter(baseDir + "/data/PubMed_HighEntropy/clamped_" + combo + "_" + comboNum
+                //+ ".csv", false);
+                facc = new FileWriter(baseDir + "/data/PubMed_HighEntropy/clamped_" + filename,false);
+                      
+                
                 //Read in top clusters to be clamped and add to Hashtable
-                FileInputStream fInStream = new FileInputStream(baseDir + "/cluster12.csv");                        
+                FileInputStream fInStream = new FileInputStream(baseDir + "/data/PubMed_HighEntropy/" + filename);                        
                 DataInputStream in = new DataInputStream(fInStream);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));               
-                String algorithm = br.readLine();
+//                String algorithm = br.readLine();
                 while ((citation = br.readLine()) != null) {
                     StringTokenizer strTok = new StringTokenizer(citation,",");
                     //if (strTok.countTokens()!=7){
@@ -489,18 +514,36 @@ public class Segment {
                 
 		int instance = 1;
 		
+                
+                
 		//Loop takes in tagged data record by record
 		// seq[] is an array of tokens
                 for (String seq[] = testData.nextRecord(); seq != null && seq.length != 0; seq = testData
 				.nextRecord()) {
 			
+                         //Print timestamp
+                         System.out.println("CURRENT TIME IS: " + System.currentTimeMillis() + " " + instance + "\n");
+                    
                         //Create tokenized record object
 			testRecord.init(seq);
                         
                         //Set values for output classes, CRFout and CitationTable
-                        CRFout.setCitationID(instance);
-                        CRFout.setSeqs(seq);
-                        CitationTable citTable = new CitationTable(instance, testData.line);
+                       
+                            CRFout.setCitationID(instance);
+                            CRFout.setSeqs(seq);
+                            
+                        FileInputStream fInStream2 = new FileInputStream(baseDir + "/data/PubMed_HighEntropy/" + filename);                        
+                        DataInputStream in2 = new DataInputStream(fInStream2);
+                        BufferedReader br2 = new BufferedReader(new InputStreamReader(in2));
+                        for (int line=0; line<instance; line++) {
+                            citation = br2.readLine();
+                        }
+                        StringTokenizer strTok = new StringTokenizer(citation,",");
+                        String relClusterID = strTok.nextToken();
+                        int citID = Integer.parseInt(strTok.nextToken().trim());
+                        
+                        //CitationTable citTable = new CitationTable(instance, testData.line);
+                        CitationTable citTable = new CitationTable(citID, testData.line);
 			
 			if (options.getInt("debugLvl") > 1) {
 				//Util.printDbg("Invoking segment on " + seq);
@@ -509,10 +552,14 @@ public class Segment {
                         // token[] is an array of labels for seq[]
 			int[] token = allLabels(taggedTestData.nextRecord());                        
                         
-                        CRFout.setToks(token);
+                        
+                            CRFout.setToks(token);
 
-			tdw = new TestDataWrite(baseDir + "/out/" + outDir + "/" + inName
-					+ ".test", baseDir + "/data/" + inName + "/" + inName
+//			tdw = new TestDataWrite(baseDir + "/" + outDirec + "/" + outDir + "/" + inName
+//					+ ".test", baseDir + "/data/" + inName + "/" + inName
+//					+ ".test", delimit, tagDelimit, impDelimit, labelMap);
+                            tdw = new TestDataWrite(baseDir + "/" + outDirec + "/" + outDir + "/" + inName
+					+ ".test", baseDir + "/data/PubMed_HighEntropy/" + filename
 					+ ".test", delimit, tagDelimit, impDelimit, labelMap);
 
 			/* Without Clamping */
@@ -529,38 +576,43 @@ public class Segment {
 			tdw.close();
                         
                         //Sunny code: outputting tokens?
-			TestDataWrite tdw1 = new TestDataWrite(baseDir + "/data/" + inName + "/"
-					+ "tempTagged" + ".test", baseDir + "/data/" + inName + "/"
-					+ inName + ".test", delimit, tagDelimit, impDelimit,
+//			TestDataWrite tdw1 = new TestDataWrite(baseDir + "/data/" + inName + "/"
+//					+ "tempTagged2" + ".test", baseDir + "/data/" + inName + "/"
+//					+ inName + ".test", delimit, tagDelimit, impDelimit,
+//					labelMap);
+                        TestDataWrite tdw1 = new TestDataWrite(baseDir + "/data/" + inName + "/"
+					+ "tempTagged2" + ".test", baseDir + "/data/PubMed_HighEntropy/" 
+					+ filename + ".test", delimit, tagDelimit, impDelimit,
 					labelMap);
 
 			tdw1.writeRecord(token, token.length, instance);
 			tdw1.close();
                         
-                        //Computing and determining all marginals
-			Marginals marginal = new Marginals(crfModel, testRecord, null);
-			marginal.compute();
-			marginal.printBetaVector();
-			marginal.computeMarginal();
-			marginal.normalize();
-			//marginal.printNormalized();
-			marginal.calculateEntropy(method);
-			//System.out.println("\n");
-			
-                        //Compute entropy
-                        Double[][] totalMarginal = new Double[token.length][nlabels];
-                        double[] ent = new double[token.length];
-                        for (int i=0; i<token.length; i++) {
-                            Double[] marg = new Double[nlabels];
-                            marg = marginal.getMarginalProb(i);
-                            System.arraycopy(marg, 0, totalMarginal[i], 0, nlabels);
-                            ent[i] = marginal.getEntropy(i);
+                        if (flag1==1) {
+                            //Computing and determining all marginals
+                            Marginals marginal = new Marginals(crfModel, testRecord, null);
+                            marginal.compute();
+                            marginal.printBetaVector();
+                            marginal.computeMarginal();
+                            marginal.normalize();
+                            //marginal.printNormalized();
+                            marginal.calculateEntropy(method);
+                            //System.out.println("\n");
+
+                            //Compute entropy
+                            Double[][] totalMarginal = new Double[token.length][nlabels];
+                            double[] ent = new double[token.length];
+                            for (int i=0; i<token.length; i++) {
+                                Double[] marg = new Double[nlabels];
+                                marg = marginal.getMarginalProb(i);
+                                System.arraycopy(marg, 0, totalMarginal[i], 0, nlabels);
+                                ent[i] = marginal.getEntropy(i);
+                            }
+
+                            //Set Marginal and Entropy values
+                            CRFout.setTotalMarginal(totalMarginal);
+                            CRFout.setEntropy(ent);
                         }
-                        
-                        //Set Marginal and Entropy values
-                        CRFout.setTotalMarginal(totalMarginal);
-                        CRFout.setEntropy(ent);
-                      
 			///////////////
 			//NodeCountMap.put(instance, marginal.numHighEntropyNodes(0.2));
 			//////////////
@@ -591,31 +643,39 @@ public class Segment {
 			/* clamping */
 			//System.out.println("Length:" + token.length);
 			
+//                        TrainData tdMan = DataCruncher.readTagged(nlabels, baseDir + "/data/"
+//				+ inName + "/" + "tempTagged2" + ".test", baseDir + "/data/"
+//				+ inName + "/" + inName + ".test", delimit, tagDelimit,
+//				impDelimit, labelMap);
+//                        TrainData tdAuto = DataCruncher.readTagged(nlabels, baseDir + "/" + outDirec + "/"
+//				+ outDir + "/" + inName + ".test", baseDir + "/data/" + inName
+//				+ "/" + inName + ".test", delimit, tagDelimit, impDelimit,
+//				labelMap);
                         TrainData tdMan = DataCruncher.readTagged(nlabels, baseDir + "/data/"
-				+ inName + "/" + "tempTagged" + ".test", baseDir + "/data/"
-				+ inName + "/" + inName + ".test", delimit, tagDelimit,
+				+ inName + "/" + "tempTagged2" + ".test", baseDir + "/data/PubMed_HighEntropy/"
+				+ filename + ".test", delimit, tagDelimit,
 				impDelimit, labelMap);
-                        TrainData tdAuto = DataCruncher.readTagged(nlabels, baseDir + "/out/"
-				+ outDir + "/" + inName + ".test", baseDir + "/data/" + inName
-				+ "/" + inName + ".test", delimit, tagDelimit, impDelimit,
+                        TrainData tdAuto = DataCruncher.readTagged(nlabels, baseDir + "/" + outDirec + "/"
+				+ outDir + "/" + inName + ".test", baseDir + "/data/PubMed_HighEntropy/"
+				+ filename + ".test", delimit, tagDelimit, impDelimit,
 				labelMap);
                         
                         //Accuracy Calculation for Clamping
-                        for (int idx=0; idx<tdAuto.size(); idx++) {
-                            TrainRecord trMan = tdMan.nextRecord();
-                            TrainRecord trAuto = tdAuto.nextRecord();
-                            //if (idx==(CRFout.citationID-1)) {
-                                int tokenMan[] = allLabels(trMan);
-                                int tokenAuto[] = allLabels(trAuto);
-                                CRFout.setTrueLabels(tokenMan);
-                                CRFout.setAutoLabels(tokenAuto);
-                                for (int idx2=0; idx2<tokenMan.length; idx2++) {
-                                    totalToks++;
-                                    if (tokenMan[idx2]==tokenAuto[idx2])
-                                        rightToks++;
-                                }
-                            //}
-                        }
+//                        for (int idx=0; idx<tdAuto.size(); idx++) {
+//                            TrainRecord trMan = tdMan.nextRecord();
+//                            TrainRecord trAuto = tdAuto.nextRecord();
+//                            //if (idx==(CRFout.citationID-1)) {
+//                                int tokenMan[] = allLabels(trMan);
+//                                int tokenAuto[] = allLabels(trAuto);
+//                                CRFout.setTrueLabels(tokenMan);
+//                                CRFout.setAutoLabels(tokenAuto);
+//                                for (int idx2=0; idx2<tokenMan.length; idx2++) {
+//                                    totalToks++;
+//                                    if (tokenMan[idx2]==tokenAuto[idx2])
+//                                        rightToks++;
+//                                }
+//                            //}
+//                        }
                         
 ///////////////////////////////////////////////////////////////////////////////////////////////
 /////
@@ -631,50 +691,113 @@ public class Segment {
                         if (topClusters.containsKey(citTable.citationID)) {
                             ArrayList<String> citValues = topClusters.get(citTable.citationID);
                             
+                            FileInputStream fInStream3 = new FileInputStream(baseDir + "/data/PubMed_HighEntropy/" 
+                                    + filename + ".test.raw");                        
+                            DataInputStream in3 = new DataInputStream(fInStream3);
+                            BufferedReader br3 = new BufferedReader(new InputStreamReader(in3));
+                            for (int line=0; line<instance; line++) {
+                                citation = br3.readLine();
+                            }
+                            StringTokenizer tok = new StringTokenizer(citation.toLowerCase(),
+                                                    " ", true);
+                            
                             //FIGURE OUT TOKEN POSITION FROM CHARACTER POSITION HERE
+                            if (instance==26) 
+                                {
+                                    System.out.println("STOP");
+                                }
+                            int fflag = 1;
                             int charPos = Integer.parseInt(citValues.get(0).trim());
                             int charLength = 0;
                             int pos = 0;
                             while (charLength < charPos) {
-                                charLength += CRFout.seqs[pos].length() + 1;
-                                pos++;
+                               //System.out.println(CRFout.seqs.length);
+//                                if(pos<CRFout.seqs.length)  {
+//                                    charLength += CRFout.seqs[pos].length() + 1;
+//                                    pos++;
+//                               }
+                                if (tok.hasMoreTokens()) {
+                                    String tt = tok.nextToken();
+                                    int count = StringUtils.countMatches(tt, "-");
+                                    int countb = StringUtils.countMatches(tt, "--");
+                                    int count2 = StringUtils.countMatches(tt, ",");
+                                    int count3 = StringUtils.countMatches(tt, ":");
+                                    
+                                    charLength += tt.length();
+                                    //System.out.println(tt);
+                                    if (!tt.equals(" "))
+                                        pos++;
+                                    for (int i=0; i<(count-2*countb); i++) {
+                                        pos++;
+                                    }
+                                    for (int i=0; i<countb; i++) {
+                                        pos++;
+                                    }
+                                    for (int i=0; i<count2; i++) {
+                                        pos++;
+                                    }
+                                }
+                                else{
+                                    break;
+                               }
                             }
-<<<<<<< HEAD
+                            
 
-                            path = segment(testRecord, testData.groupedTokens(), collect,pos, 
-                                    Integer.parseInt(citValues.get(2).trim()));
-=======
+//                            path = segment(testRecord, testData.groupedTokens(), collect,pos, 
+//                                    Integer.parseInt(citValues.get(2).trim()));
                             
                             //Convert from text to truth label
                             String lab = citValues.get(2).toLowerCase().trim();
                             int label = -1;
+//                            if (lab.equals("title")) {
+//                                label = 0;
+//                            }
+//                            else if (lab.equals("author")) {
+//                                label = 1;
+//                            }
+//                            else if (lab.equals("conference")) {
+//                                label = 2;
+//                            }
+//                            else if (lab.equals("isbn")) {
+//                                label = 3;
+//                            }
+//                            else if (lab.equals("publisher")) {
+//                                label = 4;
+//                            }
+//                            else if (lab.equals("series")) {
+//                                label = 5;
+//                            }
+//                            else if (lab.equals("proceedings")) {
+//                                label = 6;
+//                            }
+//                            else if (lab.equals("year")) {
+//                                label = 7;
+//                            }
+                            
                             if (lab.equals("title")) {
                                 label = 0;
                             }
-                            else if (lab.equals("author")) {
+                            else if (lab.equals("source")) {
                                 label = 1;
                             }
-                            else if (lab.equals("conference")) {
+                            else if (lab.equals("author")) {
                                 label = 2;
                             }
-                            else if (lab.equals("isbn")) {
+                            else if (lab.equals("issue")) {
                                 label = 3;
                             }
-                            else if (lab.equals("publisher")) {
+                            else if (lab.equals("volume")) {
                                 label = 4;
                             }
-                            else if (lab.equals("series")) {
+                            else if (lab.equals("pages")) {
                                 label = 5;
                             }
-                            else if (lab.equals("proceedings")) {
-                                label = 6;
-                            }
                             else if (lab.equals("year")) {
-                                label = 7;
+                                label = 6;
                             }
                             
                             path = segment(testRecord, testData.groupedTokens(), collect, pos, label);
->>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
+
                         //FileWriter testf = new FileWriter(baseDir + "/data/testf.txt", true);
                         
                         //testf.write(citValues.get(3) + " - " + CRFout.seqs[pos] + "\n");
@@ -706,9 +829,13 @@ public class Segment {
 //								i, token[i], token[i-1], token[i+1]);
 //						////////////////////
 //					}
-              			TestDataWrite tdw2 = new TestDataWrite(baseDir + "/out/" + outDir + "/"
-						+ inName + ".test", baseDir + "/data/" + inName + "/"
-						+ inName + ".test", delimit, tagDelimit, impDelimit,
+//              			TestDataWrite tdw2 = new TestDataWrite(baseDir + "/" + outDirec + "/" + outDir + "/"
+//						+ inName + ".test", baseDir + "/data/" + inName + "/"
+//						+ inName + ".test", delimit, tagDelimit, impDelimit,
+//						labelMap);
+                                        TestDataWrite tdw2 = new TestDataWrite(baseDir + "/" + outDirec + "/" + outDir + "/"
+						+ inName + ".test", baseDir + "/data/PubMed_HighEntropy/" 
+						+ filename + ".test", delimit, tagDelimit, impDelimit,
 						labelMap);
 					tdw2.writeRecord(path, testRecord.length(), instance);
 					tdw2.close();
@@ -744,39 +871,38 @@ public class Segment {
 //			}
 
 			instance++;
+     ////////////////////////////////////////////////////////////////////////////////////////////////////                   
+//                          f2.write(citTable.citationID + ", \"" + citTable.rawText + "\"\n");
+//                        for (int line=0; line<CRFout.seqs.length; line++) {
+//                            f.write(CRFout.citationID + ", " 
+//                                //+ citTable.rawText.indexOf(CRFout.seqs[line]) + ", \""
+//                                + line + ", \""
+//                                + CRFout.seqs[line] + "\", " 
+//                                + Integer.toString(CRFout.trueLabels[line]) + ", "
+//                                + Integer.toString(CRFout.autoLabels[line]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][0]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][1]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][2]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][3]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][4]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][5]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][6]) + ", "
+//                                + Double.toString(CRFout.totalMarginal[line][7]) + ", "
+//                                + Double.toString(CRFout.entropy[line]) + "\n"
+//                                );
+//                        }
                         
-                          f2.write(citTable.citationID + ", \"" + citTable.rawText + "\"\n");
-                        for (int line=0; line<CRFout.seqs.length; line++) {
-                            f.write(CRFout.citationID + ", " 
-                                //+ citTable.rawText.indexOf(CRFout.seqs[line]) + ", \""
-                                + line + ", \""
-                                + CRFout.seqs[line] + "\", " 
-                                + Integer.toString(CRFout.trueLabels[line]) + ", "
-                                + Integer.toString(CRFout.autoLabels[line]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][0]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][1]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][2]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][3]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][4]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][5]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][6]) + ", "
-                                + Double.toString(CRFout.totalMarginal[line][7]) + ", "
-                                + Double.toString(CRFout.entropy[line]) + "\n"
-                                );
-                        }
+//                        for (int line=0; line<CRFout.seqs.length; line++) {
+//                            f3.write(citTable.citationID + ", "
+//                                    + line + ", "
+//                                    + "\"" + CRFout.seqs[line] + "\", "
+//                                    + CRFout.token[line] + "\n");
+//                        }
                         
-                        for (int line=0; line<CRFout.seqs.length; line++) {
-                            f3.write(citTable.citationID + ", "
-                                    + line + ", "
-                                    + "\"" + CRFout.seqs[line] + "\", "
-                                    + CRFout.token[line] + "\n");
-                        }
-                        
-<<<<<<< HEAD
-                        int clamped;
-=======
+       //////////////////////////////////////////////////////////////////////////////////////                
+
                         int clamped = -1;
->>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
+
                         if (topClusters.containsKey(citTable.citationID)) {
                             clamped = 1;
                         }
@@ -784,17 +910,16 @@ public class Segment {
                             clamped = 0;
                         }
                         
-<<<<<<< HEAD
-                        facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", " + clamped + "\n");
+//                        facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", " + clamped + "\n");
                         
-=======
+
                         ArrayList<String> citValue = topClusters.get(citTable.citationID);
-                        
+                        if (citValue.size()>=4) {
                         if (citValue.get(4)!=null) {
-//                            facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", "
-//                                + citValue.get(4) + ", " + citValue.get(1) + "\n");
+                            facc.write(citTable.citationID + ", " + f1Before + ", " + f1After + ", "
+                                + citValue.get(4) + ", " + citValue.get(1) + "\n");
                         }
->>>>>>> 2f778f72ca0cc4a8d5fed4890828655fb587a0de
+                        }
                         //if (marginal.getMaxEntropyNode() < token.length){
 				//f.write(Double.toString(f1[marginal.getMaxEntropyNode()]) + " ");
 			//}
@@ -858,10 +983,10 @@ public class Segment {
                 f2.close();
                 f3.close();
 //                facc.close();
-                double acc = (double)rightToks/(double)totalToks;
-                System.out.println("Correct tokens: " + rightToks);
-                System.out.println("Total tokens: " + totalToks);
-                System.out.println("Accuracy: " + acc);
+//                double acc = (double)rightToks/(double)totalToks;
+//                System.out.println("Correct tokens: " + rightToks);
+//                System.out.println("Total tokens: " + totalToks);
+//                System.out.println("Accuracy: " + acc);
 	}
 
 	
@@ -961,15 +1086,27 @@ public class Segment {
 		//marginal.printNormalized();
 		marginal.calculateEntropy(method);
 		Vector s = new Vector();
-		TrainData tdMan = DataCruncher.readTagged(nlabels, baseDir + "/data/"
-				+ inName + "/" + "tempTagged" + ".test", baseDir + "/data/"
-				+ inName + "/" + inName + ".test", delimit, tagDelimit,
+                String outDirec = "out2";
+                String filename = "xPubMed_ByHighestEntropy_t0l0l1l1_totalEntropy_3.csv";
+//		TrainData tdMan = DataCruncher.readTagged(nlabels, baseDir + "/data/"
+//				+ inName + "/" + "tempTagged2" + ".test", baseDir + "/data/"
+//				+ inName + "/" + inName + ".test", delimit, tagDelimit,
+//				impDelimit, labelMap);
+//		TrainData tdAuto = DataCruncher.readTagged(nlabels, baseDir + "/" + outDirec + "/"
+//				+ outDir + "/" + inName + ".test", baseDir + "/data/" + inName
+//				+ "/" + inName + ".test", delimit, tagDelimit, impDelimit,
+//				labelMap);
+//                DataCruncher.readRaw(s, baseDir + "/data/" + inName + "/" + inName
+//				+ ".test", "", "");
+                TrainData tdMan = DataCruncher.readTagged(nlabels, baseDir + "/data/"
+				+ inName + "/" + "tempTagged2" + ".test", baseDir + "/data/PubMed_HighEntropy/"
+				+ filename + ".test", delimit, tagDelimit,
 				impDelimit, labelMap);
-		TrainData tdAuto = DataCruncher.readTagged(nlabels, baseDir + "/out/"
-				+ outDir + "/" + inName + ".test", baseDir + "/data/" + inName
-				+ "/" + inName + ".test", delimit, tagDelimit, impDelimit,
+		TrainData tdAuto = DataCruncher.readTagged(nlabels, baseDir + "/" + outDirec + "/"
+				+ outDir + "/" + inName + ".test", baseDir + "/data/PubMed_HighEntropy/"
+				+ filename + ".test", delimit, tagDelimit, impDelimit,
 				labelMap);
-		DataCruncher.readRaw(s, baseDir + "/data/" + inName + "/" + inName
+		DataCruncher.readRaw(s, baseDir + "/data/PubMed_HighEntropy/" + filename
 				+ ".test", "", "");
                 
                 

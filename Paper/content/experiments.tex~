@@ -1,49 +1,88 @@
 \section{Experiments}
-Our experiments were conducted using 9600 entries generated from the PROXIMITY DBLP database of Computer Science bibliographies \cite{DBLP}.  Each bibliographic sequence contains 8 fields pertaining to the title, authors, conference, ISBN, publisher, volume, proceedings, and year.  Training was performed on 4600 entries and testing on 5000 entries.  We implemented most of the CrowdPillar algorithm in Java 1.8 using the feature set provided by Sarawagi \cite{Sarawagi04}.
+In this section we demonstrate the effectiveness of our selection and integration approaches on sets of both synthetic and real data.  We extracted 14,000 labeled citations from DBLP \sean{footnote 1} and 500,000 from the PubMed database \sean{footnote 2}.  For unlabeled testing data, we removed the labels and concatenated text from each of the available fields.  Order of fields was occasionally mixed in keeping with real-life inconsistency of citation structure.
+
+\subsection{Experiments w/ Synthetic Data}
+\subsubsection{Selection}
+
+\begin{figure*}[t]
+	\centering
+	\subfigure[High Entropy] {
+		\includegraphics[width=0.48\textwidth]{images/selection_exp1_highE.png}
+		\label{fig:first1}
+	}
+	\subfigure[Total Entropy] {
+		\includegraphics[width=0.48\textwidth]{images/selection_exp1_totalE.png}
+		\label{fig:second1}
+	}
+	\caption{Seeding comparison for high entropy and total entropy ranking.}
+	\label{fig:select1}
+\end{figure*}
+
+\begin{figure*}[t]
+	\centering
+	\subfigure[High Entropy] {
+		\includegraphics[width=0.48\textwidth]{images/selection_exp2_highE.png}
+		\label{fig:firs2t}
+	}
+	\subfigure[Total Entropy] {
+		\includegraphics[width=0.48\textwidth]{images/selection_exp2_totalE.png}
+		\label{fig:second2}
+	}
+	\caption{Clustering comparison for high entropy and total entropy ranking.}
+	\label{fig:select2}
+\end{figure*}
+
+\begin{figure*}[t]
+	\centering
+	\subfigure[High Entropy] {
+		\includegraphics[width=0.48\textwidth]{images/selection_exp3_highE.png}
+		\label{fig:first3}
+	}
+	\subfigure[Random] {
+		\includegraphics[width=0.48\textwidth]{images/selection_exp3_random.png}
+		\label{fig:second3}
+	}
+	\caption{Ranking comparison for high entropy and total entropy ranking.}
+	\label{fig:select3}
+\end{figure*}
+
+Figures~\ref{fig:select1},~\ref{fig:select2}, and~\ref{fig:select3} contain experiments comparing our various selection algorithms by detailing the accuracy improvements for each question asked.  Tokens were selected using a specific combination of seeding, clustering, and ranking approaches.  
+
+Initially, a token was selected from each document using some seeding mechanism.  The number of questions is prohibitively large to show the full range of our methods, so we automatically answer each question with its ground truth label.  It's shown in the next section that the high accuracy of Mechanical Turk answers allow this to be a working assumption.  The same answer (label) to the question (token) is applied to all subsequent tokens in its cluster.  A constrained Viterbi inference algorithm runs over all documents  containing tokens belonging to question clusters.  The accuracy value in each figure represents the final token accuracy after running constrained inference.
+
+In this paper, we proposed two possible functions for selecting a token from each document.  High Entropy chooses that which has the highest marginal entropy over its labels while Neighborhood Entropy selects the token in the center of the largest 3-window pocket of marginal entropies.  Figure~\ref{fig:select1} shows effectiveness of both methods when compared to randomly selecting a token for both High Entropy and Total Entropy ranking.  The default clustering is Same Label Neighborhood.  In both cases, Neighborhood Entropy maintains a consistently higher accuracy, lending evidence to the idea that constrained inference has a larger effect on pockets of high entropy than it does on the single highest entropy tokens.  Both methods double the overall possible accuracy improvement with fewer questions.  For some accuracy regions even orders of magnitude fewer questions are needed.
+
+Figure~\ref{fig:select2} compares the possible clustering algorithms for the High Entropy and Total Entropy ranking functions.  All use high entropy for seeding.  Clustering by similar tokens that have the same label and share preceding and succeeding labels produce the largest clusters with the greatest net effect.  For the DBLP set, there were zero clustering errors for Same Token and Same Field, and approximately 2\% of citations were clustered incorrectly using the Same Label approach.  As the figures prove, however, the benefit of larger clusters far outweigh the additional errors.
+
+The final set of synthetic selection experiments is shown in Figure~/ref{fig:selection3}.  While it initially seemed like a heuristic, the effectiveness of Total entropy for ranking should now be apparent.  For both high entropy and random seeding, total entropy combines the early question strength of large clusters and the late question power of high entropy.  Same Label Neighborhood is again the default clustering for all ranking comparisons.  It's important to note, that even for random seeding, Total Entropy outperforms everything else.
+
+
+
+\subsubsection{Integration}
 \begin{figure}
-\centering
-\subfigure[Correctly Labeled]{\label{fig:blue}\includegraphics[width=0.35\textwidth]{images/blue.png}}
-\subfigure[Incorrectly Labeled]{\label{fig:red}\includegraphics[width=0.35\textwidth]{images/red.png}}
-\caption[example] {Normalized entropy histograms for correctly and incorrectly labeled tokens.}
-\end{figure} 
-
-\subsection{Entropy vs. Inaccuracy}
-The fundamental assumption our question formulation methods hinge upon is the direct correlation between inaccurate tokens and their marginal entropy level.  Figures \ref{fig:blue} and \ref{fig:red} demonstrate the veracity of this assumption.  The marginal entropy of every token in the 5000 sequence test set is measured and histogrammed by correct and incorrect sequences. The majority of accurate tokens tend to lower entropy values while the inaccurate ones appear in a much higher range.
-
-\subsection{Uncertainty Reduction}
-It is intractable to be able to ask a question about every node and send it to the crowd.  The key to CrowdPillar's success is the ability to optimally select nodes from budget size of $k$ sequences which reduce uncertainty in the entire system the most.  In testing our node selection algorithm, the chosen nodes were replaced by their ground truth values.  In practice, as discussed in Section 5, the real feedback from the crowd is complex and probabilistic.  After being clamped to the nodes' ground truth values, each sequence was re-run with Constrained Viterbi to produce a new label sequence.
-
+		\includegraphics[width=0.48\textwidth]{images/integration_exp1_numT.png}
+		\label{fig:integrate1}
+		\caption{Comparison of integration methods vs. number of Turkers per question.} 
+\end{figure}
 \begin{figure}
-\centering
-\includegraphics[width=0.48\textwidth]{images/threshold.png}
-\caption[example] { 
-\label{fig:thresh} 
-Average increase in accuracy for each clamped sequence selected by various thresholds.  The threshold determines the level above which a node's entropy is considered "high".}
-\end{figure} 
-
-In practice, it is impractical to select a node from every sequence for sending to the crowd, so we sort the sequences according to some metric and select the top $k$ depending on the budget.  We tested two different sorting metrics.  The first takes sorts by the entropy of the maximum entropy node in the sequence.  The second is slightly more complex.  We classified each sequence by the number of "high" entropy nodes it contained.  The threshold for determining what constituted high entropy was found by a parameter search.  Figure \ref{fig:thresh} shows the average increase in accuracy for the top 500 testing sequences sorted by the number of high entropy nodes determined by each threshold.  Based on the results, we deduced $\tau=0.13$ as an appropriate threshold.
-
-After determining which sequences needed to be corrected by the two sorting metrics, we tested two different methods of assigning scores to each node as discussed in Section 4.  We either assigned $S_{t}$ to be the marginal entropy or the neighborhood marginal entropy with neighborhoods including tokens before and after node $t$.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{images/budget.png}
-\label{fig:budget}
-\caption[example]{Comparison of the 4 different methods for sorting sequences and scoring nodes within each sequence.}
+		\includegraphics[width=0.48\textwidth]{images/integration_exp2_meanQ.png}
+		\label{fig:integrate2}
+		\caption{Comparison of integration methods vs. average Turker quality.} 
 \end{figure}
 
-The two sorting metrics and two scoring metrics allowed for four distinct ways of selecting the top $k$ sequences and then selecting a node from those sequences.  Figure \ref{fig:budget} shows the accuracy increase for each of these methods as a function of the number of questions asked.  Sorting by the number of high entropy nodes appears to be the best metric for determining inaccurate sequences.  The neighborhood marginal entropy as a scoring metric also provides a small boost compared to simply taking the single node's marginal entropy.  The combination of neighborhood marginal and number of high entropy nodes produced as much as a 7\% total increase in accuracy when applied to all questions in the testing set.
+Answers received from the crowd have many variables that must be factored into a rigorous justification of any method of combination.  Primarily, we are concerned with measuring how the final combined accuracy is affected both by the number of redundant answers and by the actual quality of the workers.  A set of synthetic responses to real questions were generated in a manner that the allowed the average worker quality to be varied throughout the experiments.
 
-\subsection{Dempster-Shafer Combination}
+Workers were automatically generated by selecting a quality value $Q \in [0,1]$ from a Gaussian distribution of standard deviation 0.3 and a mean that varies over the experiment.  Quality values drawn outside the $[0,1]$ range were truncated at the boundary.  Each worker was assigned to a 'HIT', which constituted a set of 10 questions.  The quality level dictated the generation of answers.  In keeping with our assumption of quality, the true label was applied with probability $Q$.  With probability $1-Q$, the answer was drawn from a uniform distribution over the label space.  In this manner we assembled 500 questions answered by 3-13 workers each, with new sets of workers generated every 10 questions.
 
-\begin{figure}
-\centering
-\includegraphics[width=0.425\textwidth]{images/DS_fixed.png}
-\caption[example] { 
-\label{fig:DS} 
-Comparison of Dempster-Shafer combination (red) vs. majority voting (blue) for possibly unreliable Turkers.  Q denotes the mean quality level of the selected Turkers.  The DS method increases in performance compared to majority voting as the Turkers become more unreliable.}
-\end{figure} 
+Figure~\ref{fig:integrate1} shows how the integration methods outlined in this paper compare as we increase the redunancy of question asking.  The mean worker accuracy is 0.5 in these results and the prior used in the Bayesian method is uniform.  While all methods increase monotonically as expected, the Bayesian method produces the best results for low redundancy and both Bayesian and Dempster-Shafer are able to attain 100\% accuracy by 13 workers, whereas Majority Voting is not.  The Bayesian method is able to beat Dempster-Shafer slightly due to its uniform prior assumption, which closely follows the distribution of labels for low quality workers.
 
-To test the use of DS combination vs. majority voting for probabilistic data, we generated a synthetic data set for Turker responses to 1,000 binary questions.  $M$ Turker responses were generated for each question for a total of $1000M$ responses, where $M = $3, 5, 7, 9, 11, and 15.  For each response, a Turker was generated with quality rating drawn from a normal distribution centered at 0.9, 0.7, 0.5, and 0.3 with a deviation of 0.1 and thresholded beteen [0,1].  The quality rating determined the likelihood that Turker's answer reflected the ground truth.  For example, a Turker with a quality rating of 0.7 was associated with an answer that was correct with 70\% probability and a random choice with 30\% probability.  This rating could be derived from the individual Turker quality or could be seen as a function of a difficult question that produces low quality results.
+The availability of high or low quality workers is certain to affect the comparisons, so in Figure~\ref{fig:integrate2} we compare the accuracy of answers as we vary the quality.  Variation is achieved by shifting the center of the Gaussian which produces worker quality values.  We initially set it at 0.2 and shifted to a maximum of 0.8.  As before, the Bayesian and Dempster-Shafer approaches show that managing Turker quality, even when so low as to be just slightly better than random, produces large gains in accuracy.  One method of attaining only high quality workers on Amazon Mechanical Turk is to implement a qualification test that workers must pass before they can complete your tasks.  Our experience has shown that while this does lead to more abled workers, the price paid in time can be many times slower.  The results of Figures~\ref{fig:integrate1} and~\ref{fig:integrate2} show that with a better integration method, some of the constraints designed to achieve higher quality may be relaxed without a large decrease in accuracy, key to making \sysName fast, agile, and powerful.
 
-Figure \ref{fig:DS} shows an accuracy comparison between Dempster-Shafer combined responses and those combined with majority voting for differing levels of Turker quality.  It's observed that the poorer the quality of the Turker or the question, the worse majority voting does in relation to DS.  DS obtains it's full power when the quality of responses is very poor and there exists a large uncertainty between answers.
+\sean{Exp6: Recall vs. accuracy for varying entropy thresholds.}
+
+\subsection{Experiments w/ Real Data}
+\sean{Description of real experiment methodology.}
+
+\sean{Exp7: Table of accuracy comparisons for DS, MV, and Bayes before and after edits plus clamped inference for both data sets.}
+
+\sean{Exp8: Recall vs. accuracy for varying entropy thresholds for both data sets.}

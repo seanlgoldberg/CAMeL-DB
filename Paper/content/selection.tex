@@ -66,7 +66,7 @@ H(d^{i}) = \sum_{\textbf{s}}p^{i}(\textbf{s})log(p^{i}(\textbf{s}))
 \end{equation}
 Since all documents in the database are independent, the total entropy is equivalent to the sum of the entropies of each document $\sum_{i}H(d^{i})$.  For a document of length $N$ in a label space of size $L$ there are $N^{L}$ possible values that $\textbf{s}$ may take, making direct calculation intractable for any nontrivial task.  We can bypass this issue by remembering that absolute values of the system entropy are not needed and we care only about relative changes in response to selecting one token over another.  
 
-We consider our selection problem to be one of partitioning the set of all tokens $T$ into those selected for submission and those not.  Let $X$ be the set of tokens pushed to the crowd and $Y$ be the remaining set of tokens such that $Y = T - X$. For a fixed budget, we seek to select $X$ such that $H(Y|X)$ is minimized.  The equation for conditional entropy states:
+We consider our selection problem to be one of partitioning the set of all tokens $T$ into those selected for submission and those not.  Let $X$ be the set of tokens pushed to the crowd and $Y$ be the remaining set of tokens such that $Y = T - X$. For a fixed budget, we seek to select $X$ such that $H(Y|X)$ is minimized.  The equation for conditional entropy states from Section~\ref{sec:uncertainty} states
 \begin{equation}
 H(Y|X) = H(X,Y) - H(X)
 \end{equation}
@@ -82,24 +82,30 @@ H^{i} = -\sum^{L}_{j=1}p^{i}_{j}log(p^{i}_{j})
 		\caption{Typical entropy distribution for a document in \sysName} 
 \end{figure}
 
-where the $p_{j}$ is the marginal probability of label $j$ being the correct label.  Marginal probabilities are calculated using the CRF-variant of the Forward-Backward algorithm \cite{}.  The marginal entropy provides a formulation for a token's individual certainty or uncertainty in its label.  Compare the distributions in Figure~\ref{fig:ent_dist}.  When the distribution is fairly peaked and we are certain of an answer, the entropy tends to be fairly low.  A more uniform distribution, however, leads to a higher entropy.
+where the $p_{j}$ is the marginal probability of label $j$ being the correct label.  Marginal probabilities are calculated using the CRF-variant of the Forward-Backward algorithm \cite{}.  The marginal entropy provides a formulation for a token's individual certainty or uncertainty in its label.  Compare the distributions in Figure~\ref{}.  When the distribution is fairly peaked and we are certain of an answer, the entropy tends to be fairly low.  A more uniform distribution, however, leads to a higher entropy.
 
 \subsection{Reducing the Space of Questions}
 \subsubsection{Constraining Tokens Per Document}
 While we may sort all of the tokens in the database by entropy and select the top-k, this may lead to less than optimal results.  Individual tokens are not independent.  Modifying the probabilistic label attribute of one token in a document may invoke additional corrections when the inference algorithm is re-run.  We discuss this constrained inference idea further in the context of data integration in Section~\ref{}.  Suffice to say, because we can't anticipate the expected gain from each individual token, we choose not to risk the redundancy of batching multiple high entropy tokens from the same document.
 
-The motivation for this choice can be found in Fig~\ref{}, which shows the entropy distribution for a typical document.  The highest entropy values appear in isolated neighborhoods which correspond to the segmentation boundaries.  Since constrained inference primarily supplies additional correction the neighborhoods of constrained tokens, the probability of two selected tokens sharing the same "correction window" is high.  
+The motivation for this choice can be found in Fig~\ref{fig:ent_dist}, which shows the entropy distribution for a typical document.  The highest entropy values appear in isolated neighborhoods which correspond to the segmentation boundaries.  Since constrained inference primarily supplies additional correction the neighborhoods of constrained tokens, the probability of two selected tokens sharing the same "correction window" is high.  
 
 Thus the strategy implemented is to select only a single token from each document, that token being the one with the highest entropy.  The explicit process can be found in Figure~\ref{} and uses a simple hash map with a docID key to assert only one token per docID is allowed.  All tokens are cycled through in a linear fashion.  If the current docID is not represented in the map, we add it, while if it is represented we only add it if it's entropy is higher than the token currently in the map.  With each document being associated with its highest entropy token, for the remainder of this discussion we refer to selection of a token and selection of document interchangeably.
 
 The existence of such a "correction window" as mentioned above brings up an interesting tradeoff that should be considered.  When the two differ, is it better to select a single highly uncertain token or a token at the center of a high entropy neighborhood, none of whose entropy is as high as the first?  As an additional entropy metric for selection, we introduce the concept of "neighborhood entropy", that is the entropy associated with a token and its nearest neighbors.  It represents a balance between the per-token uncertainty and the expected benefit of crowdsourced answer to its neighbors.  We compare both entropy metrics in the experiments of this paper. 
+
+\begin{figure}
+		\includegraphics[width=0.48\textwidth]{images/red.png}
+		\label{fig:cluster}
+		\caption{PLACEHOLDER.} 
+\end{figure}
 
 \subsubsection{Clustering Similar Tokens}
 Individual documents, especially citation data, may contain significant overlap between authors, conferences, publishers, etc. that appear in more than one document.  While we accept a certain redundancy for quality control purposes, this should be tightly controlled through the AMT interface.  Selecting the same tokens with the same labels from different documents essentially doubles the cost for a single answer.
 
 Our solution to this problem is through a novel clustering technique.  Tokens that share similar text and machine labeling properties have a high probability of sharing the same true labels.  By mapping multiple tokens into the same \textit{Question Cluster}, a single answer can be used to modify labels for a large number of tokens.  Whereas before we constrained the token space to the set of documents, here we constrain the space even further to only the set of unique clusters.  In the rest of this section we describe three specific cluster sets of cluster properties.
 
-All cluster sets require tokens belonging to the cluster to share the same token text and machine labeling, but are set apart by different neighborhood constraints.  Context is important because it's possible that two tokens with the same text such as the word "computer" could actually require different labelings and it would be false to cluster them together.  The different cluster properties trade off accuracy and cluster size and we compare them in the experiments section.  Figure~\ref{} compares two similar tokens and illustrates the different cluster properties that are checked.
+All cluster sets require tokens belonging to the cluster to share the same token text and machine labeling, but are set apart by different neighborhood constraints.  Context is important because it's possible that two tokens with the same text such as the word "computer" could actually require different labelings and it would be false to cluster them together.  The different cluster properties trade off accuracy and cluster size and we compare them in the experiments section.  Figure~\ref{fig:cluster} compares two similar tokens and illustrates the different cluster properties that are checked.
 
 \textbf{Same Field:} The strictest of the cluster properties.  It promotes the least amount of clustering, but contains greatest accuracy.  The initial cluster representative defines a field by its CRF max likelihood label and all preceeding and suceeding tokens with the same label.  Tokens are only added to the cluster if they share the entire field.
 

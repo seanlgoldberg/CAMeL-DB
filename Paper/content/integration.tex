@@ -88,90 +88,91 @@ After combining and normalizing, the final distribution over \{0,1\} is \{0.6,0.
 
 Without explicit reference to the CRF prior, we're left with the task of \textit{combining} disparate evidence from a group of Turkers.  This can be accomplished using Dempster's Rule of Combination, which operates over a set of mass functions.  Mass functions differ from probability functions by relaxing the Kolmogorov axiom that functions must sum to 1.
 
-%~ While the Bayesian approach was inspired by an alternative interpretation of belief functions, the actual implementation is still a probability function through and through, with all of Kolmogorov's axioms defining a probability function still holding.  For evidential combination, however, we leverage the full power of belief theory and relax some of those axioms to map to a set of belief functions.  
+While the Bayesian approach was inspired by an alternative interpretation of belief functions, the actual implementation is still a probability function through and through, with all of Kolmogorov's axioms defining a probability function still holding.  For evidential combination, however, we leverage the full power of belief theory and relax some of those axioms to map to a set of belief functions.  
 
-%~ The main difference between a belief function and a probability function is that probability functions are defined only over the \textit{measurable} subsets of a set while belief functions are defined over \textit{all} subsets (the power set) of a set \cite{shafer1976mathematical}.
-%
-%We now describe mapping of the Turker data these mass functions.  Like with the Bayesian approach, our confidence in them getting the answer correct is reflected in their Quality score.  The mass function $m(a_{k})$ gets assigned the score $Q_{k}$.  Let $\mathcal{A}$ be the set of all possible labels ${1,2,...,L}$.  Intuitively, $m(\mathcal{A})$ is the mass associated with a random guess and all $L$ labels being equally likely.  We assume in this framework that Turkers are either reliable, getting the answer correct with belief score $Q_{k}$, or unreliable, reflected in a random guess with belief score $1-Q_{k}$.  Explicitly, for a Turker $k$ with provided answer $a_{k}$:
-%
-%\begin{equation}
-%m^{n}(2^{L}) = 0
-%\end{equation}
-%\begin{equation}
-%\label{eq:mass1}
-%m^{n}(a_{k}) = Q_{k}
-%\end{equation}
-%\begin{equation}
-%\label{eq:mass2}
-%m^{n}(\mathcal{A}) = 1-Q_{k}
-%\end{equation}
-%
-%The first equation simply states that initialize all mass functions to zero before setting the two values below.  The mass function $m(\mathcal{A})$ has no meaning in standard probability theory, as the set of all outcomes is not a measurable in the probabilistic sense.  We use it mainly as bookkeeping for the uncertainty in the result before normalizing it out when the aggregation computation is completed.  The set of mass functions from multiple Turkers can be combined using Dempster's Rule of Combination between Turker 1 and Turker 2 for each set $A\in2^{L}$:
-%
-%\begin{equation}
-%\begin{split}
-%\label{eq:DS_combo}
-%m_{0,1}(A) &=(m_{1}\oplus m_{2})(A)\\
-%                   &=\frac{1}{1-K} \sum_{B\cap C=A\neq\emptyset} m_{1}(B)m_{2}(C)
-%\end{split}
-%\end{equation}
-%
-%\begin{equation}
-%K=\sum_{B\bigcap C=\emptyset}m_{1}(B)m_{2}(C)
-%\end{equation}
+~ The main difference between a belief function and a probability function is that probability functions are defined only over the \textit{measurable} subsets of a set while belief functions are defined over \textit{all} subsets (the power set) of a set \cite{shafer1976mathematical}.
 
-%The procedure is to map all HIT responses to mass functions and combine them one-by-one in turn to produce a single combined mass function.  Any remaining uncertainty in $m_{comb}(\mathcal{A})$ is added to all the singleton functions and re-normalized to produce a single probability function.  The original belief formulation is maintained in \sysName for easy combination if new evidence arrives at a later time.
-%
-%\textit{
-%EXAMPLE 2. Given the same Turkers and answers from EXAMPLE 1, Dempster's Rule of Combination may also be used to combine them.  First, we map them to mass functions using equations~\ref{eq:mass1} and ~\ref{eq:mass2}:
-%\begin{align}
-%m_{A}(0) = 0.8,  m_{A}(1) = 0,  m_{A}(0,1) = 0.2\nonumber\\
-%m_{B}(0) = 0,  m_{B}(1) = 0.6,  m_{B}(0,1) = 0.4
-%\end{align}
-%We apply equation~\ref{eq:DS_combo} to combine Turkers A and B.
-%\begin{align}
-%m_{A,B}(0) = m_{A}(0)*m_{B}(0,1) = 0.32\nonumber\\
-%m_{A,B}(1) = m_{B}(1)*m_{A}(0,1) = 0.12\nonumber\\
-%m_{A,B}(0,1) = m_{A}(0,1)*m_{B}(0,1) = 0.08
-%\end{align}
-%To convert to a probability distribution, we add $m_{A,B}(0,1)$ to each of the individual components and normalize.  The final distribution over \{0,1\} is \{0.66,0.34\}.  The contrasts with the result of EXAMPLE 1 by the exclusion of a machine prior.
-%}
-%
-%While we introduce Dempster-Shafer theory here in the context of our simpler one-answer-per-question framework currently found in \sysName , it is not to be taken in contrast with its Bayesian counterpart, but as a generalization of it.  The method will become more powerful in future work when we plan to extend functionality to allow the Turkers to provide more than one response per question when uncertain.  Reasoning over such fuzzy sets exemplifies the real power for using belief theory over probability theory.
-%
-%\subsection{Quantifying Turker Performance}
-%
-%Even human computation is not perfect.  The previous section looked at ways to combine Turker answers probabilistically to arrive at a final result that is not deterministic.  This is useful for when there is controversy or confusion elicited over the answers of a question.  We use the entropy of the final label distribution to arrive at confidence value for each question.  Depending on the required accuracy of the application, a threshold on the confidence may be placed to assure only the highest quality results make it through.  In the experiments we highlight Receiver Operating Characteristic (ROC) curves that measure performance vs. answer recall.  Answers not making the cut may have their questions re-submitted to attain more information in discerning the result. 
+We now describe mapping of the Turker data these mass functions.  Like with the Bayesian approach, our confidence in them getting the answer correct is reflected in their Quality score.  The mass function $m(a_{k})$ gets assigned the score $Q_{k}$.  Let $\mathcal{A}$ be the set of all possible labels ${1,2,...,L}$.  Intuitively, $m(\mathcal{A})$ is the mass associated with a random guess and all $L$ labels being equally likely.  We assume in this framework that Turkers are either reliable, getting the answer correct with belief score $Q_{k}$, or unreliable, reflected in a random guess with belief score $1-Q_{k}$.  Explicitly, for a Turker $k$ with provided answer $a_{k}$:
 
-%\subsection{Probabilistic Integration}
-%
-%\begin{algorithm}[fillcomment]
-%\label{alg:integration}
-%\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-%\Input{Array of turker answers A,\\
-%ML prior label dist. M,\\
-%CRF model C,\\
-%Unlabeled document d,\\
-%Token t}
-%\Output{Labeled document d\_labeled}
-%\BlankLine
-%\CommentSty{//Estimate Turker qualities from answers}\;
-%Q = Dawid\_Skene(A)\;
-%\CommentSty{//Compute posterior distribution of answers}\;
-%\If{Bayesian}{
-%	combination = Bayesian\_integrate(M,A,Q)\;
-%}
-%\If{Dempster-Shafer}{
-%	combination = DS\_integrate(A,Q)\;
-%}
-%\CommentSty{//Integrate back into model}\;
-%label = index\_of\_max(combination)\;
-%d\_labeled = constrained\_Viterbi(C,d,t,label)\;
-%
-%\caption{Probabilistic integration through constrained Viterbi.}
-%\end{algorithm}
-%
-%Not only does \sysName have the ability to aggregate answers from multiple sources, but also the ability to reinsert the resulting distribution back into the CRF. Since the underlying architecture of the system is a CRF, the dependence properties of each field are made explicit and re-running the inference algorithm has the potential to change surrounding fields as well.  This "constrained inference" substitutes the aggregated marginal distribution of a token in for the computed transition probabilities.  This highlights a very strong advantage of \sysName system, in that large errors can be corrected by small, incremental changes.
-%
-%Algorithm~\ref{alg:integration} shows the basic outline of our probabilistic integration scheme.  Turker answers pulled from AMT are a set of labels for token $t$ from document $d$.  They're used in the Dawid \& Skene EM method to estimate the Turkers' individual quality measures.  Depending on the integration technique chosen, either Bayesian or Dempster-Shafer is used to compute the final posterior distribution over $t$'s possible labels.  The max likelihood label is used in the constrained Viterbi function over $d$.  This function computes Viterbi in a similar manner as the original, except that all paths not passing through the max likelihood label for $t$ are set to zero.
-%
+\begin{equation}
+m^{n}(2^{L}) = 0
+\end{equation}
+\begin{equation}
+\label{eq:mass1}
+m^{n}(a_{k}) = Q_{k}
+\end{equation}
+\begin{equation}
+\label{eq:mass2}
+m^{n}(\mathcal{A}) = 1-Q_{k}
+\end{equation}
+
+The first equation simply states that initialize all mass functions to zero before setting the two values below.  The mass function $m(\mathcal{A})$ has no meaning in standard probability theory, as the set of all outcomes is not a measurable in the probabilistic sense.  We use it mainly as bookkeeping for the uncertainty in the result before normalizing it out when the aggregation computation is completed.  The set of mass functions from multiple Turkers can be combined using Dempster's Rule of Combination between Turker 1 and Turker 2 for each set $A\in2^{L}$:
+
+\begin{equation}
+\begin{split}
+\label{eq:DS_combo}
+m_{0,1}(A) &=(m_{1}\oplus m_{2})(A)\\
+                   &=\frac{1}{1-K} \sum_{B\cap C=A\neq\emptyset} m_{1}(B)m_{2}(C)
+\end{split}
+\end{equation}
+
+\begin{equation}
+K=\sum_{B\bigcap C=\emptyset}m_{1}(B)m_{2}(C)
+\end{equation}
+
+The procedure is to map all HIT responses to mass functions and combine them one-by-one in turn to produce a single combined mass function.  Any remaining uncertainty in $m_{comb}(\mathcal{A})$ is added to all the singleton functions and re-normalized to produce a single probability function.  The original belief formulation is maintained in \sysName for easy combination if new evidence arrives at a later time.
+
+\textit{
+EXAMPLE 2. Given the same Turkers and answers from EXAMPLE 1, Dempster's Rule of Combination may also be used to combine them.  First, we map them to mass functions using equations~\ref{eq:mass1} and ~\ref{eq:mass2}:
+\begin{align}
+m_{A}(0) = 0.8,  m_{A}(1) = 0,  m_{A}(0,1) = 0.2\nonumber\\
+m_{B}(0) = 0,  m_{B}(1) = 0.6,  m_{B}(0,1) = 0.4
+\end{align}
+We apply equation~\ref{eq:DS_combo} to combine Turkers A and B.
+\begin{align}
+m_{A,B}(0) = m_{A}(0)*m_{B}(0,1) = 0.32\nonumber\\
+m_{A,B}(1) = m_{B}(1)*m_{A}(0,1) = 0.12\nonumber\\
+m_{A,B}(0,1) = m_{A}(0,1)*m_{B}(0,1) = 0.08
+\end{align}
+To convert to a probability distribution, we add $m_{A,B}(0,1)$ to each of the individual components and normalize.  The final distribution over \{0,1\} is \{0.66,0.34\}.  The contrasts with the result of EXAMPLE 1 by the exclusion of a machine prior.
+}
+
+While we introduce Dempster-Shafer theory here in the context of our simpler one-answer-per-question framework currently found in \sysName , it is not to be taken in contrast with its Bayesian counterpart, but as a generalization of it.  The method will become more powerful in future work when we plan to extend functionality to allow the Turkers to provide more than one response per question when uncertain.  Reasoning over such fuzzy sets exemplifies the real power for using belief theory over probability theory.
+
+\subsection{Quantifying Turker Performance}
+
+Even human computation is not perfect.  The previous section looked at ways to combine Turker answers probabilistically to arrive at a final result that is not deterministic.  This is useful for when there is controversy or confusion elicited over the answers of a question.  We use the entropy of the final label distribution to arrive at confidence value for each question.  Depending on the required accuracy of the application, a threshold on the confidence may be placed to assure only the highest quality results make it through.  In the experiments we highlight Receiver Operating Characteristic (ROC) curves that measure performance vs. answer recall.  Answers not making the cut may have their questions re-submitted to attain more information in discerning the result. 
+
+\subsection{Probabilistic Integration}
+\label{sec:probInt}
+
+\begin{algorithm}[fillcomment]
+\label{alg:integration}
+\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+\Input{Array of turker answers A,\\
+ML prior label dist. M,\\
+CRF model C,\\
+Unlabeled document d,\\
+Token t}
+\Output{Labeled document d\_labeled}
+\BlankLine
+\CommentSty{//Estimate Turker qualities from answers}\;
+Q = Dawid\_Skene(A)\;
+\CommentSty{//Compute posterior distribution of answers}\;
+\If{Bayesian}{
+	combination = Bayesian\_integrate(M,A,Q)\;
+}
+\If{Dempster-Shafer}{
+	combination = DS\_integrate(A,Q)\;
+}
+\CommentSty{//Integrate back into model}\;
+label = index\_of\_max(combination)\;
+d\_labeled = constrained\_Viterbi(C,d,t,label)\;
+
+\caption{Probabilistic integration through constrained Viterbi.}
+\end{algorithm}
+
+Not only does \sysName have the ability to aggregate answers from multiple sources, but also the ability to reinsert the resulting distribution back into the CRF. Since the underlying architecture of the system is a CRF, the dependence properties of each field are made explicit and re-running the inference algorithm has the potential to change surrounding fields as well.  This constrained inference substitutes the aggregated marginal distribution of a token in for the computed transition probabilities and highlights a very strong advantage of \sysName system in that large errors can be corrected by small, incremental changes.
+
+Algorithm~\ref{alg:integration} shows the basic outline of our probabilistic integration scheme.  Turker answers pulled from AMT are a set of labels for token $t$ from document $d$.  They're used in the Dawid \& Skene EM method to estimate the Turkers' individual quality measures.  Depending on the integration technique chosen, either Bayesian or Dempster-Shafer is used to compute the final posterior distribution over $t$'s possible labels.  The max likelihood label is used in the constrained Viterbi function over $d$.  This function computes Viterbi in a similar manner as the original, except that all paths not passing through the max likelihood label for $t$ are set to zero.
+

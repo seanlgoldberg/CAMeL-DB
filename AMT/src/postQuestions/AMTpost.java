@@ -44,8 +44,8 @@ public class AMTpost {
   private String title = "Bibliographic Labeling";
   private String description = 
     "Tagging a set of bibliographic data.";
-  private int numAssignments = 9;
-  private double reward = 0.10;
+  private int numAssignments = 7;
+  private double reward = 0.15;
 
   
   //Defining the attributes of the Pre-Qualification
@@ -160,7 +160,7 @@ public class AMTpost {
                 reward,
                 (long) 60*60, // Duration in seconds (1 hr to answer question)
                 (long) 60*15, // Approval Delay in seconds (Automatic Approval after 15 min)
-                (long) 60*60*24*7, // Lifetime in seconds (HIT lasts for 5 days)
+                (long) 60*60*24*7, // Lifetime in seconds (HIT lasts for 7 days)
                 numAssignments, // How many Turkers will answer question
                 null,
                 null,

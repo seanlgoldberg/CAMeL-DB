@@ -183,7 +183,7 @@ class TestData {
 				StringTokenizer tok = new StringTokenizer(line.toLowerCase(),
 						delimit, true);
 				int len = tok.countTokens();
-				if ((seq == null) || (seq.length < len))
+				//if ((seq == null) || (seq.length < len))
 					seq = new String[len];
 				int count = 0;
 				for (int i = 0; i < len; i++) {
@@ -310,7 +310,7 @@ class TestDataWrite {
 		try {
 			for(int i=0;i<line;i++)
 				rawLine = rin.readLine();
-			System.out.println(rawLine+" "+rawLine.length());
+			//System.out.println(rawLine+" "+rawLine.length());
 			StringTokenizer rawTok = new StringTokenizer(rawLine, delimit, true);
 			String tokArr[] = new String[rawTok.countTokens()];
 			for (int j = 0; j < tokArr.length; j++) {

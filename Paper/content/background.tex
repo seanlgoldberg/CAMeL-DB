@@ -1,11 +1,67 @@
 \section{Background}
 
 \subsection{Probabilistic Databases}
+\eat{
+Probabilistic Databases arose out of the need to model large amounts of imprecise data.  In the Possible Worlds Data Model \cite{Dalvi07}, let $\mathbf{I}=\{I_{1},I_{2},...,I_{N}\}$ be the set of all possible instances of a typical relational database.  A PDB is the set $(I_{i},p(I_{i}))$ of all instance-probability pairs, where $p(I_{i})\rightarrow[0,1]$ such that $\sum_{i=1}^{N}p(I_{i})=1$.  Queries may be modified to return probabilistic results, though the number of possible worlds may grow exponentially with the size of the database.  It is for this reason that queries generally return only the \textit{top k} most probable results.  }
+
+A \textit{probabilistic database} $\mathcal{DB}^{p}$ consists of two key components: (1) a collection of incomplete relations $\mathcal{R}$ with missing or uncertain data, and (2) a probability distribution $F$ on all possible database instances.  These \textit{possible worlds} denoted by pwd($D^{p}$) represent multiple viable instances of the database.  The attributes of an incomplete relation $R \in \mathcal{R}$ may contain deterministic attributes, but include a subset that are \textit{probabilistic attributes} $\mathcal{A}^{p}$.  The values of $\mathcal{A}^{p}$ may be present, missing, or uncertain.  Each possible database instance is a completion of the missing or uncertain data in $\mathcal{R}$.
 
 \subsection{Conditional Random Fields (CRF)}
+\begin{figure}
+		\includegraphics[width=0.47\textwidth]{images/CRF.jpg}
+		\label{fig:CRF}
+		\caption{Example CRF model.} 
+\end{figure}
+
+The linear-chain CRF \cite{DBLP:conf/icml/LaffertyMP01,sutton06introduction}, an extension of the Hidden Markov Model, is a state-of-the-art probabilistic graphical model for solving IE tasks.  In the context of IE, a CRF model encodes the probability distribution over a set of \textit{label} random variables (RVs) $\mathbf{Y}$, given the value of a set of \textit{token} RVs $\mathbf{X}$.  Assignments to $\mathbf{X}$ are given by $\mathbf{x}$ and to $\mathbf{Y}$ by $\mathbf{y}$.  In a linear-chain CRF model, label $y_{i}$ is correlated only with label $y_{i-1}$ and token $x_{i}$.  Such correlations are represented by the feature functions $\{f_{k}(y_{i},y_{i-1},x_{i})\}^{K}_{k=1}$.
+
+\begin{example}
+Figure~\ref{fig:CRF} shows an example CRF model over a subset of the citation string from EXAMPLE~\ref{ex:citation}.  Observed (known) variables are shaded nodes in the graph.  Hidden (unknown) variables are unshaded.  Edges in the graph denote statistical correlations.  The possible labels are $Y = \{$title, author, conference, isbn, publisher, series, proceedings, year\}.  Two possible feature functions of this CRF are:
+\begin{align*}
+	\centering
+	f_{1}(y_{i}, y_{i-1}, x_{i}) &= [x_{i} \text{ appears in a conf list}] \cdot [y_{i} = \text{ conf}]\\
+	f_{1}(y_{i}, y_{i-1}, x_{i}) &= [y_{i} = \text{ author}] \cdot [y_{i-1} = \text{ title}]
+\end{align*}
+\end{example}
+\begin{definition}
+Let $\{f_{k}(y_{i},y_{i-1},x_{i})\}^{K}_{k=1}$ be a set of real-valued feature functions, and $\Lambda = \{\lambda_{k}) \in R^{K}$ be a vector of real-valued parameters, a CRF model defines the probabilistic distribution of segmentations $\mathbf{y}$ given a specific token sequence $\mathbf{x}$:
+\begin{equation}
+\label{eq:CRFmodel}
+p(\mathbf{y} | \mathbf{x}) = \frac{1}{Z(\mathbf{x})}\text{exp}\{\sum_{i=1}^{T}\sum_{k=1}^{K}\lambda_{k}f_{k}(y_{i},y_{i-1},x_{i})\}, 
+\end{equation}
+where $Z(\mathbf{x})$ is a standard partition function that guarantees probability values between $0$ and $1$.
+\end{definition}
 
 \subsection{Inference Queries over a CRF Model}
+\newcommand{\topk}{top-\textit{k}}
+There are three types of inference queries over the CRF model \cite{} used in \sysName .
+
+\textbf{Top-}\textit{k}\textbf{ Inference}: The \topk inference computes the segmentations with the \topk highest probabilities given a token sequence $\mathbf{x}$ from a text-string $d$.  The Viterbi dynamic programming algorithm \cite{} is the key algorithmic technique for CRF \topk inference.
+
+The Viterbi algorithm computes a two dimensional V matrix, where each cell $V(i,y)$ stores a ranked list of $\text{entries} e = \{\text{score},\text{prev}(\text{label},\text{idx})\}$ ordered by a \textit{score}.  Each entry contains (1) the \textit{score} of a \topk (partial) segmentation ending at position $i$ with label $y$; and (2) a pointer to the previous entry \textit{prev} on the path that led to the \topk \textit{score's} in $V(i,y)$.  The pointer $\text{e.prev}$ consists of the label $\text{label}$ and the list index $\text{idx}$ of the previous entry on the path to $e$.  Based on equation~\ref{eq:CRFmodel}, the recurrence to compute the ML (top-1) segmentation is as follows:
+\begin{equation}
+V(i,y) = \left\{
+\begin{array}{l l}
+\text{max}_{y'}(V(i-1,y')\\
+   + \sum_{k=1}^{K}\lambda_{k}f_{k}(y,y',x_{i})), & \quad \text{if } i \geq 0\\
+0, & \quad \text{if } $i$ = -1
+\end{array} \right.
+\end{equation}
+The ML segmentation $y*$, backtracked from the maximum entry in $V(T,y_{T})$ (where $T$ is the length of the token sequence \textbf{x}) through $/text{prev}$ pointers is shown in Figure~\ref{}.  The complexity of the Viterbi algorithm is $O(T \cdot |L|^{2})$, where $|L|$ is the number of possible labels.
+
+\textbf{Constrained Top-k Inference}: Constrained \topk inference \cite{} is a special case of \topk inference.  It is used when a subset of the token labels has been provided (e.g., via a user interface such as Amazon Mechanical Turk).  Let $\mathbf{s}$ be the evidence vector $\{s_{1}, \dots, s_{T}\}$, where $s_{i}$ is either NULL (i.e., no evidence) or the evidence label for $y_{i}$.  Constrained \topk inference can be computed for a variant of the Viterbi algorithm which restricts the chosen labels $\mathbf{y}$ to conform to the evidence $\mathbf{s}$.  Specific implementation details for \sysName are delayed to Section~\ref{sec:probInt}.
+
+\textbf{Marginal Inference}: Marginal inference computes a marginal probability $p(y_{t},y_{t+1}, \dots, t_{t+k}|\mathbf{x})$ over a single label or a sub-sequence of labels \cite{}.  The backward-forward algorithm, a variation of the Viterbi algorithm is used for such marginal inference tasks.
 
 \subsection{Uncertainty Sampling}
+\label{sec:uncertainty}
+Uncertainty sampling has a long history in pool-based active learning \cite{Lewis94heterogeneousuncertainty} and seeks to optimally select a set of unlabeled examples for labeling by experts.  The approach selects those that are the "least certain," which means they have the highest variance over their label distributions.  One method for quantifying uncertainty over a random variable \textbf{X} is through its entropy \cite{cover91}:
+\begin{equation}
+H(\mathbf{X}) = \sum p_{i}(\mathbf{X})log(p_{i}(\mathbf{X})).
+\end{equation}
+Given sets of random variables $\mathbf{X}$ and $\mathbf{Y}$ with dependency properties (such as may be found in a sequence model like CRF), observing variables produces a conditional entropy
+\begin{equation}
+H(Y|X) = H(X,Y) - H(X)
+\end{equation}
 
 \subsection{Crowdsourcing}
