@@ -1,5 +1,18 @@
 \begin{thebibliography}{10}
 
+\bibitem{DBLP:conf/vldb/AgrawalBSHNSW06}
+P.~Agrawal, O.~Benjelloun, A.~D. Sarma, C.~Hayworth, S.~U. Nabar, T.~Sugihara,
+  and J.~Widom.
+\newblock Trio: A system for data, uncertainty, and lineage.
+\newblock In {\em VLDB}, pages 1151--1154, 2006.
+
+\bibitem{Boulos:2005:MSF:1066157.1066277}
+J.~Boulos, N.~Dalvi, B.~Mandhani, S.~Mathur, C.~Re, and D.~Suciu.
+\newblock Mystiq: a system for finding more answers by using probabilities.
+\newblock In {\em Proceedings of the 2005 ACM SIGMOD international conference
+  on Management of data}, SIGMOD '05, pages 891--893, New York, NY, USA, 2005.
+  ACM.
+
 \bibitem{citeulike:9437699}
 B.~Carpenter.
 \newblock {Multilevel Bayesian Models of Categorical Data Annotation}.
@@ -16,6 +29,11 @@ A.~P. Dawid and A.~M. Skene.
 M.~J. Franklin, D.~Kossmann, T.~Kraska, S.~Ramesh, and R.~Xin.
 \newblock Crowddb: answering queries with crowdsourcing.
 \newblock In Sellis et~al. \cite{DBLP:conf/sigmod/2011}, pages 61--72.
+
+\bibitem{Huang09maybms:a}
+J.~Huang, L.~Antova, C.~Koch, and D.~Olteanu.
+\newblock Maybms: a probabilistic database management system.
+\newblock In {\em In SIGMOD Conference}, 2009.
 
 \bibitem{Ipeirotis:2010:QMA:1837885.1837906}
 P.~G. Ipeirotis, F.~Provost, and J.~Wang.
@@ -51,6 +69,11 @@ T.~K. Sellis, R.~J. Miller, A.~Kementsietsidis, and Y.~Velegrakis, editors.
 \newblock {\em Proceedings of the ACM SIGMOD International Conference on
   Management of Data, SIGMOD 2011, Athens, Greece, June 12-16, 2011}. ACM,
   2011.
+
+\bibitem{DBLP:conf/comad/SinghMMPHS08}
+S.~Singh, C.~Mayfield, S.~Mittal, S.~Prabhakar, S.~E. Hambrusch, and R.~Shah.
+\newblock The orion uncertain data management system.
+\newblock In {\em COMAD}, pages 273--276, 2008.
 
 \bibitem{DBLP:journals/pvldb/WangFGH10}
 D.~Z. Wang, M.~J. Franklin, M.~N. Garofalakis, and J.~M. Hellerstein.

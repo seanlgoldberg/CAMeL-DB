@@ -45,22 +45,23 @@
 %
 % For tracking purposes - this is V2.0 - May 2012
 
-\documentclass{sig-alternate}
+\documentclass{vldb}
 \input{shorthands}
 \input{packages}
-%\usepackage{bbm}
-\usepackage{graphicx}
-\usepackage{subfigure}
-\usepackage{algorithm2e}
+\newtheorem{example}{EXAMPLE}
+\newtheorem{definition}{DEFINITION}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+
+
 \begin{document}
 %
 % --- Author Metadata here ---
-\conferenceinfo{SIGMOD}{'13 New York, New York USA}
+%\conferenceinfo{SIGMOD}{'13 New York, New York USA}
 %\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
 %\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
 % --- End of Author Metadata ---
 
-\title{{\ttlit CASTLE}: Crowd-Assisted System for Textual\\
+\title{{\ttlit CASTLE}: Crowd-Assisted System for\\ Textual
 Labeling and Extraction}
 %\subtitle{[Extended Abstract]
 %\titlenote{A full version of this paper is available as
@@ -96,7 +97,7 @@ Labeling and Extraction}
 % of EIGHT authors. SIX appear on the 'first-page' (for formatting
 % reasons) and the remaining two appear in the \additionalauthors section.
 %
-\author{
+%\author{
 % You can go ahead and credit any number of authors here,
 % e.g. one 'row of three' or two rows (consisting of one row of three
 % and a second row of one, two or three).
@@ -107,13 +108,25 @@ Labeling and Extraction}
 % affiliation/address with \affaddr, and tag the
 % e-mail address with \email.
 %
+\def\ufl{\superscript{*}}
+\def\br{\superscript{\dag}}
+\def\sharedaffiliation{\end{tabular}\newline\begin{tabular}{c}}
+\author{Sean Goldberg\ufl, Jeff Depree\ufl, Daisy Zhe Wang\ufl, and Tim Kraska\br\\
+\begin{tabular}{ccc}
+\{sean@cise.ufl.edu, jdepree@cise.ufl.edu, daisyw@cise.ufl.edu, kraskat@cs.brown.edu\}\\
+\end{tabular}
+\sharedaffiliation
+\begin{tabular}{ccc}
+\affaddr{{\ufl}University of Florida,{\ }} \affaddr{{\br}Brown University{\ }}
+\end{tabular}
+}
 % 1st. author
 %\alignauthor{Sean Goldberg\\
 %\titlenote{Dr.~Trovato insisted his name be first.}\\
 %       \affaddr{University of Florida}\\
        %\affaddr{1932 Wallamaloo Lane}\\
        %\affaddr{Wallamaloo, New Zealand}\\
-       %\email{sean@cise.ufl.edu}
+%       \email{sean@cise.ufl.edu}
 %}
 % 2nd. author
 %\alignauthor{Jeff Depree\\
@@ -122,7 +135,7 @@ Labeling and Extraction}
 %       \affaddr{University of Florida}\\
        %\affaddr{P.O. Box 1212}\\
        %\affaddr{Dublin, Ohio 43017-6221}\\
-       %\email{jdepree@cise.ufl.edu}
+%       \email{jdepree@cise.ufl.edu}
 %}
 % 3rd. author
 %\alignauthor Lars Th{\o}rv{\"a}ld\titlenote{This author is the
@@ -137,14 +150,14 @@ Labeling and Extraction}
 %       \affaddr{University of Florida}\\
        %\affaddr{Brookhaven National Lab}\\
        %\affaddr{P.O. Box 5000}\\
-       %\email{daisyw@cise.ufl.edu}
+%       \email{daisyw@cise.ufl.edu}
 %}
 % 5th. author
 %\alignauthor{Tim Kraska\\
 %       \affaddr{Brown University}\\
        %\affaddr{Moffett Field}\\
        %\affaddr{California 94035}\\
-       %\email{kraskat@cs.brown.edu}
+%       \email{kraskat@cs.brown.edu}
 %}
 % 6th. author
 %\alignauthor Charles Palmer\\
@@ -152,7 +165,7 @@ Labeling and Extraction}
 %       \affaddr{8600 Datapoint Drive}\\
 %       \affaddr{San Antonio, Texas 78229}\\
 %       \email{cpalmer@prl.com}
-}
+%}
 % There's nothing stopping you putting the seventh, eighth, etc.
 % author on the opening page (as the 'third row') but we ask,
 % for aesthetic reasons that you place these 'additional authors'
@@ -170,9 +183,6 @@ Labeling and Extraction}
 
 \input{content/introduction.tex}
 % 1.5
-
-\input{content/related_work.tex}
-% .5 (2)
 
 \input{content/background.tex}
 % 1.5 (3.5)
@@ -210,6 +220,9 @@ Labeling and Extraction}
 \input{content/experiments.tex}
 % 1.5 (10.5)
 
+\input{content/related_work.tex}
+% .5 (2)
+
 \input{content/conclusion.tex}
 % .25
 
@@ -221,5 +234,5 @@ Labeling and Extraction}
 \bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
 %
 
-\input{content/appendix.tex}
+%\input{content/appendix.tex}
 \end{document}

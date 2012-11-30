@@ -1362,7 +1362,7 @@
 \baselineskip=11pt
 \let\thepage\relax % For NO page numbers - GM Nov. 30th. 1999 and July 2000
 \def\setpagenumber#1{\global\setcounter{page}{#1}}
-%\pagenumbering{arabic}  % Arabic page numbers GM July 2000
+\pagenumbering{arabic}  % Arabic page numbers GM July 2000
 \twocolumn             % Double column.
 \flushbottom           % Even bottom -- alas, does not balance columns at end of document
 \pagestyle{plain}
@@ -1382,10 +1382,10 @@
 %\newtoks\copyrightetc
 %\global\copyrightetc{Copyright \the\copyrtyr\ ACM \the\acmcopyr\ ...\$5.00}
 
-\global\boilerplate={Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. To copy otherwise, to republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee.  Articles from this volume were invited to present their results at The 38th International Conference on Very Large Data Bases, August 27th - 31st 2012, Istanbul, Turkey. }
+\global\boilerplate={Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. To copy otherwise, to republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee.  Articles from this volume were invited to present their results at The 38th International Conference on Very Large Data Bases, August 26th - 31st 2013, Riva del Garda, Trento, Italy. }
 
 \global\conf{Proceedings of the VLDB Endowment,}
-\global\confinfo{Vol. 5, No. 3}
+\global\confinfo{Vol. 6, No. XXX}
 \newtoks\copyrightetc
 \global\copyrightetc{Copyright 2011 VLDB Endowment 2150-8097/11/11... \$ 10.00}
 		

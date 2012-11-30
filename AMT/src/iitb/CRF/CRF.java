@@ -114,7 +114,7 @@ public class CRF implements Serializable {
         if (viterbi==null)
             viterbi = getViterbi(1);
         if (params.debugLvl > 1) 
-            Util.printDbg("CRF: Applying on " + dataSeq);
+            //Util.printDbg("CRF: Applying on " + dataSeq);
         viterbi.bestLabelSequence(dataSeq,lambda);
         if (histMgr != null) {
             for(int i = dataSeq.length()-1; i >= 0; i--) {
@@ -127,7 +127,7 @@ public class CRF implements Serializable {
         if (viterbi==null)
             viterbi = getViterbi(1);
         if (params.debugLvl > 1) 
-            Util.printDbg("CRF: Applying on " + dataSeq);
+            //Util.printDbg("CRF: Applying on " + dataSeq);
         viterbi.bestLabelSequence(dataSeq,lambda,pos,label);
         if (histMgr != null) {
             for(int i = dataSeq.length()-1; i >= 0; i--) {
@@ -140,7 +140,7 @@ public class CRF implements Serializable {
         if (viterbi==null)
             viterbi = getViterbi(1);
         if (params.debugLvl > 1) 
-            Util.printDbg("CRF: Applying on " + dataSeq);
+            //Util.printDbg("CRF: Applying on " + dataSeq);
         viterbi.bestLabelSequence(dataSeq,lambda,pos,label,labelLeft,labelRight);
         if (histMgr != null) {
             for(int i = dataSeq.length()-1; i >= 0; i--) {
@@ -153,7 +153,7 @@ public class CRF implements Serializable {
         if (viterbi==null)
             viterbi = getViterbi(1);
         if (params.debugLvl > 1) 
-            Util.printDbg("CRF: Applying on " + dataSeq);
+            //Util.printDbg("CRF: Applying on " + dataSeq);
         viterbi.bestLabelSequence(dataSeq,lambda,pos, pos2,label,label2,flag);
         if (histMgr != null) {
             for(int i = dataSeq.length()-1; i >= 0; i--) {

@@ -1,128 +1,133 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.2.25)  27 NOV 2012 22:16
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.16)  30 NOV 2012 04:01
 entering extended mode
-**C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/paper2.tex
-(C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/paper2.tex
-LaTeX2e <2011/06/27>
-Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
-abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
-croatian, czech, danish, dutch, esperanto, estonian, farsi, finnish, french, ga
-lician, german, german-x-2009-06-19, greek, gujarati, hindi, hungarian, iceland
-ic, indonesian, interlingua, irish, italian, kannada, kurmanji, lao, latin, lat
-vian, lithuanian, malayalam, marathi, mongolian, mongolianlmc, monogreek, ngerm
-an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese, 
-romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
-sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
-senglishmax, welsh, loaded.
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\sig-alternate.cls
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\epsfig.sty"
-Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+ %&-line parsing enabled.
+**paper2
+(./paper2.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(./vldb.cls (/usr/share/texmf-texlive/tex/latex/geometry/geometry.sty
+Package: geometry 2008/12/21 v4.2 Page Geometry
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
-Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+)
+\Gm@cnth=\count79
+\Gm@cntv=\count80
+\c@Gm@tempcnt=\count81
+\Gm@bindingoffset=\dimen102
+\Gm@wd@mp=\dimen103
+\Gm@odd@mp=\dimen104
+\Gm@even@mp=\dimen105
+\Gm@dimlist=\toks15
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
-File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
-File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
-)
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
-Package: ltxcmds 2011/04/18 v1.20 LaTeX kernel commands for general use (HO)
-)
-\Gread@gobject=\count79
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+\Gread@gobject=\count82
 ))
-\Gin@req@height=\dimen102
-\Gin@req@width=\dimen103
+\Gin@req@height=\dimen106
+\Gin@req@width=\dimen107
 )
-\epsfxsize=\dimen104
-\epsfysize=\dimen105
+\epsfxsize=\dimen108
+\epsfysize=\dimen109
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2009/06/22 v3.00
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
-\@emptytoks=\toks15
+\@emptytoks=\toks16
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsmath.sty"
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2000/07/18 v2.13 AMS math features
 \@mathmargin=\skip41
 
 For additional information on amsmath, use the `?' option.
-("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amstext.sty"
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsgen.sty"
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks16
-\ex@=\dimen106
+\@emptytoks=\toks17
+\ex@=\dimen110
 ))
-("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsbsy.sty"
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
-\pmbraise@=\dimen107
+\pmbraise@=\dimen111
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\ams\math\amsopn.sty"
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count80
+\inf@bad=\count83
 LaTeX Info: Redefining \frac on input line 211.
-\uproot@=\count81
-\leftroot@=\count82
+\uproot@=\count84
+\leftroot@=\count85
 LaTeX Info: Redefining \overline on input line 307.
-\classnum@=\count83
-\DOTSCASE@=\count84
+\classnum@=\count86
+\DOTSCASE@=\count87
 LaTeX Info: Redefining \ldots on input line 379.
 LaTeX Info: Redefining \dots on input line 382.
 LaTeX Info: Redefining \cdots on input line 467.
 \Mathstrutbox@=\box26
 \strutbox@=\box27
-\big@size=\dimen108
+\big@size=\dimen112
 LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
-\macc@depth=\count85
-\c@MaxMatrixCols=\count86
+\macc@depth=\count88
+\c@MaxMatrixCols=\count89
 \dotsspace@=\muskip10
-\c@parentequation=\count87
-\dspbrk@lvl=\count88
-\tag@help=\toks17
-\row@=\count89
-\column@=\count90
-\maxfields@=\count91
-\andhelp@=\toks18
-\eqnshift@=\dimen109
-\alignsep@=\dimen110
-\tagshift@=\dimen111
-\tagwidth@=\dimen112
-\totwidth@=\dimen113
-\lineht@=\dimen114
-\@envbody=\toks19
+\c@parentequation=\count90
+\dspbrk@lvl=\count91
+\tag@help=\toks18
+\row@=\count92
+\column@=\count93
+\maxfields@=\count94
+\andhelp@=\toks19
+\eqnshift@=\dimen113
+\alignsep@=\dimen114
+\tagshift@=\dimen115
+\tagwidth@=\dimen116
+\totwidth@=\dimen117
+\lineht@=\dimen118
+\@envbody=\toks20
 \multlinegap=\skip42
 \multlinetaggap=\skip43
-\mathdisplay@stack=\toks20
+\mathdisplay@stack=\toks21
 LaTeX Info: Redefining \[ on input line 2666.
 LaTeX Info: Redefining \] on input line 2667.
 )
-Document Class 'sig-alternate' <23rd. May '12>. Modified by G.K.M. Tobin/Gerry 
-Murray
+Document Class 'vldb' - based on 'sig-alternate' <26th. July '05>. Modified by 
+G.K.M. Tobin/Gerry Murray
 Based in part upon document Style `acmconf' <22 May 89>. Hacked 4/91 by
 shivers@cs.cmu.edu, 4/93 by theobald@cs.mcgill.ca
 Excerpts were taken from (Journal Style) 'esub2acm.cls'.
@@ -130,141 +135,146 @@ Excerpts were taken from (Journal Style) 'esub2acm.cls'.
 m.org ******
 Questions on the style, SIGS policies, etc. to Adrienne Griscti griscti@acm.org
 
-\footheight=\dimen115
-\@maxsep=\dimen116
-\@dblmaxsep=\dimen117
-\aucount=\count92
-\originalaucount=\count93
-\auwidth=\dimen118
-\auskip=\dimen119
-\auskipcount=\count94
-\auskip=\dimen120
-\allauboxes=\dimen121
-\addauthors=\toks21
-\addauflag=\count95
-\subtitletext=\toks22
-\savesection=\count96
-\sectioncntr=\count97
-\c@figure=\count98
-\c@table=\count99
-\titleboxnotes=\toks23
-\titleboxnoteflag=\count100
-Document Class: sig-alternate 2012/05/23 - V2.5 - based on acmproc.cls V1.3 <No
-v. 30 '99>
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\latexsym.sty"
+\footheight=\dimen119
+\@maxsep=\dimen120
+\@dblmaxsep=\dimen121
+\aucount=\count95
+\originalaucount=\count96
+\auwidth=\dimen122
+\auskip=\dimen123
+\auskipcount=\count97
+\auskip=\dimen124
+\allauboxes=\dimen125
+\addauthors=\toks22
+\addauflag=\count98
+\subtitletext=\toks23
+\savesection=\count99
+\sectioncntr=\count100
+\c@figure=\count101
+\c@table=\count102
+\titleboxnotes=\toks24
+\titleboxnoteflag=\count103
+Document Class: vldb 2010/10/19 - V1.8b - based on sig-alternate V1.8 - based o
+n acmproc.cls V1.3 <Nov. 30 '99>
+(/usr/share/texmf-texlive/tex/latex/base/latexsym.sty
 Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
 \symlasy=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
 (Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
 )
 \@acmtitlebox=\box28
-\titlenotecount=\count101
-\tntoks=\toks24
-\tntokstwo=\toks25
-\tntoksthree=\toks26
-\tntoksfour=\toks27
-\tntoksfive=\toks28
-\catcount=\count102
-\copyrightnotice=\toks29
-\conf=\toks30
-\confinfo=\toks31
-\c@part=\count103
-\c@section=\count104
-\c@subsection=\count105
-\c@subsubsection=\count106
-\c@paragraph=\count107
+\titlenotecount=\count104
+\tntoks=\toks25
+\tntokstwo=\toks26
+\tntoksthree=\toks27
+\tntoksfour=\toks28
+\tntoksfive=\toks29
+\catcount=\count105
+\copyrightnotice=\toks30
+\conf=\toks31
+\confinfo=\toks32
+\c@part=\count106
+\c@section=\count107
+\c@subsection=\count108
+\c@subsubsection=\count109
+\c@paragraph=\count110
 
 Using 'Abbrev' bibliography style
-LaTeX Info: Redefining \cite on input line 1211.
-\bibindent=\dimen122
-\colcntr=\count108
-\saveb@x=\box29
-\copyrtyr=\toks32
-\acmcopyr=\toks33
-\boilerplate=\toks34
-\copyrightetc=\toks35
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\fontenc.sty"
-Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.def"
-File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
-LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
-)
-LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\ae\t1aer.fd"
-File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
-)))
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\shorthands.tex
-\c@thm=\count109
-\c@lem=\count110
-\c@ex=\count111
-\c@df=\count112
-)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\packages.tex
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\times.sty"
+\bibindent=\dimen126
+\colcntr=\count111
+\savebox=\box29
+\copyrtyr=\toks33
+\acmcopyr=\toks34
+\boilerplate=\toks35
+\copyrightetc=\toks36
+) (./shorthands.tex
+\c@thm=\count112
+\c@lem=\count113
+\c@ex=\count114
+\c@df=\count115
+) (./packages.tex
+(/usr/share/texmf-texlive/tex/latex/psnfss/times.sty
 Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
-)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\ams.sty
+) (./ams.sty
 Package: ams 1996/01/09
 
 Package `ams' <09 Jan 1996 13:53:56 BST>.
 Copyright (C) 1990,1995 Mike Piff, University of Sheffield, England
 Use option defs to define all the AMS symbol names
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\algo.sty
+) (/usr/share/texmf-texlive/tex/latex/amscls/amsthm.sty
+Package: amsthm 2004/08/06 v2.20
+\thm@style=\toks37
+\thm@bodyfont=\toks38
+\thm@headfont=\toks39
+\thm@notefont=\toks40
+\thm@headpunct=\toks41
+\thm@preskip=\skip44
+\thm@postskip=\skip45
+\thm@headsep=\skip46
+\dth@everypar=\toks42
+LaTeX Info: Redefining \qed on input line 283.
+
+
+! LaTeX Error: Command \proof already defined.
+               Or name \end... illegal, see p.192 of the manual.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.444 }
+       
+? 
+) (./algo.sty
 Package: algo 2002/06/21 v1.0 Algorithm typesetting package (JG)
 \algo@box=\box30
-\c@algo@nr=\count113
-\algo@left=\skip44
-\algo@margin=\skip45
-\algo@indent=\skip46
-\algo@cur=\skip47
-\algo@next=\skip48
-)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\appendix.sty
+\c@algo@nr=\count116
+\algo@left=\skip47
+\algo@margin=\skip48
+\algo@indent=\skip49
+\algo@cur=\skip50
+\algo@next=\skip51
+) (./appendix.sty
 Package: appendix 2002/08/06 v1.2 extra appendix facilities
-\c@@pps=\count114
-\c@@ppsavesec=\count115
-\c@@ppsaveapp=\count116
-)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\xspace.sty
+\c@@pps=\count117
+\c@@ppsavesec=\count118
+\c@@ppsaveapp=\count119
+) (./xspace.sty
 Package: xspace 1997/10/13 v1.06 Space after command names (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+(/usr/share/texmf-texlive/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+(/etc/texmf/tex/latex/config/color.cfg
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
-)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\subfigure.sty
+) (./subfigure.sty
 Package: subfigure 1995/03/06 v2.0 subfigure package
 
 Package: subfigure 1995/03/06 v2.0
-\c@subfigure=\count117
-\c@lofdepth=\count118
-\c@subtable=\count119
-\c@lotdepth=\count120
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\titlesec.sty
+\c@subfigure=\count120
+\c@lofdepth=\count121
+\c@subtable=\count122
+\c@lotdepth=\count123
+) (./titlesec.sty
 Package: titlesec 2005/01/22 v2.6 Sectioning titles
 \ttl@box=\box31
-\beforetitleunit=\skip49
-\aftertitleunit=\skip50
-\ttl@plus=\dimen123
-\ttl@minus=\dimen124
-\titlewidth=\dimen125
-\titlewidthlast=\dimen126
-\titlewidthfirst=\dimen127
-))
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\algorithm2e.sty
+\beforetitleunit=\skip52
+\aftertitleunit=\skip53
+\ttl@plus=\dimen127
+\ttl@minus=\dimen128
+\titlewidth=\dimen129
+\titlewidthlast=\dimen130
+\titlewidthfirst=\dimen131
+) (./algorithm2e.sty
 Package: algorithm2e 2008/00/00 v3.10 algorithms environments
-\c@AlgoLine=\count121
+\c@AlgoLine=\count124
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
+(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\relsize.sty"
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
 Package: relsize 2003/07/04 ver 3.1
 
 
@@ -279,136 +289,350 @@ Package `algorithm2e' Release 4.01 -- december 14 2009 --
 subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 - Author: Christophe Fiorio (fiorio@lirmm.fr)
 ********************************************************
-\skiptotal=\skip51
-\skiplinenumber=\skip52
-\skiprule=\skip53
-\skiphlne=\skip54
-\skiptext=\skip55
-\skiplength=\skip56
-\algomargin=\skip57
-\skipalgocfslide=\skip58
-\algowidth=\dimen128
-\inoutsize=\dimen129
-\inoutindent=\dimen130
-\interspacetitleruled=\dimen131
-\interspacealgoruled=\dimen132
-\interspacetitleboxruled=\dimen133
+\skiptotal=\skip54
+\skiplinenumber=\skip55
+\skiprule=\skip56
+\skiphlne=\skip57
+\skiptext=\skip58
+\skiplength=\skip59
+\algomargin=\skip60
+\skipalgocfslide=\skip61
+\algowidth=\dimen132
+\inoutsize=\dimen133
+\inoutindent=\dimen134
+\interspacetitleruled=\dimen135
+\interspacealgoruled=\dimen136
+\interspacetitleboxruled=\dimen137
 \algocf@inoutbox=\box32
 \algocf@inputbox=\box33
-\AlCapSkip=\skip59
-\AlCapHSkip=\skip60
+\AlCapSkip=\skip62
+\AlCapHSkip=\skip63
 \algocf@nlbox=\box34
 \algocf@hangingbox=\box35
 \algocf@capbox=\box36
-\algoheightruledefault=\skip61
-\algoheightrule=\skip62
-\algotitleheightruledefault=\skip63
-\algotitleheightrule=\skip64
-\c@algocfline=\count122
-\c@algocfproc=\count123
-\c@algocf=\count124
+\algoheightruledefault=\skip64
+\algoheightrule=\skip65
+\algotitleheightruledefault=\skip66
+\algotitleheightrule=\skip67
+\c@algocfline=\count125
+\c@algocfproc=\count126
+\c@algocf=\count127
 \algocf@algoframe=\box37
 \algocf@algobox=\box38
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
-LaTeX Font Info:    ... okay on input line 55.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 55.
+)) (/usr/share/texmf-texlive/tex/latex/preprint/balance.sty
+Package: balance 1999/02/23 4.3 (PWD)
+\oldvsize=\dimen138
+)
+\c@example=\count128
+\c@definition=\count129
+ (./paper2.aux)
+\openout1 = `paper2.aux'.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1ptm.fd"
-File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 56.
+LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 56.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
-("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+*geometry detected driver: pdftex*
+-------------------- Geometry parameters
+paper: letterpaper
+landscape: --
+twocolumn: true
+twoside: true
+asymmetric: --
+h-parts: 92.14519pt, 0.7\paperwidth , 92.14519pt (default)
+v-parts: 95.39737pt, 0.7\paperheight , 143.09605pt (default)
+hmarginratio: 1:1
+vmarginratio: 2:3
+lines: --
+heightrounded: --
+bindingoffset: 0.0pt
+truedimen: --
+includehead: --
+includefoot: --
+includemp: --
+driver: pdftex
+-------------------- Page layout dimensions and switches
+\paperwidth  614.295pt
+\paperheight 794.96999pt
+\textwidth  504.0pt
+\textheight 666.0pt
+\oddsidemargin  -18.26999pt
+\evensidemargin -18.26999pt
+\topmargin  -55.26999pt
+\headheight 12.0pt
+\headsep    25.0pt
+\footskip   30.0pt
+\marginparwidth 0.0pt
+\marginparsep   11.0pt
+\columnsep  24.0pt
+\skip\footins  8.1pt plus 4.0pt minus 2.0pt
+\hoffset 0.0pt
+\voffset 0.0pt
+\mag 1000
+\@twocolumntrue \@twosidetrue \@mparswitchtrue 
+(1in=72.27pt, 1cm=28.45pt)
+-----------------------
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count125
-\scratchdimen=\dimen134
+\scratchcounter=\count130
+\scratchdimen=\dimen139
 \scratchbox=\box39
-\nofMPsegments=\count126
-\nofMParguments=\count127
-\everyMPshowfont=\toks36
-\MPscratchCnt=\count128
-\MPscratchDim=\dimen135
-\MPnumerator=\count129
-\makeMPintoPDFobject=\count130
-\everyMPtoPDFconversion=\toks37
+\nofMPsegments=\count131
+\nofMParguments=\count132
+\everyMPshowfont=\toks43
+\MPscratchCnt=\count133
+\MPscratchDim=\dimen140
+\MPnumerator=\count134
+\everyMPtoPDFconversion=\toks44
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 168.
- ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+LaTeX Font Info:    Try loading font information for U+msa on input line 181.
+ (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 168.
+LaTeX Font Info:    Try loading font information for U+msb on input line 181.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 168.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 181.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\base\ulasy.fd"
+(/usr/share/texmf-texlive/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/abstract.tex
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 181.
+
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
 )
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/introduction.tex
-Overfull \hbox (15.01196pt too wide) in paragraph at lines 3--4
-[]\T1/ptm/m/n/9 Need to fig-ure out where to put HIT main-te-nance and API info
-rmation.--
- []
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 181.
+ (./content/abstract.tex
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
+)
+(./content/introduction.tex
 
+LaTeX Warning: Citation `Ipeirotis:2010:AAM:1869086.1869094' on page 1 undefine
+d on input line 23.
 
-LaTeX Warning: Reference `uncertainty' on page \thepage  undefined on input lin
-e 26.
-
-[1{C:/Users/Sean/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
 
-LaTeX Warning: Reference `system' on page \thepage  undefined on input line 38.
+LaTeX Warning: Reference `system' on page 2 undefined on input line 37.
 
 
-
-LaTeX Warning: Reference `uncertainty' on page \thepage  undefined on input lin
-e 38.
+LaTeX Warning: Reference `uncertainty' on page 2 undefined on input line 37.
 
 
-LaTeX Warning: Reference `hit' on page \thepage  undefined on input line 38.
+LaTeX Warning: Reference `hit' on page 2 undefined on input line 37.
 
 
-LaTeX Warning: Reference `integration' on page \thepage  undefined on input lin
-e 38.
+LaTeX Warning: Reference `integration' on page 2 undefined on input line 37.
 
 
-LaTeX Warning: Reference `experiments' on page \thepage  undefined on input lin
-e 38.
+LaTeX Warning: Reference `experiments' on page 2 undefined on input line 37.
 
 
-LaTeX Warning: Reference `conclusion' on page \thepage  undefined on input line
- 38.
+LaTeX Warning: Reference `conclusion' on page 2 undefined on input line 37.
 
 
-LaTeX Warning: Reference `future' on page \thepage  undefined on input line 38.
+LaTeX Warning: Reference `future' on page 2 undefined on input line 37.
 
+) (./content/background.tex <images/CRF.jpg, id=13, 700.6175pt x 209.78375pt>
+File: images/CRF.jpg Graphic file (type jpg)
 
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/related_work.tex
-Underfull \hbox (badness 10000) in paragraph at lines 2--4
+<use images/CRF.jpg>
 
+LaTeX Warning: Citation `sutton06introduction' on page 2 undefined on input lin
+e 16.
+
+LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 19.
+
+Overfull \hbox (50.60347pt too wide) in paragraph at lines 41--42
+\OT1/ptm/m/n/9 where each cell $\OML/cmm/m/it/9 V\OT1/cmr/m/n/9 (\OML/cmm/m/it/
+9 i; y\OT1/cmr/m/n/9 )$ \OT1/ptm/m/n/9 stores a ranked list of $[]\OML/cmm/m/it
+/9 e \OT1/cmr/m/n/9 = \OMS/cmsy/m/n/9 f[]\OML/cmm/m/it/9 ; []\OT1/cmr/m/n/9 ([]
+\OML/cmm/m/it/9 ; []\OT1/cmr/m/n/9 )\OMS/cmsy/m/n/9 g$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5--6
+LaTeX Warning: Reference `' on page 2 undefined on input line 50.
+
+
+LaTeX Warning: Citation `Lewis94heterogeneousuncertainty' on page 2 undefined o
+n input line 58.
+
+
+LaTeX Warning: Citation `cover91' on page 2 undefined on input line 58.
+
+[2 <./images/CRF.jpg>]) (./content/system_overview.tex
+<images/system_design.png, id=25, 538.26094pt x 362.85562pt>
+File: images/system_design.png Graphic file (type png)
+
+<use images/system_design.png>
+LaTeX Font Info:    Font shape `OT1/ptm/bx/sc' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/sc' tried instead on input line 7.
+
+Overfull \hbox (1.25008pt too wide) in paragraph at lines 18--19
+\OT1/ptm/m/n/9 tributes. The to-ken also con-tains one prob-a-bilis-tic attribu
+te|label$[]$.
+ []
+
+
+LaTeX Warning: Reference `hit' on page 3 undefined on input line 32.
+
+
+LaTeX Warning: Reference `integration' on page 3 undefined on input line 38.
+
+
+Overfull \hbox (17.05798pt too wide) in paragraph at lines 38--39
+\OT1/ptm/m/n/9 vid-ual la-bels $\OML/cmm/m/it/9 l \OMS/cmsy/m/n/9 2 L$ \OT1/ptm
+/m/n/9 re-trieved for each HIT are stored in C\OT1/ptm/m/n/8 ROWD\OT1/ptm/m/n/9
+ A\OT1/ptm/m/n/8 NS\OT1/ptm/m/n/9 T\OT1/ptm/m/n/8 BL
+ []
+
+
+Overfull \hbox (22.3744pt too wide) in paragraph at lines 38--39
+\OT1/ptm/m/n/9 the Turker her-self (work-erID). Per-form-ing a JOIN with C\OT1/
+ptm/m/n/8 ROWD\OT1/ptm/m/n/9 P\OT1/ptm/m/n/8 OST\OT1/ptm/m/n/9 T\OT1/ptm/m/n/8 
+BL
+ []
+
+
+LaTeX Warning: Reference `integration' on page 3 undefined on input line 44.
+
+
+Overfull \hbox (8.64066pt too wide) in paragraph at lines 58--59
+[]\OT1/ptm/m/n/9 Finally, in-te-gra-tion al-lows the database to use the crowd-
+aggregated
+ []
+
+[3]) (./content/selection.tex
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 19.
+
+(/usr/share/texmf-texlive/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \vbox (badness 6675) has occurred while \output is active []
+
+ [4 <./images/system_design.png (PNG copy)>]
+<images/ent_dist1.png, id=32, 561.09625pt x 420.57124pt>
+File: images/ent_dist1.png Graphic file (type png)
+
+<use images/ent_dist1.png>
+Overfull \hbox (1.91785pt too wide) in paragraph at lines 80--82
+[][]
+ []
+
+
+LaTeX Warning: Reference `' on page 5 undefined on input line 85.
+
+
+LaTeX Warning: Reference `' on page 5 undefined on input line 89.
+
+
+LaTeX Warning: Reference `' on page 5 undefined on input line 93.
+
+<images/red.png, id=34, 421.575pt x 316.18124pt>
+File: images/red.png Graphic file (type png)
+ <use images/red.png>
+Overfull \hbox (1.91785pt too wide) in paragraph at lines 98--100
+[][]
+ []
+
+[5 <./images/ent_dist1.png>]) (./content/integration.tex [6 <./images/red.png (
+PNG copy)>]
+Overfull \hbox (3.17694pt too wide) in paragraph at lines 41--42
+\OT1/ptm/m/n/9 rel-a-tive dif-fer-ences among dif-fer-ent la-bel pos-si-bil-i-t
+ies, we may with-
+ []
+
+
+Overfull \hbox (5.26498pt too wide) in paragraph at lines 68--82
+\OT1/ptm/m/n/9 tween DS and Bayes do I want to ex-hibit by us-ing spe-cific num
+bers?--
+ []
+
+[7]
+
+LaTeX Warning: Citation `shafer1976mathematical' on page 8 undefined on input l
+ine 93.
+
+
+Overfull \hbox (3.55597pt too wide) in paragraph at lines 144--145
+\OT1/ptm/m/n/9 Even hu-man com-pu-ta-tion is not per-fect. The pre-vi-ous sec-t
+ion looked
+ []
+
+[8]) (./content/experiments.tex
+<images/selection_exp1_highE.png, id=52, 421.575pt x 316.18124pt>
+File: images/selection_exp1_highE.png Graphic file (type png)
+
+<use images/selection_exp1_highE.png>
+<images/selection_exp1_totalE.png, id=53, 421.575pt x 316.18124pt>
+File: images/selection_exp1_totalE.png Graphic file (type png)
+
+<use images/selection_exp1_totalE.png>
+<images/selection_exp2_highE.png, id=54, 421.575pt x 316.18124pt>
+File: images/selection_exp2_highE.png Graphic file (type png)
+
+<use images/selection_exp2_highE.png>
+<images/selection_exp2_totalE.png, id=55, 421.575pt x 316.18124pt>
+File: images/selection_exp2_totalE.png Graphic file (type png)
+
+<use images/selection_exp2_totalE.png>
+<images/selection_exp3_highE.png, id=56, 421.575pt x 316.18124pt>
+File: images/selection_exp3_highE.png Graphic file (type png)
+
+<use images/selection_exp3_highE.png>
+<images/selection_exp3_random.png, id=57, 421.575pt x 316.18124pt>
+File: images/selection_exp3_random.png Graphic file (type png)
+
+<use images/selection_exp3_random.png>
+<images/integration_exp1_numT.png, id=58, 421.575pt x 316.18124pt>
+File: images/integration_exp1_numT.png Graphic file (type png)
+
+<use images/integration_exp1_numT.png>
+Overfull \hbox (1.91785pt too wide) in paragraph at lines 63--65
+[][]
+ []
+
+<images/integration_exp2_meanQ.png, id=59, 421.575pt x 316.18124pt>
+File: images/integration_exp2_meanQ.png Graphic file (type png)
+
+<use images/integration_exp2_meanQ.png>
+Overfull \hbox (1.91785pt too wide) in paragraph at lines 68--70
+[][]
+ []
+
+
+Overfull \hbox (3.58244pt too wide) in paragraph at lines 75--76
+[]\OT1/ptm/m/n/9 Workers were au-to-mat-i-cally gen-er-ated by se-lect-ing a qu
+al-ity value
+ []
+
+[9 <./images/integration_exp1_numT.png (PNG copy)>])
+(./content/related_work.tex
+Underfull \hbox (badness 10000) in paragraph at lines 2--6
 
  []
 
@@ -417,227 +641,57 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--8
 
  []
 
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/background.tex)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/system_overview.tex
-<images/system_design.png, id=10, 538.26094pt x 362.85562pt>
-File: images/system_design.png Graphic file (type png)
 
-<use images/system_design.png>
-Package pdftex.def Info: images/system_design.png used on input line 5.
-(pdftex.def)             Requested size: 327.59692pt x 220.84329pt.
-LaTeX Font Info:    Font shape `T1/ptm/bx/sc' in size <9> not available
-(Font)              Font shape `T1/ptm/b/sc' tried instead on input line 7.
+Underfull \hbox (badness 10000) in paragraph at lines 9--10
 
-Overfull \hbox (1.25008pt too wide) in paragraph at lines 18--19
-\T1/ptm/m/n/9 tributes. The to-ken also con-tains one prob-a-bilis-tic attribut
-elabel$[]$.
  []
 
+) (./content/conclusion.tex) (./content/future_work.tex) (./paper2.bbl
 
-Overfull \hbox (44.57384pt too wide) in paragraph at lines 24--25
-\T1/ptm/m/n/9 weighted sum of fea-ture func-tions: $\OML/cmm/m/it/9 '\OT1/cmr/m
-/n/9 [\OML/cmm/m/it/9 y[]; y[]\OMS/cmsy/m/n/9 j\OML/cmm/m/it/9 x[]\OT1/cmr/m/n/
-9 ] = [][] \OML/cmm/m/it/9 []f[]\OT1/cmr/m/n/9 (\OML/cmm/m/it/9 y[]; y[]; x[]\
-OT1/cmr/m/n/9 )$\T1/ptm/m/n/9 . 
- []
+Package balance Warning: You have called \balance in second column
+(balance)                Columns might not be balanced.
 
-
-LaTeX Warning: Reference `hit' on page \thepage  undefined on input line 32.
-
-
-LaTeX Warning: Reference `integration' on page \thepage  undefined on input lin
-e 38.
+[10 <./images/selection_exp1_highE.png (PNG copy)> <./images/selection_exp1_tot
+alE.png (PNG copy)> <./images/integration_exp2_meanQ.png (PNG copy)>] [11 <./im
+ages/selection_exp2_highE.png (PNG copy)> <./images/selection_exp2_totalE.png (
+PNG copy)> <./images/selection_exp3_highE.png (PNG copy)> <./images/selection_e
+xp3_random.png (PNG copy)>])
+Overfull \vbox (1.55971pt too high) has occurred while \output is active []
 
 
-Overfull \hbox (17.05798pt too wide) in paragraph at lines 38--39
-\T1/ptm/m/n/9 vid-ual la-bels $\OML/cmm/m/it/9 l \OMS/cmsy/m/n/9 2 L$ \T1/ptm/m
-/n/9 re-trieved for each HIT are stored in C\T1/ptm/m/n/8 ROWD\T1/ptm/m/n/9 A\T
-1/ptm/m/n/8 NS\T1/ptm/m/n/9 T\T1/ptm/m/n/8 BL
- []
-
-
-Overfull \hbox (22.3744pt too wide) in paragraph at lines 38--39
-\T1/ptm/m/n/9 the Turker her-self (work-erID). Per-form-ing a JOIN with C\T1/pt
-m/m/n/8 ROWD\T1/ptm/m/n/9 P\T1/ptm/m/n/8 OST\T1/ptm/m/n/9 T\T1/ptm/m/n/8 BL
- []
-
-
-LaTeX Warning: Reference `integration' on page \thepage  undefined on input lin
-e 44.
-
-[2]
-Overfull \hbox (8.64066pt too wide) in paragraph at lines 58--59
-[]\T1/ptm/m/n/9 Finally, in-te-gra-tion al-lows the database to use the crowd-a
-ggregated
- []
-
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/selection.tex
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 19.
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\t1pcr.fd"
-File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [3 <C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/images/system_design.png>]
-<images/ent_dist1.png, id=24, 561.09625pt x 420.57124pt>
-File: images/ent_dist1.png Graphic file (type png)
-
-<use images/ent_dist1.png>
-Package pdftex.def Info: images/ent_dist1.png used on input line 80.
-(pdftex.def)             Requested size: 241.91785pt x 181.32983pt.
-
-Overfull \hbox (1.91785pt too wide) in paragraph at lines 80--82
-[][]
- []
-
-
-LaTeX Warning: Reference `' on page \thepage  undefined on input line 89.
-
-
-LaTeX Warning: Reference `' on page \thepage  undefined on input line 91.
-
-
-LaTeX Warning: Reference `' on page \thepage  undefined on input line 93.
-
-[4 <C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/images/ent_dist1.png>]
-
-LaTeX Warning: Reference `' on page \thepage  undefined on input line 102.
-
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/integration.tex
-[5]
-Underfull \vbox (badness 1331) has occurred while \output is active []
-
-
-Overfull \hbox (3.17694pt too wide) in paragraph at lines 41--42
-\T1/ptm/m/n/9 rel-a-tive dif-fer-ences among dif-fer-ent la-bel pos-si-bil-i-ti
-es, we may with-
- []
-
-
-Overfull \hbox (5.26498pt too wide) in paragraph at lines 68--82
-\T1/ptm/m/n/9 tween DS and Bayes do I want to ex-hibit by us-ing spe-cific numb
-ers?--
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6])
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/experiments.tex
-<images/selection_exp1_highE.png, id=38, 421.575pt x 316.18124pt>
-File: images/selection_exp1_highE.png Graphic file (type png)
-
-<use images/selection_exp1_highE.png>
-Package pdftex.def Info: images/selection_exp1_highE.png used on input line 12.
-
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-<images/selection_exp1_totalE.png, id=39, 421.575pt x 316.18124pt>
-File: images/selection_exp1_totalE.png Graphic file (type png)
-
-<use images/selection_exp1_totalE.png>
-Package pdftex.def Info: images/selection_exp1_totalE.png used on input line 16
-.
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-<images/selection_exp2_highE.png, id=40, 421.575pt x 316.18124pt>
-File: images/selection_exp2_highE.png Graphic file (type png)
-
-<use images/selection_exp2_highE.png>
-Package pdftex.def Info: images/selection_exp2_highE.png used on input line 26.
-
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-<images/selection_exp2_totalE.png, id=41, 421.575pt x 316.18124pt>
-File: images/selection_exp2_totalE.png Graphic file (type png)
-
-<use images/selection_exp2_totalE.png>
-Package pdftex.def Info: images/selection_exp2_totalE.png used on input line 30
-.
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-<images/selection_exp3_highE.png, id=42, 421.575pt x 316.18124pt>
-File: images/selection_exp3_highE.png Graphic file (type png)
-
-<use images/selection_exp3_highE.png>
-Package pdftex.def Info: images/selection_exp3_highE.png used on input line 40.
-
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-<images/selection_exp3_random.png, id=43, 421.575pt x 316.18124pt>
-File: images/selection_exp3_random.png Graphic file (type png)
-
-<use images/selection_exp3_random.png>
-Package pdftex.def Info: images/selection_exp3_random.png used on input line 44
-.
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-<images/integration_exp1_numT.png, id=44, 421.575pt x 316.18124pt>
-File: images/integration_exp1_numT.png Graphic file (type png)
-
-<use images/integration_exp1_numT.png>
-Package pdftex.def Info: images/integration_exp1_numT.png used on input line 63
-.
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-Overfull \hbox (1.91785pt too wide) in paragraph at lines 63--65
-[][]
- []
-
-<images/integration_exp2_meanQ.png, id=45, 421.575pt x 316.18124pt>
-File: images/integration_exp2_meanQ.png Graphic file (type png)
-
-<use images/integration_exp2_meanQ.png>
-Package pdftex.def Info: images/integration_exp2_meanQ.png used on input line 6
-8.
-(pdftex.def)             Requested size: 241.91785pt x 181.44095pt.
-
-Overfull \hbox (1.91785pt too wide) in paragraph at lines 68--70
-[][]
- []
-
-) (C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/conclusion.tex)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/future_work.tex)
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\paper2.bbl [7 <C:/Users/Sean/Doc
-uments/GitHub/CAMeL-DB/Paper/images/integration_exp1_numT.png (PNG copy)>])
-(C:\Users\Sean\Documents\GitHub\CAMeL-DB\Paper\content/appendix.tex [8 <C:/User
-s/Sean/Documents/GitHub/CAMeL-DB/Paper/images/selection_exp1_highE.png (PNG cop
-y)> <C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/images/selection_exp1_totalE
-.png (PNG copy)> <C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/images/integrat
-ion_exp2_meanQ.png (PNG copy)>]) [9
-
- <C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/images/selection_exp2_highE.png
- (PNG copy)> <C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/images/selection_ex
-p2_totalE.png (PNG copy)>] [10 <C:/Users/Sean/Documents/GitHub/CAMeL-DB/Paper/i
-mages/selection_exp3_highE.png (PNG copy)> <C:/Users/Sean/Documents/GitHub/CAMe
-L-DB/Paper/images/selection_exp3_random.png (PNG copy)>] (C:\Users\Sean\Documen
-ts\GitHub\CAMeL-DB\Paper\paper2.aux)
+[12] (./paper2.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4527 strings out of 494045
- 57753 string characters out of 3148390
- 140120 words of memory out of 3000000
- 7695 multiletter control sequences out of 15000+200000
- 69382 words of font info for 71 fonts, out of 3000000 for 9000
- 715 hyphenation exceptions out of 8191
- 41i,16n,31p,1101b,413s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Program File
-s/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmex9.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.p
-fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Pr
-ogram Files/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb><C:/Program Files/MiK
-TeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/tim
-es/utmb8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmr8a.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper2.pdf (10 pages, 279173 bytes).
+ 4615 strings out of 495061
+ 57803 string characters out of 1182621
+ 146370 words of memory out of 3000000
+ 7654 multiletter control sequences out of 15000+50000
+ 41318 words of font info for 80 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 39i,20n,31p,1156b,411s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texli
+ve/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texmf-texlive/fonts/typ
+e1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cmextra/cmex9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
+onts/cm/cmmi5.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi
+6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/
+share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texmf-t
+exlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmsy6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm
+/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/symbols/msam10
+.pfb></usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/t
+exmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/font
+s/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helv
+etic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmb8a.pfb></us
+r/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/share/texmf-texliv
+e/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper2.pdf (12 pages, 410974 bytes).
 PDF statistics:
- 104 PDF objects out of 1000 (max. 8388607)
+ 132 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

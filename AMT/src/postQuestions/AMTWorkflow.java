@@ -19,9 +19,9 @@ public class AMTWorkflow {
 	public static final String MTURK_CONFIG_FILE="src/mturk.properties";
 	public static final String CURRENT_RESOURCE_DIRECTORY="src/postQuestions/";
 	public static final String postedCitationFileName=CURRENT_RESOURCE_DIRECTORY+"posted.txt";
-        public static final String XML_DIRECTORY = "QuestionXML_DBLP500/";
+        public static final String XML_DIRECTORY = "QuestionXML_PubMed500/";
 	
-	private static int NUM_QUESTIONS = 500;
+	private static int NUM_QUESTIONS = 600;
 	private static String delimiter = "***********************************";
 	/**
 	 * @param args inputCSV outputCSV

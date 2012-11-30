@@ -1,29 +1,28 @@
 \section{Introduction}
 
-\noindent\sean{Need to figure out where to put HIT maintenance and API information.}
-
-\noindent\sean{Will be modifying to keep overall picture in line with rest of paper.}
-
 %1. Introduce problem of information extraction
-The web is becoming an ever increasing expanse of information and knowledge.  Unfortunately, the majority of this data is not easily manipulated or analyzed by computers.  Granting structure to the trove of unstructured data for storage in a database is the key to efficient and complex searching, querying, and analysis.  Traditionally it's been the job of humans to provide such metadata and structure, filling out the database by hand, but this is typically a slow and expensive process.  Information Extraction is the method of performing this annotation automatically and at scale, rapidly increasing speed and dramatic lowering costs.
+The web is becoming an ever increasing expanse of information and knowledge.  Unfortunately, the majority of this data is not easily manipulated or analyzed by computers.  Granting structure to the trove of unstructured data for storage in a database is the key to efficient and complex searching, querying, and analysis.  Traditionally it's been the job of humans to provide such metadata and structure, filling out the database by hand, but this is typically a slow and expensive process.  Information Extraction is the method of performing this annotation automatically and at scale, rapidly increasing speed and dramatically lowering costs.
 
 %2. Introduce subset of text segmentation
-Consider the following example scientific citation.
+\begin{example}
+\label{ex:citation}
+Consider the following example scientific citation:
 
-[Citation]
+\vspace{5mm}
+\parbox{.45\textwidth}{\textit{Building New Tools for Synthetic Image Animation by Using Evolutionary Techniques. Xavier Provot, David Crochemore, Michael Boccara, Jean Louchet Artificial Evolution 3-540-61108-8 Springer Lecture Notes in Computer Science Artificial Evolution, European Conference, AE 95, Brest, France, September 4-6, 1995, Selected Papers 1996}}
+\vspace{5mm}
 
-Recognizing certain fields such as the title or author are simple tasks for most individuals, but represents a challenging problem for machines.  One of the leading automated techniques employs the use of linear-chain conditional random fields (CRFs) \cite{DBLP:conf/icml/LaffertyMP01}, a generalization of hidden Markov models, for sequential tagging.  
+\end{example}
 
-%3. Reference previous approaches in IE, specifically segmentation
-\sean{Reference further attempts at using CRF for IE.}
+Recognizing certain fields such as the title or author are simple tasks for most individuals, but represents a challenging problem for machines.  One of the leading automated techniques employs the use of linear-chain conditional random fields (CRFs) \cite{DBLP:conf/icml/LaffertyMP01}, a generalization of Hidden Markov Models, for sequential tagging.
 
 %4. Problem: even the best machine results introduce some error
-While there are many advantages to be gained from automation, even the most start-of-the-art algorithms are not without error.  There is a well known tradeoff \cite{Quinn10crowdflow:integrating} between the level of accuracy achieved by human processing and the speed and financial gains from machine processing.  
+While there are many advantages to be gained from automation, even the most state-of-the-art algorithms are not without error.  There is a well known tradeoff \cite{Quinn10crowdflow:integrating} between the level of accuracy achieved by human processing and the speed and financial gains from machine processing.  
 
 %5. Introduce crowdsourcing
-Recently there has been increasing development of "human computation marketplaces" such as Amazon Mechanical Turk.  Developing microtasks that can be distributed concurrently to thousands of people at once at reduced cost has greatly increased the utility of hiring human workers to do trivial tasks such as annotation, ranking, and searching on the internet.  While significantly cheaper than hiring human experts, the cost of crowdsourcing is still much greater than processor a task using automated techniques.  The key is being able to use both efficiently.
+Recently there has been increasing development of "human computation marketplaces" such as Amazon Mechanical Turk \cite{Ipeirotis:2010:AAM:1869086.1869094}.  Developing microtasks that can be distributed concurrently to thousands of people at once at reduced cost has greatly increased the utility of hiring human workers to do trivial tasks such as annotation, ranking, and searching on the internet.  While significantly cheaper than hiring human experts, the cost of crowdsourcing is still much greater than processing a task using automated techniques.  The ideal scenario would leverage the advantages of both human and machine computation efficiently.
 
-In this paper we introduce \sysName, a system designed to take advantage of the strengths of both human and machine computation in a unified manner.  The goal is to introduce humans only after machine algorithms have run, cleaning up and improving those elements of the output that are the most uncertain.  Our specific notion of uncertainty is defined is expanded upon in Section ~\ref{uncertainty}.
+In this paper we introduce \sysName, a system designed to take advantage of the strengths of human and machine computation in a unified manner.  This is achieved by introducing human editing only after machine algorithms have run, cleaning up and improving those elements of the output that are the most uncertain.  Our specific notion of uncertainty is defined is expanded upon in Section ~\ref{sec:uncertainty}.
 
 There are many challenges which need to be met in designing a system such as \sysName .  Uncertainty needs to managed and maintained throughout the database.  The number of questions which represent the mapping from specific fields to the crowd should be minimized to control costs.  Lastly, quality should be maintained even when dealing with a possibly noisy and conflicting crowd.  \sysName makes a number of contributions to address these challenges.
 
